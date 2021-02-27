@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Amegu</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. At blanditiis corporis, culpa dicta doloremque doloribus est fugit, illum inventore ipsa iste laboriosam minus modi nemo odio perspiciatis, quos suscipit vero.
+    </string>
+    <string name="home">Home</string>
+    <string name="upload">Upload</string>
+    <string name="account">Account</string>
+    <string name="terakhir_dicari">Terakhir dicari</string>
+    <string name="riwayat_pencarian_kosong">Riwayat pencarian kosong</string>
+    <string name="search">Search...</string>
+    <string name="hasil_pencarian">Hasil pencarian dari</string>
+</resources>
