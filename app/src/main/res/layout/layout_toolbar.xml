@@ -1,65 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.appbar.AppBarLayout
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/appBar"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <LinearLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
-        android:id="@+id/toolbar"
         android:gravity="center"
+        android:orientation="horizontal"
         android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:orientation="horizontal">
+        android:paddingRight="@dimen/activity_horizontal_margin">
+
         <ImageView
-            android:visibility="gone"
             android:id="@+id/back_navigation"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_baseline_arrow_back_24" />
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/logo"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
+            android:layout_weight="1"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:src="@drawable/amegu_paw"
-            android:layout_weight="1"/>
+            android:src="@drawable/amegu_paw" />
 
         <LinearLayout
             android:id="@+id/search"
-            android:background="@drawable/bg_search_bar"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="14dp"
             android:layout_weight="10"
-            android:orientation="horizontal">
+            android:background="@drawable/bg_search_bar"
+            android:orientation="horizontal"
+            android:paddingLeft="14dp">
+
             <EditText
                 android:id="@+id/search_box"
-                android:textColor="#333"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:textSize="16sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="16"
+                android:background="@android:color/transparent"
+                android:defaultFocusHighlightEnabled="false"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
                 android:maxLines="1"
                 android:minLines="1"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
                 android:singleLine="true"
-                android:imeOptions="actionSearch"
-                android:defaultFocusHighlightEnabled="false"
-                android:background="@android:color/transparent"
-                android:layout_weight="16"
-                android:hint="@string/search"
+                android:textColor="#333"
                 android:textCursorDrawable="@drawable/color_cursor_search"
-                />
+                android:textSize="16sp" />
+
             <ImageView
-                android:src="@drawable/ic_baseline_search_24"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_search_24" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.appbar.AppBarLayout>
