@@ -18,9 +18,9 @@ import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.adapter.PetAdapter;
 import id.rezajuliandri.amegu.entity.Pet;
 import id.rezajuliandri.amegu.helper.ActionBarHelper;
-import id.rezajuliandri.amegu.helper.ActionBarSearchHelper;
+import id.rezajuliandri.amegu.ui.main.abstraction.ItemDetailAbstract;
 
-public class HomeFragment extends ActionBarSearchHelper {
+public class HomeFragment extends ItemDetailAbstract {
     View view;
     RecyclerView recyclerView;
     PetAdapter petAdapter;
@@ -46,7 +46,7 @@ public class HomeFragment extends ActionBarSearchHelper {
 
         // Recyclerview settings
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        petAdapter = new PetAdapter(getActivity(), requireActivity().getApplication(), view);
+        petAdapter = new PetAdapter(getContext(), requireActivity().getApplication(), this, view);
         recyclerView.setAdapter(petAdapter);
 
         // Just dummy data
@@ -74,4 +74,12 @@ public class HomeFragment extends ActionBarSearchHelper {
     protected void moveToSearchFragment(View view) {
         Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_searchFragment);
     }
+
+    @Override
+    public void moveToDetailPet(View view, Pet pet) {
+        HomeFragmentDirections.ActionNavigationHomeToPetDetailFragment toPetDetailFragment = HomeFragmentDirections.actionNavigationHomeToPetDetailFragment(pet);
+        toPetDetailFragment.setPet(pet);
+        Navigation.findNavController(view).navigate(toPetDetailFragment);
+    }
+
 }
