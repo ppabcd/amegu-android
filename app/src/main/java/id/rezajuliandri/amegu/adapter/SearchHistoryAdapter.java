@@ -8,27 +8,30 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.database.SearchHistory;
 import id.rezajuliandri.amegu.helper.StringHelper;
+import id.rezajuliandri.amegu.ui.main.fragment.SearchFragmentDirections;
 
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.ListViewHolder> {
-    private Context context;
-    private Application application;
+    private final Context context;
+    private final Application application;
     private List<SearchHistory> searchHistoryList = new ArrayList<>();
-    View view;
+    View viewParent;
 
-    public SearchHistoryAdapter(Context context, Application application) {
+    public SearchHistoryAdapter(Context context, Application application, View viewParent) {
         this.context = context;
         this.application = application;
+        this.viewParent = viewParent;
     }
-    public void setData(List<SearchHistory> searchHistories){
+
+    public void setData(List<SearchHistory> searchHistories) {
         this.searchHistoryList = searchHistories;
         notifyDataSetChanged();
     }
@@ -46,6 +49,9 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
         holder.keyword.setText(StringHelper.setMaximumText(searchHistory.getKeyword()));
 
         holder.itemView.setOnClickListener(v -> {
+            SearchFragmentDirections.ActionSearchFragmentToSearchResultFragment toSearchResultFragment = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(searchHistory.getKeyword());
+            toSearchResultFragment.setKeyword(searchHistory.getKeyword());
+            Navigation.findNavController(viewParent).navigate(toSearchResultFragment);
             // Action while click history search
         });
     }

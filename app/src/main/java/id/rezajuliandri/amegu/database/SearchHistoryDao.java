@@ -21,6 +21,15 @@ public interface SearchHistoryDao {
     @Delete
     void delete(SearchHistory searchHistory);
 
-    @Query("SELECT * FROM searchhistory ORDER BY _id DESC")
+    @Query("DELETE FROM searchhistory")
+    void deleteAll();
+
+    @Query("SELECT * FROM searchhistory ORDER BY updated_at DESC")
     LiveData<List<SearchHistory>> getAllSearchHistory();
+
+    @Query("SELECT * FROM searchhistory ORDER BY updated_at DESC LIMIT :limit")
+    LiveData<List<SearchHistory>> getAllSearchHistory(int limit);
+
+    @Query("SELECT * FROM searchhistory WHERE keyword = :keyword LIMIT 1")
+    SearchHistory getDataByKeyword(String keyword);
 }

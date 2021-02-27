@@ -1,22 +1,21 @@
 package id.rezajuliandri.amegu.ui.main.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import id.rezajuliandri.amegu.R;
+import id.rezajuliandri.amegu.database.SearchHistory;
 import id.rezajuliandri.amegu.helper.ActionBarHelper;
 import id.rezajuliandri.amegu.helper.ActionBarSearchHelper;
 import id.rezajuliandri.amegu.viewmodel.SearchViewModel;
+import id.rezajuliandri.amegu.viewmodel.SearchViewModelFactory;
 
 public class SearchResultFragment extends ActionBarSearchHelper {
     View view;
@@ -40,9 +39,15 @@ public class SearchResultFragment extends ActionBarSearchHelper {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_result, container, false);
 
+        // View Model
+        searchViewModel = new ViewModelProvider(
+                this,
+                new SearchViewModelFactory(requireActivity().getApplication())
+        ).get(SearchViewModel.class);
+
         textResult = view.findViewById(R.id.text_result);
-        String keyword = SearchResultFragmentArgs.fromBundle(getArguments()).getKeyword();
-        String hasilPencarian = getActivity().getString(R.string.hasil_pencarian) + " " + keyword;
+        String keyword = SearchResultFragmentArgs.fromBundle(requireArguments()).getKeyword();
+        String hasilPencarian = requireActivity().getString(R.string.hasil_pencarian) + " " + keyword;
         textResult.setText(hasilPencarian);
 
         actionBarHelper = new ActionBarHelper(getActivity(), view);
@@ -53,6 +58,10 @@ public class SearchResultFragment extends ActionBarSearchHelper {
         editText = view.findViewById(R.id.search_box);
         editText.clearFocus();
         editText.setFocusableInTouchMode(false);
+
+        SearchHistory searchHistory = new SearchHistory(keyword);
+        searchViewModel.updateOrInsert(keyword, searchHistory);
+
         // Inflate the layout for this fragment
         return view;
     }

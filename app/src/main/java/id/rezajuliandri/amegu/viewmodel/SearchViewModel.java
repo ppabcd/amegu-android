@@ -11,7 +11,7 @@ import id.rezajuliandri.amegu.database.SearchHistory;
 import id.rezajuliandri.amegu.database.SearchHistoryRepository;
 
 public class SearchViewModel extends ViewModel {
-    private SearchHistoryRepository mRepository;
+    private final SearchHistoryRepository mRepository;
 
     private final LiveData<List<SearchHistory>> mAllHistory;
 
@@ -28,7 +28,15 @@ public class SearchViewModel extends ViewModel {
         mRepository.insert(searchHistory);
     }
 
+    public void updateOrInsert(String keyword, SearchHistory searchHistory) {
+        mRepository.updateOrInsert(keyword, searchHistory);
+    }
+
     public void delete(SearchHistory searchHistory) {
         mRepository.delete(searchHistory);
+    }
+
+    public void deleteAll() {
+        mRepository.deleteAll();
     }
 }

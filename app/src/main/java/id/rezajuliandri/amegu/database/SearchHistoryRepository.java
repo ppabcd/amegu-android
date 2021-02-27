@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.Date;
 import java.util.List;
 
 public class SearchHistoryRepository {
@@ -21,20 +22,30 @@ public class SearchHistoryRepository {
     }
 
     public void insert(SearchHistory searchHistory) {
+        AmeguDatabase.databaseWriteExecutor.execute(() -> mSearchHistoryDao.insert(searchHistory));
+    }
+
+    public void updateOrInsert(String keyword, SearchHistory searchHistory) {
         AmeguDatabase.databaseWriteExecutor.execute(() -> {
-            mSearchHistoryDao.insert(searchHistory);
+            SearchHistory checkHistory = mSearchHistoryDao.getDataByKeyword(keyword);
+            if (checkHistory == null) {
+                mSearchHistoryDao.insert(searchHistory);
+                return;
+            }
+            checkHistory.setUpdatedAt(new Date().getTime());
+            mSearchHistoryDao.update(checkHistory);
         });
     }
 
     public void update(SearchHistory searchHistory) {
-        AmeguDatabase.databaseWriteExecutor.execute(() -> {
-            mSearchHistoryDao.update(searchHistory);
-        });
+        AmeguDatabase.databaseWriteExecutor.execute(() -> mSearchHistoryDao.update(searchHistory));
     }
 
     public void delete(SearchHistory searchHistory) {
-        AmeguDatabase.databaseWriteExecutor.execute(() -> {
-            mSearchHistoryDao.delete(searchHistory);
-        });
+        AmeguDatabase.databaseWriteExecutor.execute(() -> mSearchHistoryDao.delete(searchHistory));
+    }
+
+    public void deleteAll() {
+        AmeguDatabase.databaseWriteExecutor.execute(mSearchHistoryDao::deleteAll);
     }
 }

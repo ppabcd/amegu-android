@@ -3,13 +3,10 @@ package id.rezajuliandri.amegu.ui.main.fragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import id.rezajuliandri.amegu.R;
@@ -17,8 +14,6 @@ import id.rezajuliandri.amegu.helper.ActionBarHelper;
 import id.rezajuliandri.amegu.helper.ActionBarSearchHelper;
 
 public class HomeFragment extends ActionBarSearchHelper {
-    LinearLayout search;
-    EditText editText;
     View view;
 
     public HomeFragment() {

@@ -1,7 +1,9 @@
 package id.rezajuliandri.amegu.ui.main.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +32,7 @@ import id.rezajuliandri.amegu.viewmodel.SearchViewModelFactory;
 public class SearchFragment extends Fragment {
     EditText searchBox;
     LinearLayout searchContent;
-    TextView errorEmptySearchHistory;
+    TextView errorEmptySearchHistory, removeHistory;
     AppBarLayout appBarLayout;
     RecyclerView recyclerView;
 
@@ -58,13 +60,14 @@ public class SearchFragment extends Fragment {
 
         searchViewModel = new ViewModelProvider(
                 this,
-                new SearchViewModelFactory(getActivity().getApplication())
+                new SearchViewModelFactory(requireActivity().getApplication())
         ).get(SearchViewModel.class);
 
         appBarLayout = view.findViewById(R.id.appBar);
         searchBox = view.findViewById(R.id.search_box);
         searchContent = view.findViewById(R.id.search_content);
         errorEmptySearchHistory = view.findViewById(R.id.error_empty_search_history);
+        removeHistory = view.findViewById(R.id.remove_history);
 
         searchBox.requestFocus();
         appBarLayout.setOutlineProvider(null);
@@ -78,14 +81,16 @@ public class SearchFragment extends Fragment {
         ameguDatabase = AmeguDatabase.getDatabase(getContext());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new SearchHistoryAdapter(getActivity(), getActivity().getApplication());
+        adapter = new SearchHistoryAdapter(getActivity(), requireActivity().getApplication(), view);
         recyclerView.setAdapter(adapter);
 
         getSearchHistory();
+        removeHistoryData();
 
         searchBox.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 searchData(view);
+                searchBox.setText("");
                 return true;
             }
             return false;
@@ -93,29 +98,47 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
+    private void removeHistoryData() {
+        removeHistory.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//            builder.setTitle("Apakah Anda yakin untuk menghapus semua riwayat pencarian?");
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_only_text, null);
+            builder.setView(view);
+            builder.setPositiveButton("Ya", ((dialog, which) -> {
+                searchViewModel.deleteAll();
+                getSearchHistory();
+                Toast.makeText(getContext(), "Berhasil menghapus riwayat pencarian", Toast.LENGTH_SHORT).show();
+            }));
+            builder.setNegativeButton("Batal", ((dialog, which) -> {
+            }));
+            builder.show();
+        });
+    }
+
     private void searchData(View view) {
         if ("".equals(searchBox.getText().toString())) {
             Toast.makeText(getActivity(), "Mohon untuk mengisi text pada form search", Toast.LENGTH_SHORT).show();
             return;
         }
-        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view1 = getActivity().getCurrentFocus();
-        if(view1 == null){
+        InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view1 = requireActivity().getCurrentFocus();
+        if (view1 == null) {
             view1 = new View(getActivity());
         }
         inputMethodManager.hideSoftInputFromWindow(view1.getWindowToken(), 0);
 
 
-        SearchFragmentDirections.ActionSearchFragmentToSearchResultFragment toSearchResultFragment = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(searchBox.getText().toString());
-        toSearchResultFragment.setKeyword(searchBox.getText().toString());
+        SearchFragmentDirections.ActionSearchFragmentToSearchResultFragment toSearchResultFragment = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(searchBox.getText().toString().trim());
+        toSearchResultFragment.setKeyword(searchBox.getText().toString().trim());
         Navigation.findNavController(view).navigate(toSearchResultFragment);
     }
 
     private void getSearchHistory() {
-        searchViewModel.getAllSearchHistory().observe(getActivity(), itemSearch -> {
+        searchViewModel.getAllSearchHistory().observe(requireActivity(), itemSearch -> {
             if (itemSearch != null) {
                 adapter.setData(itemSearch);
-                errorEmptySearchHistory.setVisibility((adapter.getItemCount() > 1) ? View.GONE : View.VISIBLE);
+                Log.i("SearchItemCount", String.valueOf(adapter.getItemCount()));
+                errorEmptySearchHistory.setVisibility((adapter.getItemCount() > 0) ? View.GONE : View.VISIBLE);
             } else {
                 errorEmptySearchHistory.setVisibility(View.VISIBLE);
             }

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 public class SearchViewModelFactory implements ViewModelProvider.Factory {
-    private Application mApplication;
+    private final Application mApplication;
 
     public SearchViewModelFactory(Application application) {
         mApplication = application;

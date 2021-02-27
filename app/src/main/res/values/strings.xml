@@ -19,6 +19,9 @@
     <string name="account">Account</string>
     <string name="terakhir_dicari">Terakhir dicari</string>
     <string name="riwayat_pencarian_kosong">Riwayat pencarian kosong</string>
-    <string name="search">Search...</string>
+    <string name="search">Search …</string>
     <string name="hasil_pencarian">Hasil pencarian dari</string>
+    <string name="hapus_riwayat">Hapus Riwayat</string>
+    <string name="apakah_anda_yakin_untuk_menghapus_semua_riwayat_pencarian">Apakah Anda yakin untuk menghapus semua riwayat pencarian?</string>
+    <string name="history_icon">History Icon</string>
 </resources>
