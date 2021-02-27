@@ -22,8 +22,8 @@ import id.rezajuliandri.amegu.ui.main.fragment.SearchFragmentDirections;
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.ListViewHolder> {
     private final Context context;
     private final Application application;
-    private List<SearchHistory> searchHistoryList = new ArrayList<>();
     View viewParent;
+    private List<SearchHistory> searchHistoryList = new ArrayList<>();
 
     public SearchHistoryAdapter(Context context, Application application, View viewParent) {
         this.context = context;
@@ -63,6 +63,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
 
     public static class ListViewHolder extends RecyclerView.ViewHolder {
         TextView keyword;
+
         public ListViewHolder(@NonNull View itemView) {
             super(itemView);
             keyword = itemView.findViewById(R.id.search_keyword);

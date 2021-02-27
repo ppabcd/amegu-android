@@ -36,26 +36,6 @@ public class SearchHistory implements Parcelable {
     @ColumnInfo(name = "updated_at")
     private long updatedAt;
 
-    public static Creator<SearchHistory> getCREATOR() {
-        return CREATOR;
-    }
-
-    public long getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(long createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public long getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(long updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     @Ignore
     public SearchHistory() {
     }
@@ -89,6 +69,26 @@ public class SearchHistory implements Parcelable {
     protected SearchHistory(Parcel in) {
         id = in.readLong();
         keyword = in.readString();
+    }
+
+    public static Creator<SearchHistory> getCREATOR() {
+        return CREATOR;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(long updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public long getId() {

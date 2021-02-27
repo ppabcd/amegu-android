@@ -8,13 +8,22 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import id.rezajuliandri.amegu.R;
+import id.rezajuliandri.amegu.adapter.PetAdapter;
+import id.rezajuliandri.amegu.entity.Pet;
 import id.rezajuliandri.amegu.helper.ActionBarHelper;
 import id.rezajuliandri.amegu.helper.ActionBarSearchHelper;
 
 public class HomeFragment extends ActionBarSearchHelper {
     View view;
+    RecyclerView recyclerView;
+    PetAdapter petAdapter;
 
     public HomeFragment() {
 
@@ -32,6 +41,25 @@ public class HomeFragment extends ActionBarSearchHelper {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         ActionBarHelper.searchLayoutHandler(view, this);
+        // Declare view
+        recyclerView = view.findViewById(R.id.rv_main_content);
+
+        // Recyclerview settings
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        petAdapter = new PetAdapter(getActivity(), requireActivity().getApplication(), view);
+        recyclerView.setAdapter(petAdapter);
+
+        // Just dummy data
+        // TODO Delete this code after connected to API
+        List<Pet> pets = new ArrayList<>();
+        String[] rasKucing = {"Shorthair", "Abyssinian", "Balinese", "Bengal", "Birman", "British Shorthair", "Burmese", "Burmilla"};
+        for (String s : rasKucing) {
+            Pet pet = new Pet("Kucing " + s);
+            pets.add(pet);
+        }
+        petAdapter.setData(pets);
+        // END Dummy
+
         return view;
     }
 

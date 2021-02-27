@@ -43,6 +43,10 @@ public class SearchFragment extends Fragment {
 
     SearchHistoryAdapter adapter;
 
+    InputMethodManager inputMethodManager;
+
+    View view1;
+
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -68,6 +72,7 @@ public class SearchFragment extends Fragment {
         searchContent = view.findViewById(R.id.search_content);
         errorEmptySearchHistory = view.findViewById(R.id.error_empty_search_history);
         removeHistory = view.findViewById(R.id.remove_history);
+
 
         searchBox.requestFocus();
         appBarLayout.setOutlineProvider(null);
@@ -120,13 +125,12 @@ public class SearchFragment extends Fragment {
             Toast.makeText(getActivity(), "Mohon untuk mengisi text pada form search", Toast.LENGTH_SHORT).show();
             return;
         }
-        InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view1 = requireActivity().getCurrentFocus();
+        inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        view1 = requireActivity().getCurrentFocus();
         if (view1 == null) {
             view1 = new View(getActivity());
         }
         inputMethodManager.hideSoftInputFromWindow(view1.getWindowToken(), 0);
-
 
         SearchFragmentDirections.ActionSearchFragmentToSearchResultFragment toSearchResultFragment = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(searchBox.getText().toString().trim());
         toSearchResultFragment.setKeyword(searchBox.getText().toString().trim());

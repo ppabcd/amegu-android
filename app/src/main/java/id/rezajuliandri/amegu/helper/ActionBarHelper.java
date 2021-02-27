@@ -7,29 +7,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.fragment.app.Fragment;
-
 import id.rezajuliandri.amegu.R;
 
 public class ActionBarHelper {
     private final Activity activity;
     private final View view;
-    static LinearLayout search;
-    static EditText editText;
 
     public ActionBarHelper(Activity activity, View view) {
         this.activity = activity;
         this.view = view;
     }
 
-    public void showBackButton() {
-        ImageView backButton = view.findViewById(R.id.back_navigation);
-        ImageView logo = view.findViewById(R.id.logo);
-        logo.setVisibility(View.GONE);
-        backButton.setVisibility(View.VISIBLE);
-        backButton.setOnClickListener(v -> activity.onBackPressed());
-    }
-    public static void searchLayoutHandler(View view, ActionBarSearchHelper fragment){
+    public static void searchLayoutHandler(View view, ActionBarSearchHelper fragment) {
+        LinearLayout search;
+        EditText editText;
         search = view.findViewById(R.id.search);
         search.setOnClickListener(fragment::moveToSearchFragment);
         editText = view.findViewById(R.id.search_box);
@@ -39,5 +30,13 @@ public class ActionBarHelper {
             }
             return true;
         });
+    }
+
+    public void showBackButton() {
+        ImageView backButton = view.findViewById(R.id.back_navigation);
+        ImageView logo = view.findViewById(R.id.logo);
+        logo.setVisibility(View.GONE);
+        backButton.setVisibility(View.VISIBLE);
+        backButton.setOnClickListener(v -> activity.onBackPressed());
     }
 }

@@ -3,28 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="24dp"
     tools:context=".ui.main.fragment.HomeFragment">
 
     <include layout="@layout/layout_toolbar" />
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:id="@+id/search_content"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="?attr/actionBarSize">
+        android:paddingBottom="64dp">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="270dp"
-            android:src="@drawable/anjing" />
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/search_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment" />
+            android:orientation="vertical"
+            android:paddingTop="?attr/actionBarSize">
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:src="@drawable/anjing" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_main_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>
