@@ -19,6 +19,7 @@ import java.util.List;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.entity.Pet;
+import id.rezajuliandri.amegu.helper.StringHelper;
 import id.rezajuliandri.amegu.ui.main.abstraction.ItemDetailAbstract;
 
 public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ListViewHolder> {
@@ -49,7 +50,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ListViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         Pet pet = petList.get(position);
-        holder.petName.setText(pet.getPetName());
+        holder.petName.setText(StringHelper.setMaximumText(pet.getPetName(), 15));
         setRoundedImage(holder);
         holder.itemView.setOnClickListener(v -> itemDetailAbstract.moveToDetailPet(viewParent, pet));
     }

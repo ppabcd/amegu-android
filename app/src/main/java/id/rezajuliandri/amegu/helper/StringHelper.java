@@ -14,7 +14,7 @@ public class StringHelper {
     public static String setMaximumText(String text, int limit, String suffix) {
         if (!TextUtils.isEmpty(text)) {
             if (text.length() >= limit) {
-                return text.substring(0, limit) + suffix;
+                return text.substring(0, limit).trim() + suffix;
             }
         }
         return text;

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.rezajuliandri.amegu.R;
-import id.rezajuliandri.amegu.database.SearchHistory;
+import id.rezajuliandri.amegu.entity.SearchHistory;
 import id.rezajuliandri.amegu.helper.StringHelper;
 import id.rezajuliandri.amegu.ui.main.fragment.SearchFragmentDirections;
 
@@ -52,7 +52,6 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
             SearchFragmentDirections.ActionSearchFragmentToSearchResultFragment toSearchResultFragment = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(searchHistory.getKeyword());
             toSearchResultFragment.setKeyword(searchHistory.getKeyword());
             Navigation.findNavController(viewParent).navigate(toSearchResultFragment);
-            // Action while click history search
         });
     }
 

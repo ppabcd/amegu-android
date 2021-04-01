@@ -9,6 +9,8 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import id.rezajuliandri.amegu.entity.SearchHistory;
+
 @Database(entities = {SearchHistory.class}, version = 1, exportSchema = false)
 public abstract class AmeguDatabase extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;

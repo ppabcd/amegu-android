@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import id.rezajuliandri.amegu.database.SearchHistory;
 import id.rezajuliandri.amegu.database.SearchHistoryRepository;
+import id.rezajuliandri.amegu.entity.SearchHistory;
 
 public class SearchViewModel extends ViewModel {
     private final SearchHistoryRepository mRepository;

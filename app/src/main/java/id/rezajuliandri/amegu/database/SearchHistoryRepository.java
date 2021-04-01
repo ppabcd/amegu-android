@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData;
 import java.util.Date;
 import java.util.List;
 
+import id.rezajuliandri.amegu.entity.SearchHistory;
+
 public class SearchHistoryRepository {
     private final SearchHistoryDao mSearchHistoryDao;
     private final LiveData<List<SearchHistory>> mAllSearchHistory;
@@ -35,10 +37,6 @@ public class SearchHistoryRepository {
             checkHistory.setUpdatedAt(new Date().getTime());
             mSearchHistoryDao.update(checkHistory);
         });
-    }
-
-    public void update(SearchHistory searchHistory) {
-        AmeguDatabase.databaseWriteExecutor.execute(() -> mSearchHistoryDao.update(searchHistory));
     }
 
     public void delete(SearchHistory searchHistory) {

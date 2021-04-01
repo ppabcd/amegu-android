@@ -1,4 +1,4 @@
-package id.rezajuliandri.amegu.database;
+package id.rezajuliandri.amegu.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -105,10 +105,6 @@ public class SearchHistory implements Parcelable {
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
-    }
-
-    public Long getCreateat() {
-        return this.createdAt;
     }
 
     @Override

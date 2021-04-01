@@ -10,6 +10,8 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import id.rezajuliandri.amegu.entity.SearchHistory;
+
 @Dao
 public interface SearchHistoryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)

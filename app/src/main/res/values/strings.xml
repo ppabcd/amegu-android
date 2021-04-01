@@ -24,4 +24,24 @@
     <string name="hapus_riwayat">Hapus Riwayat</string>
     <string name="apakah_anda_yakin_untuk_menghapus_semua_riwayat_pencarian">Apakah Anda yakin untuk menghapus semua riwayat pencarian?</string>
     <string name="history_icon">History Icon</string>
+    <string name="anjing_super_langka_bulldog_limited_edition">Anjing Super Langka Bulldog Limited Edition</string>
+    <string name="informasi_pemilik">Informasi Pemilik</string>
+    <string name="bambang_sulaiman">Bambang Sulaiman</string>
+    <string name="jakarta_pusat">Jakarta Pusat</string>
+    <string name="informasi_hewan">Informasi Hewan</string>
+    <string name="jenis_kelamin">Jenis Kelamin</string>
+    <string name="laki_laki">Laki-laki</string>
+    <string name="jenis">Jenis</string>
+    <string name="bulldog">Bulldog</string>
+    <string name="usia">Usia</string>
+    <string name="_3_tahun">3 tahun</string>
+    <string name="kondisi">Kondisi</string>
+    <string name="sehat">Sehat</string>
+    <string name="berat">Berat</string>
+    <string name="_5_kg">5 kg</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="anjing_ini_adalah_anjing_dari_jenis_bulldog_dengan_nama_toni_yang_sangat_periang_anjing_ini_gemar_mengikuti_pemiliknya_mengitari_halaman_rumah_ia_senang_diajak_main_dan_diajak_berenang_saran_perawatan_tidak_perlu_sering_sering_memandikannya_karena_anjing_ini_gemar_mandi_sendiri">Anjing ini adalah anjing dari jenis Bulldog dengan nama Toni yang sangat periang. Anjing ini gemar mengikuti pemiliknya mengitari halaman rumah, ia senang diajak main dan diajak berenang. Saran perawatan: tidak perlu sering-sering memandikannya karena anjing ini gemar mandi sendiri.</string>
+    <string name="adopsi_sekarang">Adopsi Sekarang</string>
+    <string name="button">Button</string>
+    <string name="rp_10_000_000">Rp. 10,000,000</string>
 </resources>

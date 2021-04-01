@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import id.rezajuliandri.amegu.R;
-import id.rezajuliandri.amegu.database.SearchHistory;
+import id.rezajuliandri.amegu.entity.SearchHistory;
 import id.rezajuliandri.amegu.helper.ActionBarHelper;
 import id.rezajuliandri.amegu.helper.ActionBarSearchHelper;
 import id.rezajuliandri.amegu.viewmodel.SearchViewModel;
