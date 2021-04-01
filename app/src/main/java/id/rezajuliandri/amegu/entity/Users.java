@@ -38,6 +38,7 @@ public class Users implements Parcelable {
         this.token = token;
     }
 
+    @Ignore
     public Users(long id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
@@ -45,6 +46,7 @@ public class Users implements Parcelable {
         this.email = email;
     }
 
+    @Ignore
     public Users(String token) {
         this.token = token;
     }

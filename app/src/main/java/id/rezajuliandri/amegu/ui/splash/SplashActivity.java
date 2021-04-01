@@ -2,18 +2,25 @@ package id.rezajuliandri.amegu.ui.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.ViewModelProvider;
+
+import java.util.Objects;
 
 import id.rezajuliandri.amegu.R;
-import id.rezajuliandri.amegu.preference.UserPreference;
+import id.rezajuliandri.amegu.entity.Users;
+import id.rezajuliandri.amegu.interfaces.OnProfile;
 import id.rezajuliandri.amegu.ui.login.LoginActivity;
 import id.rezajuliandri.amegu.ui.main.MainActivity;
+import id.rezajuliandri.amegu.viewmodel.SplashViewModel;
+import id.rezajuliandri.amegu.viewmodel.SplashViewModelFactory;
 
 public class SplashActivity extends AppCompatActivity {
+
+    SplashViewModel splashViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +29,27 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_spash);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
+        splashViewModel = new ViewModelProvider(
+                this,
+                new SplashViewModelFactory(this.getApplication())
+        ).get(SplashViewModel.class);
 
-        UserPreference userPreference = new UserPreference(getApplicationContext());
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if ("".equals(userPreference.getToken())) {
-                goLogin();
+        splashViewModel.checkUserData(new OnProfile() {
+            @Override
+            public void success(Users users) {
+                if (Objects.isNull(users)) {
+                    goLogin();
+                    Log.i("Login", "Login");
+                    return;
+                }
+                goMain();
             }
-        }, 3000);
+
+            @Override
+            public void error(String message) {
+                Log.e("CheckUser", "Check user failed");
+            }
+        });
     }
 
     private void goLogin() {

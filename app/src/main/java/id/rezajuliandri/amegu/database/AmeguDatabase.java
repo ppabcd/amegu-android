@@ -10,8 +10,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import id.rezajuliandri.amegu.entity.SearchHistory;
+import id.rezajuliandri.amegu.entity.Users;
 
-@Database(entities = {SearchHistory.class}, version = 1, exportSchema = false)
+@Database(entities = {SearchHistory.class, Users.class}, version = 1, exportSchema = false)
 public abstract class AmeguDatabase extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor =
@@ -31,4 +32,5 @@ public abstract class AmeguDatabase extends RoomDatabase {
     }
 
     public abstract SearchHistoryDao searchHistoryDao();
+    public abstract UsersDao usersDao();
 }
