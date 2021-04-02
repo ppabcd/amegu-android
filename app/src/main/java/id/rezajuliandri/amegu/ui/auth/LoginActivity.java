@@ -1,6 +1,5 @@
-package id.rezajuliandri.amegu.ui.login;
+package id.rezajuliandri.amegu.ui.auth;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,7 +24,7 @@ import id.rezajuliandri.amegu.viewmodel.LoginViewModelFactory;
 public class LoginActivity extends AppCompatActivity {
 
     EditText username, password;
-    Button button;
+    Button loginBtn, actionRegister;
     LoginViewModel loginViewModel;
 
     @Override
@@ -41,7 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         ).get(LoginViewModel.class);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
-        button = findViewById(R.id.login);
+        loginBtn = findViewById(R.id.login);
+        actionRegister = findViewById(R.id.action_register);
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
@@ -57,15 +57,15 @@ public class LoginActivity extends AppCompatActivity {
                 String checkPassword = loginViewModel.getErrorMsg(loginViewModel.PASSWORD);
                 if (checkUsername != null) {
                     username.setError(checkUsername);
-                    button.setEnabled(false);
+                    loginBtn.setEnabled(false);
                     return;
                 }
                 if (checkPassword != null) {
                     password.setError(checkPassword);
-                    button.setEnabled(false);
+                    loginBtn.setEnabled(false);
                     return;
                 }
-                button.setEnabled(true);
+                loginBtn.setEnabled(true);
             }
 
             @Override
@@ -77,8 +77,9 @@ public class LoginActivity extends AppCompatActivity {
         password.addTextChangedListener(afterTextChangedListener);
 
 
-        button.setOnClickListener(v -> {
-            button.setEnabled(false);
+        loginBtn.setOnClickListener(v -> {
+            loginBtn.setEnabled(false);
+            loginBtn.setText(R.string.loading);
             // Request login to server
             loginViewModel.login(
                     new OnLogin() {
@@ -93,7 +94,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         @Override
                         public void error(String message) {
-                            button.setEnabled(false);
+                            loginBtn.setEnabled(true);
+                            loginBtn.setText(R.string.action_login);
                             AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
                             dialog.setTitle(getString(R.string.invalid_login));
                             dialog.setPositiveButton("Ok", (dialog1, which) -> {
@@ -105,6 +107,11 @@ public class LoginActivity extends AppCompatActivity {
                     username.getText().toString().trim().toLowerCase(),
                     password.getText().toString().trim()
             );
+        });
+        actionRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 }

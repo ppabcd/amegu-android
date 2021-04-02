@@ -23,7 +23,6 @@ public class DataLogin implements Parcelable {
         }
 
     };
-    private final static long serialVersionUID = 8481073169783687405L;
 
     protected DataLogin(android.os.Parcel in) {
         this.token = ((String) in.readValue((String.class.getClassLoader())));

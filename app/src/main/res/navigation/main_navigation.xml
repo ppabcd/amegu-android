@@ -42,7 +42,11 @@
         android:id="@+id/navigation_account"
         android:name="id.rezajuliandri.amegu.ui.main.fragment.AccountFragment"
         android:label="fragment_account"
-        tools:layout="@layout/fragment_upload" />
+        tools:layout="@layout/fragment_upload" >
+        <action
+            android:id="@+id/action_navigation_account_to_loginActivity"
+            app:destination="@id/loginActivity" />
+    </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
         android:name="id.rezajuliandri.amegu.ui.main.fragment.SearchResultFragment"
@@ -67,4 +71,14 @@
             android:name="pet"
             app:argType="id.rezajuliandri.amegu.entity.Pet" />
     </fragment>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="id.rezajuliandri.amegu.ui.auth.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <activity
+        android:id="@+id/registerActivity"
+        android:name="id.rezajuliandri.amegu.ui.auth.RegisterActivity"
+        android:label="activity_register"
+        tools:layout="@layout/activity_register" />
 </navigation>

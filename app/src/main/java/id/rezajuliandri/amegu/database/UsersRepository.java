@@ -22,7 +22,7 @@ public class UsersRepository {
         AmeguDatabase.databaseWriteExecutor.execute(() -> mUsersDao.insert(users));
     }
 
-    public void delete(Users users) {
+    public void delete() {
         AmeguDatabase.databaseWriteExecutor.execute(mUsersDao::delete);
     }
 }

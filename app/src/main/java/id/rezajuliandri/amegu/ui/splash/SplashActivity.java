@@ -13,7 +13,7 @@ import java.util.Objects;
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.entity.Users;
 import id.rezajuliandri.amegu.interfaces.OnProfile;
-import id.rezajuliandri.amegu.ui.login.LoginActivity;
+import id.rezajuliandri.amegu.ui.auth.LoginActivity;
 import id.rezajuliandri.amegu.ui.main.MainActivity;
 import id.rezajuliandri.amegu.viewmodel.SplashViewModel;
 import id.rezajuliandri.amegu.viewmodel.SplashViewModelFactory;

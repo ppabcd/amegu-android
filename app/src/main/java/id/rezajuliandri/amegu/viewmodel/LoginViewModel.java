@@ -14,6 +14,7 @@ import id.rezajuliandri.amegu.database.SearchHistoryRepository;
 import id.rezajuliandri.amegu.database.UsersRepository;
 import id.rezajuliandri.amegu.entity.Users;
 import id.rezajuliandri.amegu.interfaces.OnLogin;
+import id.rezajuliandri.amegu.interfaces.OnLogout;
 import id.rezajuliandri.amegu.interfaces.OnProfile;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,7 +32,6 @@ public class LoginViewModel extends ViewModel {
     private OnProfile onProfile;
 
     private UsersRepository mRepository;
-    private Users users;
 
     public LoginViewModel(Application application) {
         this.application = application;
@@ -49,14 +49,10 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void loginDataChanged(String username, String password) {
-        if (!isUserNameValid(username)) {
-            errorMsgUsername = application.getResources().getString(R.string.invalid_username);
-        } else if (!isPasswordValid(password)) {
-            errorMsgPassword = application.getResources().getString(R.string.invalid_password);
-        } else {
-            errorMsgUsername = null;
-            errorMsgPassword = null;
-        }
+        errorMsgUsername = (!isUserNameValid(username)) ?
+                application.getResources().getString(R.string.invalid_username) : null;
+        errorMsgPassword = (!isPasswordValid(password))?
+                application.getResources().getString(R.string.invalid_password): null;
     }
 
     private boolean isUserNameValid(String username) {
@@ -132,5 +128,13 @@ public class LoginViewModel extends ViewModel {
                 onProfile.error(t.getMessage());
             }
         });
+    }
+    public final void logout(OnLogout onLogout){
+        try{
+            mRepository.delete();
+            onLogout.success();
+        } catch (Exception exception){
+            onLogout.error(exception.getMessage());
+        }
     }
 }
