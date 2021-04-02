@@ -1,16 +1,14 @@
 package id.rezajuliandri.amegu.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.api.ApiConfig;
-import id.rezajuliandri.amegu.api.responses.DataLogin;
+import id.rezajuliandri.amegu.api.responses.data.DataLogin;
 import id.rezajuliandri.amegu.api.responses.LoginResponse;
 import id.rezajuliandri.amegu.api.responses.ProfileResponse;
-import id.rezajuliandri.amegu.database.SearchHistoryRepository;
 import id.rezajuliandri.amegu.database.UsersRepository;
 import id.rezajuliandri.amegu.entity.Users;
 import id.rezajuliandri.amegu.interfaces.OnLogin;

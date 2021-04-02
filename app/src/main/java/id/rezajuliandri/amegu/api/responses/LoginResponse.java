@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import id.rezajuliandri.amegu.api.responses.data.DataLogin;
+
 
 public class LoginResponse implements Serializable, Parcelable {
 

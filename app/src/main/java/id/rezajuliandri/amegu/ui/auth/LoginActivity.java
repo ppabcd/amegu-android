@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void error(String message) {
                             loginBtn.setEnabled(true);
-                            loginBtn.setText(R.string.action_login);
+                            loginBtn.setText(R.string.action_sign_in);
                             AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
                             dialog.setTitle(getString(R.string.invalid_login));
                             dialog.setPositiveButton("Ok", (dialog1, which) -> {

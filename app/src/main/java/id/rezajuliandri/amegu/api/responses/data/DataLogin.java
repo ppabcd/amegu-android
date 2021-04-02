@@ -1,4 +1,4 @@
-package id.rezajuliandri.amegu.api.responses;
+package id.rezajuliandri.amegu.api.responses.data;
 
 import android.os.Parcelable;
 

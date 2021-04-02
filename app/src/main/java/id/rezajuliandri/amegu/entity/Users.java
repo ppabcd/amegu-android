@@ -26,24 +26,41 @@ public class Users implements Parcelable {
     @ColumnInfo(name = "token")
     private String token;
 
+    @ColumnInfo(name = "alamat_id")
+    private int alamatId;
+
+    public int getAlamatId() {
+        return alamatId;
+    }
+
+    public void setAlamatId(int alamatId) {
+        this.alamatId = alamatId;
+    }
+
+    public static Creator<Users> getCREATOR() {
+        return CREATOR;
+    }
+
     @Ignore
     public Users() {
     }
 
-    public Users(long id, String firstName, String lastName, String email, String token) {
+    public Users(long id, String firstName, String lastName, String email, String token, int alamatId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.token = token;
+        this.alamatId = alamatId;
     }
 
     @Ignore
-    public Users(long id, String firstName, String lastName, String email) {
+    public Users(long id, String firstName, String lastName, String email,int alamatId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.alamatId = alamatId;
     }
 
     @Ignore
@@ -51,12 +68,14 @@ public class Users implements Parcelable {
         this.token = token;
     }
 
+
     protected Users(Parcel in) {
         id = in.readLong();
         firstName = in.readString();
         lastName = in.readString();
         email = in.readString();
         token = in.readString();
+        alamatId = in.readInt();
     }
 
     public static final Creator<Users> CREATOR = new Creator<Users>() {
@@ -123,5 +142,6 @@ public class Users implements Parcelable {
         dest.writeString(lastName);
         dest.writeString(email);
         dest.writeString(token);
+        dest.writeInt(alamatId);
     }
 }
