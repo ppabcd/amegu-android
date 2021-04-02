@@ -3,7 +3,7 @@ package id.rezajuliandri.amegu.database;
 import android.app.Application;
 
 import id.rezajuliandri.amegu.entity.Users;
-import id.rezajuliandri.amegu.interfaces.OnProfile;
+import id.rezajuliandri.amegu.interfaces.auth.OnProfile;
 
 public class UsersRepository {
     private final UsersDao mUsersDao;

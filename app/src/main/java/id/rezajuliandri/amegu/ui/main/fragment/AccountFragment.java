@@ -1,6 +1,5 @@
 package id.rezajuliandri.amegu.ui.main.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import java.util.Objects;
-
 import id.rezajuliandri.amegu.R;
-import id.rezajuliandri.amegu.interfaces.OnLogout;
+import id.rezajuliandri.amegu.interfaces.auth.OnLogout;
 import id.rezajuliandri.amegu.viewmodel.LoginViewModel;
-import id.rezajuliandri.amegu.viewmodel.LoginViewModelFactory;
+import id.rezajuliandri.amegu.viewmodel.factory.LoginViewModelFactory;
 
 public class AccountFragment extends Fragment {
     Button logoutBtn;

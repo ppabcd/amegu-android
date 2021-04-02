@@ -1,4 +1,4 @@
-package id.rezajuliandri.amegu.interfaces;
+package id.rezajuliandri.amegu.interfaces.auth;
 
 public interface OnLogout {
     void success();

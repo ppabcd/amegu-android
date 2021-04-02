@@ -1,10 +1,12 @@
-package id.rezajuliandri.amegu.viewmodel;
+package id.rezajuliandri.amegu.viewmodel.factory;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
+import id.rezajuliandri.amegu.viewmodel.SplashViewModel;
 
 public class SplashViewModelFactory implements ViewModelProvider.Factory {
     private final Application mApplication;

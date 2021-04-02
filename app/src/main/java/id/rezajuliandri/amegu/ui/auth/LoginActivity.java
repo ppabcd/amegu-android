@@ -16,10 +16,10 @@ import java.util.Objects;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.entity.Users;
-import id.rezajuliandri.amegu.interfaces.OnLogin;
+import id.rezajuliandri.amegu.interfaces.auth.OnLogin;
 import id.rezajuliandri.amegu.ui.main.MainActivity;
 import id.rezajuliandri.amegu.viewmodel.LoginViewModel;
-import id.rezajuliandri.amegu.viewmodel.LoginViewModelFactory;
+import id.rezajuliandri.amegu.viewmodel.factory.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -86,9 +86,14 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void success(Users user) {
                             // if true, continue to main activity
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intent = (user.getAlamatId() == 0) ?
+                                    new Intent(
+                                            LoginActivity.this,
+                                            AlamatActivity.class) :
+                                    new Intent(
+                                            LoginActivity.this,
+                                            MainActivity.class);
                             startActivity(intent);
-
                             finish();
                         }
 

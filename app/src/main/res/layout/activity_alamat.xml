@@ -1,9 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin_auth"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin_auth"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".ui.auth.AlamatActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/amegu" />
+
+    <EditText
+        android:id="@+id/alamat"
+        android:layout_width="288dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/alamat"
+        android:minLines="1"
+        android:scrollbars="vertical"
+        android:selectAllOnFocus="true" />
+    <EditText
+        android:enabled="false"
+        android:id="@+id/provinsiPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/Provinsi"/>
+    <Spinner
+        android:visibility="gone"
+        android:id="@+id/provinsi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <EditText
+        android:enabled="false"
+        android:id="@+id/kotaPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/kota"/>
+    <Spinner
+        android:visibility="gone"
+        android:id="@+id/kota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:enabled="false"
+        android:id="@+id/kecamatanPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/kecamatan"/>
+    <Spinner
+        android:visibility="gone"
+        android:id="@+id/kecamatan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:enabled="false"
+        android:id="@+id/kelurahanPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/kelurahan"/>
+    <Spinner
+        android:visibility="gone"
+        android:id="@+id/kelurahan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/sendAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/action_send" />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+</LinearLayout>

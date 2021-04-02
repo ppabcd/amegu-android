@@ -15,7 +15,7 @@ import id.rezajuliandri.amegu.entity.SearchHistory;
 import id.rezajuliandri.amegu.helper.ActionBarHelper;
 import id.rezajuliandri.amegu.helper.ActionBarSearchHelper;
 import id.rezajuliandri.amegu.viewmodel.SearchViewModel;
-import id.rezajuliandri.amegu.viewmodel.SearchViewModelFactory;
+import id.rezajuliandri.amegu.viewmodel.factory.SearchViewModelFactory;
 
 public class SearchResultFragment extends ActionBarSearchHelper {
     View view;

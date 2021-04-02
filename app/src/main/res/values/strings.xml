@@ -54,4 +54,10 @@
     <string name="invalid_last_name">Please fill last name</string>
     <string name="logout">Logout</string>
     <string name="loading">Please wait…</string>
+    <string name="action_send">Send</string>
+    <string name="alamat">Alamat</string>
+    <string name="Provinsi">Provinsi</string>
+    <string name="kota">Kota</string>
+    <string name="kecamatan">Kecamatan</string>
+    <string name="kelurahan">Kelurahan</string>
 </resources>

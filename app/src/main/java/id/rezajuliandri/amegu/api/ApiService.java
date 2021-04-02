@@ -41,7 +41,7 @@ public interface ApiService {
             @Field("provinsiId") int provinsiId
     );
 
-    @GET("v1/location/province")
+    @GET("v1/location/provinsi")
     Call<ProvinsiResponse> getProvinsi();
 
     @GET("v1/location/{provinsi}/kota")

@@ -12,11 +12,12 @@ import java.util.Objects;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.entity.Users;
-import id.rezajuliandri.amegu.interfaces.OnProfile;
+import id.rezajuliandri.amegu.interfaces.auth.OnProfile;
+import id.rezajuliandri.amegu.ui.auth.AlamatActivity;
 import id.rezajuliandri.amegu.ui.auth.LoginActivity;
 import id.rezajuliandri.amegu.ui.main.MainActivity;
 import id.rezajuliandri.amegu.viewmodel.SplashViewModel;
-import id.rezajuliandri.amegu.viewmodel.SplashViewModelFactory;
+import id.rezajuliandri.amegu.viewmodel.factory.SplashViewModelFactory;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -34,12 +35,16 @@ public class SplashActivity extends AppCompatActivity {
                 new SplashViewModelFactory(this.getApplication())
         ).get(SplashViewModel.class);
 
+        // Check user authentication
         splashViewModel.checkUserData(new OnProfile() {
             @Override
             public void success(Users users) {
                 if (Objects.isNull(users)) {
                     goLogin();
-                    Log.i("Login", "Login");
+                    return;
+                }
+                if(users.getAlamatId() == 0){
+                    goAddress();
                     return;
                 }
                 goMain();
@@ -60,6 +65,12 @@ public class SplashActivity extends AppCompatActivity {
 
     private void goMain() {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void goAddress() {
+        Intent intent = new Intent(SplashActivity.this, AlamatActivity.class);
         startActivity(intent);
         finish();
     }

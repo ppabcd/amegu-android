@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.ViewModel;
 
 import id.rezajuliandri.amegu.database.UsersRepository;
-import id.rezajuliandri.amegu.interfaces.OnProfile;
+import id.rezajuliandri.amegu.interfaces.auth.OnProfile;
 
 
 public class SplashViewModel extends ViewModel {

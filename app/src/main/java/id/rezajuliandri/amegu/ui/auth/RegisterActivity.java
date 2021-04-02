@@ -15,9 +15,9 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.Objects;
 
 import id.rezajuliandri.amegu.R;
-import id.rezajuliandri.amegu.interfaces.OnRegister;
+import id.rezajuliandri.amegu.interfaces.auth.OnRegister;
 import id.rezajuliandri.amegu.viewmodel.RegisterViewModel;
-import id.rezajuliandri.amegu.viewmodel.RegisterViewModelFactory;
+import id.rezajuliandri.amegu.viewmodel.factory.RegisterViewModelFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 

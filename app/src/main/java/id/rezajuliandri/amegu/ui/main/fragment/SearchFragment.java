@@ -27,7 +27,7 @@ import id.rezajuliandri.amegu.adapter.SearchHistoryAdapter;
 import id.rezajuliandri.amegu.database.AmeguDatabase;
 import id.rezajuliandri.amegu.helper.ActionBarHelper;
 import id.rezajuliandri.amegu.viewmodel.SearchViewModel;
-import id.rezajuliandri.amegu.viewmodel.SearchViewModelFactory;
+import id.rezajuliandri.amegu.viewmodel.factory.SearchViewModelFactory;
 
 public class SearchFragment extends Fragment {
     EditText searchBox;

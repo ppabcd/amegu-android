@@ -1,7 +1,6 @@
 package id.rezajuliandri.amegu.viewmodel;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.lifecycle.ViewModel;
 
@@ -9,7 +8,7 @@ import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.api.ApiConfig;
 import id.rezajuliandri.amegu.api.responses.EmptyOkResponse;
 import id.rezajuliandri.amegu.database.UsersRepository;
-import id.rezajuliandri.amegu.interfaces.OnRegister;
+import id.rezajuliandri.amegu.interfaces.auth.OnRegister;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,7 +26,7 @@ public class RegisterViewModel extends ViewModel {
     private String errorMsgFirstName = null;
     private String errorMsgLastName = null;
 
-    RegisterViewModel(Application application) {
+    public RegisterViewModel(Application application) {
         this.application = application;
         usersRepository = new UsersRepository(application);
 

@@ -1,4 +1,4 @@
-package id.rezajuliandri.amegu.viewmodel;
+package id.rezajuliandri.amegu.viewmodel.factory;
 
 import android.app.Application;
 
@@ -6,16 +6,18 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-public class SearchViewModelFactory implements ViewModelProvider.Factory {
+import id.rezajuliandri.amegu.viewmodel.AlamatViewModel;
+
+public class AlamatViewModelFactory implements ViewModelProvider.Factory {
     private final Application mApplication;
 
-    public SearchViewModelFactory(Application application) {
+    public AlamatViewModelFactory(Application application) {
         mApplication = application;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new SearchViewModel(mApplication);
+        return (T) new AlamatViewModel(mApplication);
     }
 }
