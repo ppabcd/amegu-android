@@ -1,4 +1,4 @@
-package id.rezajuliandri.amegu.api.responses.data;
+package id.rezajuliandri.amegu.api.responses.data.location;
 
 import android.os.Parcelable;
 
@@ -6,8 +6,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
-public class Provinsi implements Serializable, Parcelable {
+/**
+ * Hasil response dari data provinsi yang diminta dari database
+ */
+public class Provinsi implements Serializable, Parcelable, Comparable<Provinsi> {
 
     @SerializedName("id")
     @Expose
@@ -71,22 +73,7 @@ public class Provinsi implements Serializable, Parcelable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Provinsi.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("id");
-        sb.append('=');
-        sb.append(this.id);
-        sb.append(',');
-        sb.append("nama");
-        sb.append('=');
-        sb.append(((this.nama == null) ? "<null>" : this.nama));
-        sb.append(',');
-        if (sb.charAt((sb.length() - 1)) == ',') {
-            sb.setCharAt((sb.length() - 1), ']');
-        } else {
-            sb.append(']');
-        }
-        return sb.toString();
+        return nama;
     }
 
     public void writeToParcel(android.os.Parcel dest, int flags) {
@@ -98,4 +85,8 @@ public class Provinsi implements Serializable, Parcelable {
         return 0;
     }
 
+    @Override
+    public int compareTo(Provinsi another) {
+        return (int) (this.id - another.getId());
+    }
 }

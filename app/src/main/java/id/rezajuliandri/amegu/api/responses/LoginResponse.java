@@ -7,9 +7,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import id.rezajuliandri.amegu.api.responses.data.DataLogin;
+import id.rezajuliandri.amegu.api.responses.data.auth.DataLogin;
 
-
+/**
+ * Hasil response dari data login yang diminta dari database
+ */
 public class LoginResponse implements Serializable, Parcelable {
 
     @SerializedName("data")

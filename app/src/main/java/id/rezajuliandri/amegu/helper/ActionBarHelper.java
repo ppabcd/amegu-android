@@ -1,5 +1,6 @@
 package id.rezajuliandri.amegu.helper;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,12 @@ public class ActionBarHelper {
         this.view = view;
     }
 
+    /**
+     * Fungsi yang digunakan untuk menghandle search box yang ada di atas.
+     * @param view
+     * @param fragment
+     */
+    @SuppressLint("ClickableViewAccessibility")
     public static void searchLayoutHandler(View view, ActionBarSearchHelper fragment) {
         LinearLayout search;
         EditText editText;
@@ -32,6 +39,9 @@ public class ActionBarHelper {
         });
     }
 
+    /**
+     * Menampilkan back button pada layout
+     */
     public void showBackButton() {
         ImageView backButton = view.findViewById(R.id.back_navigation);
         ImageView logo = view.findViewById(R.id.logo);

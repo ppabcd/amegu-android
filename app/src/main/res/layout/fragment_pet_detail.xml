@@ -124,14 +124,14 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView16"
+                        android:id="@+id/namaPemilik"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/bambang_sulaiman"
                         android:textColor="@android:color/secondary_text_light" />
 
                     <TextView
-                        android:id="@+id/textView17"
+                        android:id="@+id/lokasiPemilik"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/jakarta_pusat" />
@@ -185,7 +185,7 @@
                                 android:text="@string/jenis_kelamin" />
 
                             <TextView
-                                android:id="@+id/textView2"
+                                android:id="@+id/txtJenisKelamin"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -308,7 +308,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView15"
+                        android:id="@+id/txtDeskripsi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"

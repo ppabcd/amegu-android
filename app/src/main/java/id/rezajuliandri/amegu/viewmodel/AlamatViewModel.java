@@ -4,17 +4,24 @@ import android.app.Application;
 
 import androidx.lifecycle.ViewModel;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import id.rezajuliandri.amegu.api.ApiConfig;
+import id.rezajuliandri.amegu.api.responses.EmptyOkResponse;
 import id.rezajuliandri.amegu.api.responses.KecamatanResponse;
 import id.rezajuliandri.amegu.api.responses.KelurahanResponse;
 import id.rezajuliandri.amegu.api.responses.KotaResponse;
 import id.rezajuliandri.amegu.api.responses.ProvinsiResponse;
-import id.rezajuliandri.amegu.api.responses.data.Kecamatan;
-import id.rezajuliandri.amegu.api.responses.data.Kelurahan;
-import id.rezajuliandri.amegu.api.responses.data.Kota;
-import id.rezajuliandri.amegu.api.responses.data.Provinsi;
+import id.rezajuliandri.amegu.api.responses.data.location.Kecamatan;
+import id.rezajuliandri.amegu.api.responses.data.location.Kelurahan;
+import id.rezajuliandri.amegu.api.responses.data.location.Kota;
+import id.rezajuliandri.amegu.api.responses.data.location.Provinsi;
+import id.rezajuliandri.amegu.database.UsersRepository;
+import id.rezajuliandri.amegu.entity.Session;
+import id.rezajuliandri.amegu.entity.Users;
+import id.rezajuliandri.amegu.interfaces.auth.OnProfile;
+import id.rezajuliandri.amegu.interfaces.auth.OnToken;
+import id.rezajuliandri.amegu.interfaces.location.OnAlamatSent;
 import id.rezajuliandri.amegu.interfaces.location.OnKecamatan;
 import id.rezajuliandri.amegu.interfaces.location.OnKelurahan;
 import id.rezajuliandri.amegu.interfaces.location.OnKota;
@@ -26,10 +33,20 @@ import retrofit2.Response;
 public class AlamatViewModel extends ViewModel {
 
     Application application;
-    public AlamatViewModel(Application application){
+    UsersRepository mRepository;
+    LoginViewModel loginViewModel;
+    Session session;
+    public AlamatViewModel(Application application, LoginViewModel loginViewModel){
         this.application = application;
+        this.loginViewModel = loginViewModel;
+        mRepository = new UsersRepository(application);
+        session = new Session(application);
     }
 
+    /**
+     * Mengambil data provinsi
+     * @param onProvinsi Callback yang digunakan jika action sudah dilakukan.
+     */
     public final void getProvinsi(OnProvinsi onProvinsi){
         Call<ProvinsiResponse> provinsiResponseCall = ApiConfig.getApiService().getProvinsi();
         provinsiResponseCall.enqueue(new Callback<ProvinsiResponse>() {
@@ -38,7 +55,7 @@ public class AlamatViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         ProvinsiResponse provinsiResponse = response.body();
-                        List<Provinsi> provinsiList = provinsiResponse.getData();
+                        ArrayList<Provinsi> provinsiList = provinsiResponse.getData();
                         onProvinsi.success(provinsiList);
                     }
                 } else {
@@ -52,7 +69,13 @@ public class AlamatViewModel extends ViewModel {
             }
         });
     }
-    public final void getKota(OnKota onKota, int provinsiId){
+
+    /**
+     * Mengambil data kota berdasarkan provinsiId
+     * @param onKota Callback yang digunakan jika action sudah dilakukan
+     * @param provinsiId Parameter provinsiId yang dibutuhkan untuk mendapatkan data kota
+     */
+    public final void getKota(OnKota onKota, long provinsiId){
         Call<KotaResponse> kotaResponseCall = ApiConfig.getApiService().getKota(provinsiId);
         kotaResponseCall.enqueue(new Callback<KotaResponse>() {
             @Override
@@ -60,7 +83,7 @@ public class AlamatViewModel extends ViewModel {
                 if(response.isSuccessful()){
                     if(response.body() != null){
                         KotaResponse kotaResponse = response.body();
-                        List<Kota> kotaList= kotaResponse.getData();
+                        ArrayList<Kota> kotaList= kotaResponse.getData();
                         onKota.success(kotaList);
                     }
                 } else {
@@ -74,7 +97,13 @@ public class AlamatViewModel extends ViewModel {
             }
         });
     }
-    public final void getKecamatan(OnKecamatan onKecamatan, int kotaId){
+
+    /**
+     * Mengambil data kecamatan berdasarkan kotaId
+     * @param onKecamatan Callback yang digunakan jika action sudah dilakukan
+     * @param kotaId Parameter kotaId yang digunakan untuk mengambil kotaId
+     */
+    public final void getKecamatan(OnKecamatan onKecamatan, long kotaId){
         Call<KecamatanResponse> kecamatanResponseCall = ApiConfig.getApiService().getKecamatan(kotaId);
         kecamatanResponseCall.enqueue(new Callback<KecamatanResponse>() {
             @Override
@@ -82,7 +111,7 @@ public class AlamatViewModel extends ViewModel {
                 if(response.isSuccessful()){
                     if(response.body() != null){
                         KecamatanResponse kecamatanResponse = response.body();
-                        List<Kecamatan> kecamatanList= kecamatanResponse.getData();
+                        ArrayList<Kecamatan> kecamatanList= kecamatanResponse.getData();
                         onKecamatan.success(kecamatanList);
                     }
                 } else {
@@ -96,7 +125,13 @@ public class AlamatViewModel extends ViewModel {
             }
         });
     }
-    public final void getKelurahan(OnKelurahan onKelurahan, int kecamatanId){
+
+    /**
+     * Mengambil data kelurahan berdasarkan kecamatanId
+     * @param onKelurahan Callback yang digunakan jika action berhasil dilakukan
+     * @param kecamatanId Parameter kecamatanId yang digunakan untuk mendapatkan data kelurahan
+     */
+    public final void getKelurahan(OnKelurahan onKelurahan, long kecamatanId){
         Call<KelurahanResponse> kelurahanResponseCall = ApiConfig.getApiService().getKelurahan(kecamatanId);
         kelurahanResponseCall.enqueue(new Callback<KelurahanResponse>() {
             @Override
@@ -104,7 +139,7 @@ public class AlamatViewModel extends ViewModel {
                 if(response.isSuccessful()){
                     if(response.body() != null){
                         KelurahanResponse kelurahanResponse = response.body();
-                        List<Kelurahan> kelurahanList= kelurahanResponse.getData();
+                        ArrayList<Kelurahan> kelurahanList= kelurahanResponse.getData();
                         onKelurahan.success(kelurahanList);
                     }
                 } else {
@@ -115,6 +150,57 @@ public class AlamatViewModel extends ViewModel {
             @Override
             public void onFailure(Call<KelurahanResponse> call, Throwable t) {
                 onKelurahan.error(t.getMessage());
+            }
+        });
+    }
+
+    /**
+     * Mengirimkan alamat user kedalam database dan merefresh data yang ada pada lokal
+     * @param onAlamatSent Callback yang dipanggil jika action sudah dilakukan
+     * @param alamat Data alamat yang dikirimkan ke server
+     * @param kelurahan Class kelurahan yang digunakan untuk dikirimkan ke server
+     */
+    public final void sendAlamat(OnAlamatSent onAlamatSent, String alamat, Kelurahan kelurahan){
+        session.getToken(new OnToken() {
+            @Override
+            public void success(String token) {
+                Call<EmptyOkResponse> emptyOkResponseCall = ApiConfig.
+                        getApiService().
+                        sendAlamat(
+                                alamat,
+                                kelurahan.getId(),
+                                kelurahan.getKecamatan().getId(),
+                                kelurahan.getKecamatan().getKota().getId(),
+                                kelurahan.getKecamatan().getKota().getProvinsi().getId(),
+                                token
+                        );
+                emptyOkResponseCall.enqueue(new Callback<EmptyOkResponse>() {
+                    @Override
+                    public void onResponse(Call<EmptyOkResponse> call, Response<EmptyOkResponse> response) {
+                        session.refreshUserData(new OnProfile() {
+                            @Override
+                            public void success(Users users) {
+                                onAlamatSent.success();
+
+                            }
+
+                            @Override
+                            public void error(String message) {
+                                onAlamatSent.error(message);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call<EmptyOkResponse> call, Throwable t) {
+                        onAlamatSent.error(t.getMessage());
+                    }
+                });
+            }
+
+            @Override
+            public void error(String error) {
+                onAlamatSent.error(error);
             }
         });
     }

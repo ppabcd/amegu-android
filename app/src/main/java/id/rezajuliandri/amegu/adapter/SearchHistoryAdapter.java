@@ -15,19 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.rezajuliandri.amegu.R;
+import id.rezajuliandri.amegu.databinding.ItemPetRowBinding;
+import id.rezajuliandri.amegu.databinding.ItemSearchRowBinding;
 import id.rezajuliandri.amegu.entity.SearchHistory;
 import id.rezajuliandri.amegu.helper.StringHelper;
 import id.rezajuliandri.amegu.ui.main.fragment.SearchFragmentDirections;
-
+/**
+ * Adapter yang digunakan untuk menampilkan data search
+ */
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.ListViewHolder> {
-    private final Context context;
-    private final Application application;
-    View viewParent;
+    private final View viewParent;
     private List<SearchHistory> searchHistoryList = new ArrayList<>();
+    ItemSearchRowBinding itemSearchRowBinding;
 
-    public SearchHistoryAdapter(Context context, Application application, View viewParent) {
-        this.context = context;
-        this.application = application;
+    public SearchHistoryAdapter(View viewParent) {
         this.viewParent = viewParent;
     }
 
@@ -39,20 +40,14 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
     @NonNull
     @Override
     public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_row, parent, false);
-        return new ListViewHolder(view);
+        itemSearchRowBinding = ItemSearchRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ListViewHolder(itemSearchRowBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         final SearchHistory searchHistory = searchHistoryList.get(position);
-        holder.keyword.setText(StringHelper.setMaximumText(searchHistory.getKeyword()));
-
-        holder.itemView.setOnClickListener(v -> {
-            SearchFragmentDirections.ActionSearchFragmentToSearchResultFragment toSearchResultFragment = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(searchHistory.getKeyword());
-            toSearchResultFragment.setKeyword(searchHistory.getKeyword());
-            Navigation.findNavController(viewParent).navigate(toSearchResultFragment);
-        });
+        holder.bind(searchHistory);
     }
 
     @Override
@@ -60,12 +55,22 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
         return searchHistoryList.size();
     }
 
-    public static class ListViewHolder extends RecyclerView.ViewHolder {
-        TextView keyword;
+    public class ListViewHolder extends RecyclerView.ViewHolder {
+        ItemSearchRowBinding binding;
 
-        public ListViewHolder(@NonNull View itemView) {
-            super(itemView);
-            keyword = itemView.findViewById(R.id.search_keyword);
+        public ListViewHolder(@NonNull ItemSearchRowBinding itemView) {
+            super(itemView.getRoot());
+            this.binding = itemView;
+        }
+
+        public void bind(SearchHistory searchHistory) {
+            binding.searchKeyword.setText(StringHelper.setMaximumText(searchHistory.getKeyword()));
+
+            itemView.setOnClickListener(v -> {
+                SearchFragmentDirections.ActionSearchFragmentToSearchResultFragment toSearchResultFragment = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(searchHistory.getKeyword());
+                toSearchResultFragment.setKeyword(searchHistory.getKeyword());
+                Navigation.findNavController(viewParent).navigate(toSearchResultFragment);
+            });
         }
     }
 }

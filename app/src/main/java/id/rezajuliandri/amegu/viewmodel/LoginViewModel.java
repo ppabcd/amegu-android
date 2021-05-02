@@ -6,13 +6,12 @@ import androidx.lifecycle.ViewModel;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.api.ApiConfig;
-import id.rezajuliandri.amegu.api.responses.data.DataLogin;
+import id.rezajuliandri.amegu.api.responses.data.auth.DataLogin;
 import id.rezajuliandri.amegu.api.responses.LoginResponse;
-import id.rezajuliandri.amegu.api.responses.ProfileResponse;
 import id.rezajuliandri.amegu.database.UsersRepository;
+import id.rezajuliandri.amegu.entity.Session;
 import id.rezajuliandri.amegu.entity.Users;
 import id.rezajuliandri.amegu.interfaces.auth.OnLogin;
-import id.rezajuliandri.amegu.interfaces.auth.OnLogout;
 import id.rezajuliandri.amegu.interfaces.auth.OnProfile;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,16 +25,20 @@ public class LoginViewModel extends ViewModel {
     private String errorMsgUsername = null;
     private String errorMsgPassword = null;
 
-    private OnLogin onLogin;
-    private OnProfile onProfile;
-
     private UsersRepository mRepository;
+    private Session session;
 
     public LoginViewModel(Application application) {
         this.application = application;
         mRepository = new UsersRepository(application);
+        session = new Session(application);
     }
 
+    /**
+     * Mengambil data error jika terdapat error dalam validasi
+     * @param type tipe yang ingin dipanggil username / password
+     * @return String
+     */
     public String getErrorMsg(int type) {
         switch (type) {
             case USERNAME:
@@ -46,6 +49,11 @@ public class LoginViewModel extends ViewModel {
         return "";
     }
 
+    /**
+     * Dipanggil jika terdapat perubahan data pada form pada halaman login
+     * @param username Username user yang ingin digunakan untuk login
+     * @param password Password user yang ingin digunakan untuk login
+     */
     public void loginDataChanged(String username, String password) {
         errorMsgUsername = (!isUserNameValid(username)) ?
                 application.getResources().getString(R.string.invalid_username) : null;
@@ -53,6 +61,11 @@ public class LoginViewModel extends ViewModel {
                 application.getResources().getString(R.string.invalid_password): null;
     }
 
+    /**
+     * Validasi username apakah valid atau tidak
+     * @param username
+     * @return
+     */
     private boolean isUserNameValid(String username) {
         if (username == null) {
             return false;
@@ -64,75 +77,56 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    // A placeholder password validation check
+    /**
+     * Validasi password apakah valid atau tidak
+     * @param password
+     * @return
+     */
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
     }
 
+    /**
+     * Proses login ke server dengan mengirimkan beberapa data ke server
+     * @param onLogin Callback yang dipanggil jika action sudah dilakukan
+     * @param username Parameter username untuk login ke server
+     * @param password Parameter password untuk login ke server
+     */
     public final void login(OnLogin onLogin, String username, String password) {
-        this.onLogin = onLogin;
-        Call<LoginResponse> loginResponsesCall = ApiConfig.getApiService().login(username, password);
-        loginResponsesCall.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        DataLogin dataLogin = response.body().getDataLogin();
-                        String token = dataLogin.getToken();
-                        getProfile(new OnProfile() {
-                            @Override
-                            public void success(Users users) {
-                               users.setToken(token);
-                               mRepository.insert(users);
-                               onLogin.success(users);
-                            }
+        try {
+            Call<LoginResponse> loginResponsesCall = ApiConfig.getApiService().login(username, password);
+            loginResponsesCall.enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            DataLogin dataLogin = response.body().getDataLogin();
+                            String token = dataLogin.getToken();
+                            session.setToken(token);
+                            session.refreshUserData(new OnProfile() {
+                                @Override
+                                public void success(Users users) {
+                                    onLogin.success(users);
+                                }
 
-                            @Override
-                            public void error(String message) {
-                                onLogin.error("onFailure:" +message);
-                            }
-                        },token);
+                                @Override
+                                public void error(String message) {
+                                    onLogin.error("onFailure:" +message);
+                                }
+                            }, token);
+                        }
+                    } else {
+                        onLogin.error(response.message());
                     }
-                } else {
-                    onLogin.error("onFailure:" + response.message());
                 }
-            }
 
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                onLogin.error(t.getMessage());
-            }
-        });
-    }
-    public final void getProfile(OnProfile onProfile, String token){
-        this.onProfile = onProfile;
-        Call<ProfileResponse> profileResponseCall = ApiConfig.getApiService().profile(token);
-        profileResponseCall.enqueue(new Callback<ProfileResponse>() {
-            @Override
-            public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        ProfileResponse profileResponse = response.body();
-                        Users users = profileResponse.getData();
-                        onProfile.success(users);
-                    }
-                } else {
-                    onProfile.error("onFailure:" + response.message());
+                @Override
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                    onLogin.error(t.getMessage());
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ProfileResponse> call, Throwable t) {
-                onProfile.error(t.getMessage());
-            }
-        });
-    }
-    public final void logout(OnLogout onLogout){
-        try{
-            mRepository.delete();
-            onLogout.success();
-        } catch (Exception exception){
-            onLogout.error(exception.getMessage());
+            });
+        } catch (Exception e){
+            onLogin.error(e.getMessage());
         }
     }
 }

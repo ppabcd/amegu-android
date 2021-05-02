@@ -9,8 +9,10 @@ import java.io.Serializable;
 
 import id.rezajuliandri.amegu.entity.Users;
 
-public class ProfileResponse implements Serializable, Parcelable
-{
+/**
+ * Hasil response dari data profile yang diminta dari database
+ */
+public class ProfileResponse implements Serializable, Parcelable {
 
     @SerializedName("data")
     @Expose
@@ -35,8 +37,7 @@ public class ProfileResponse implements Serializable, Parcelable
             return (new ProfileResponse[size]);
         }
 
-    }
-            ;
+    };
     private final static long serialVersionUID = -287177936809898744L;
 
     protected ProfileResponse(android.os.Parcel in) {
@@ -47,13 +48,11 @@ public class ProfileResponse implements Serializable, Parcelable
 
     /**
      * No args constructor for use in serialization
-     *
      */
     public ProfileResponse() {
     }
 
     /**
-     *
      * @param code
      * @param data
      * @param message
@@ -95,7 +94,7 @@ public class ProfileResponse implements Serializable, Parcelable
         sb.append(ProfileResponse.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("data");
         sb.append('=');
-        sb.append(((this.data == null)?"<null>":this.data));
+        sb.append(((this.data == null) ? "<null>" : this.data));
         sb.append(',');
         sb.append("code");
         sb.append('=');
@@ -103,10 +102,10 @@ public class ProfileResponse implements Serializable, Parcelable
         sb.append(',');
         sb.append("message");
         sb.append('=');
-        sb.append(((this.message == null)?"<null>":this.message));
+        sb.append(((this.message == null) ? "<null>" : this.message));
         sb.append(',');
-        if (sb.charAt((sb.length()- 1)) == ',') {
-            sb.setCharAt((sb.length()- 1), ']');
+        if (sb.charAt((sb.length() - 1)) == ',') {
+            sb.setCharAt((sb.length() - 1), ']');
         } else {
             sb.append(']');
         }

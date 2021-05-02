@@ -2,28 +2,42 @@ package id.rezajuliandri.amegu.ui.main.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.adapter.PetAdapter;
+import id.rezajuliandri.amegu.api.responses.data.Pagination;
+import id.rezajuliandri.amegu.databinding.FragmentHomeBinding;
 import id.rezajuliandri.amegu.entity.Pet;
+import id.rezajuliandri.amegu.entity.Session;
 import id.rezajuliandri.amegu.helper.ActionBarHelper;
+import id.rezajuliandri.amegu.interfaces.auth.OnToken;
+import id.rezajuliandri.amegu.interfaces.pet.OnPet;
 import id.rezajuliandri.amegu.ui.main.abstraction.ItemDetailAbstract;
+import id.rezajuliandri.amegu.viewmodel.HomeViewModel;
+import id.rezajuliandri.amegu.viewmodel.factory.HomeViewmodelFactory;
 
 public class HomeFragment extends ItemDetailAbstract {
-    View view;
-    RecyclerView recyclerView;
     PetAdapter petAdapter;
+
+    HomeViewModel homeViewModel;
+    Session session;
+
+    FragmentHomeBinding fragmentHomeBinding;
 
     public HomeFragment() {
 
@@ -38,43 +52,81 @@ public class HomeFragment extends ItemDetailAbstract {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+        fragmentHomeBinding = FragmentHomeBinding.inflate(getLayoutInflater());
+        ActionBarHelper.searchLayoutHandler(fragmentHomeBinding.getRoot(), this);
+        return fragmentHomeBinding.getRoot();
+    }
 
-        ActionBarHelper.searchLayoutHandler(view, this);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         // Declare view
-        recyclerView = view.findViewById(R.id.rv_main_content);
 
         // Recyclerview settings
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        petAdapter = new PetAdapter(getContext(), requireActivity().getApplication(), this, view);
-        recyclerView.setAdapter(petAdapter);
+        fragmentHomeBinding.rvMainContent.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        petAdapter = new PetAdapter(requireActivity().getApplication(), this, fragmentHomeBinding.getRoot());
+
+        homeViewModel = new ViewModelProvider(
+                this,
+                new HomeViewmodelFactory(getActivity().getApplication())
+        ).get(HomeViewModel.class);
+        session = new Session(getActivity().getApplication());
 
         // Just dummy data
         // TODO Delete this code after connected to API
-        List<Pet> pets = new ArrayList<>();
-        String[] rasKucing = {"Shorthair", "Abyssinian", "Balinese", "Bengal", "Birman", "British Shorthair", "Burmese", "Burmilla"};
-        for (String s : rasKucing) {
-            Pet pet = new Pet("Kucing " + s);
-            pets.add(pet);
-        }
-        petAdapter.setData(pets);
-        // END Dummy
+        session.getToken(new OnToken() {
+            @Override
+            public void success(String token) {
+                homeViewModel.getPet(token, new OnPet() {
+                    @Override
+                    public void success(List<Pet> pet) {
+                        petAdapter.setData(pet);
+                        fragmentHomeBinding.rvMainContent.setAdapter(petAdapter);
+                    }
 
-        return view;
+                    @Override
+                    public void successWithPagination(List<Pet> pet, Pagination pagination) {
+
+                    }
+
+                    @Override
+                    public void error(String error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void error(String error) {
+                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
+        // END Dummy
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        EditText editText = view.findViewById(R.id.search_box);
+        EditText editText = fragmentHomeBinding.toolbar.searchBox;
         editText.clearFocus();
         editText.setFocusableInTouchMode(false);
     }
 
+    /**
+     * Memindahkan ke fragment search
+     *
+     * @param view
+     */
     protected void moveToSearchFragment(View view) {
         Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_searchFragment);
     }
 
+    /**
+     * Memindahkan ke fragment pet detail
+     *
+     * @param view
+     * @param pet  Data pet yang ingin ditampilkan data detailnya
+     */
     @Override
     public void moveToDetailPet(View view, Pet pet) {
         HomeFragmentDirections.ActionNavigationHomeToPetDetailFragment toPetDetailFragment = HomeFragmentDirections.actionNavigationHomeToPetDetailFragment(pet);

@@ -20,55 +20,27 @@
 
     <EditText
         android:id="@+id/alamat"
-        android:layout_width="288dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:hint="@string/alamat"
         android:minLines="1"
         android:scrollbars="vertical"
         android:selectAllOnFocus="true" />
-    <EditText
-        android:enabled="false"
-        android:id="@+id/provinsiPlaceholder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/Provinsi"/>
     <Spinner
-        android:visibility="gone"
         android:id="@+id/provinsi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-    <EditText
-        android:enabled="false"
-        android:id="@+id/kotaPlaceholder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/kota"/>
     <Spinner
-        android:visibility="gone"
         android:id="@+id/kota"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <EditText
-        android:enabled="false"
-        android:id="@+id/kecamatanPlaceholder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/kecamatan"/>
     <Spinner
-        android:visibility="gone"
         android:id="@+id/kecamatan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <EditText
-        android:enabled="false"
-        android:id="@+id/kelurahanPlaceholder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/kelurahan"/>
     <Spinner
-        android:visibility="gone"
         android:id="@+id/kelurahan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

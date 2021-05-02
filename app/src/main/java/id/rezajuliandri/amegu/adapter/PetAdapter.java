@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.ShapeAppearanceModel;
@@ -18,24 +20,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.rezajuliandri.amegu.R;
+import id.rezajuliandri.amegu.databinding.ItemPetRowBinding;
 import id.rezajuliandri.amegu.entity.Pet;
 import id.rezajuliandri.amegu.helper.StringHelper;
 import id.rezajuliandri.amegu.ui.main.abstraction.ItemDetailAbstract;
 
+/**
+ * Adapter yang digunakan untuk menampilkan data pet
+ */
 public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ListViewHolder> {
     private final View viewParent;
-    private final Context context;
     private final Application application;
     private final ItemDetailAbstract itemDetailAbstract;
+    ItemPetRowBinding itemPetRowBinding;
     private List<Pet> petList = new ArrayList<>();
 
-    public PetAdapter(Context context, Application application, ItemDetailAbstract itemDetailAbstract, View viewParent) {
+    public PetAdapter(Application application, ItemDetailAbstract itemDetailAbstract, View viewParent) {
         this.application = application;
-        this.context = context;
         this.viewParent = viewParent;
         this.itemDetailAbstract = itemDetailAbstract;
     }
-
+    
     public void setData(List<Pet> pets) {
         this.petList = pets;
     }
@@ -43,16 +48,14 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ListViewHolder> 
     @NonNull
     @Override
     public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_pet_row, parent, false);
-        return new ListViewHolder(view);
+        itemPetRowBinding = ItemPetRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ListViewHolder(itemPetRowBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         Pet pet = petList.get(position);
-        holder.petName.setText(StringHelper.setMaximumText(pet.getPetName(), 15));
-        setRoundedImage(holder);
-        holder.itemView.setOnClickListener(v -> itemDetailAbstract.moveToDetailPet(viewParent, pet));
+        holder.bind(pet);
     }
 
     private void setRoundedImage(ListViewHolder holder) {
@@ -61,7 +64,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ListViewHolder> 
                 .setBottomLeftCorner(CornerFamily.ROUNDED, application.getResources().getDimension(R.dimen.rounded_image))
                 .setBottomRightCorner(CornerFamily.ROUNDED, application.getResources().getDimension(R.dimen.rounded_image))
                 .build();
-        holder.petImage.setShapeAppearanceModel(shapeAppearanceModel);
+        holder.binding.petImage.setShapeAppearanceModel(shapeAppearanceModel);
     }
 
     @Override
@@ -69,14 +72,24 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ListViewHolder> 
         return petList.size();
     }
 
-    public static class ListViewHolder extends RecyclerView.ViewHolder {
-        TextView petName;
-        ShapeableImageView petImage;
+    public class ListViewHolder extends RecyclerView.ViewHolder {
+        ItemPetRowBinding binding;
 
-        public ListViewHolder(@NonNull View itemView) {
-            super(itemView);
-            petName = itemView.findViewById(R.id.pet_name);
-            petImage = itemView.findViewById(R.id.pet_image);
+        public ListViewHolder(@NonNull ItemPetRowBinding itemView) {
+            super(itemView.getRoot());
+            binding = itemView;
+        }
+
+        public void bind(Pet pet) {
+            binding.petName.setText(StringHelper.setMaximumText(pet.getNamaHewan(), 15));
+            setRoundedImage(this);
+            Glide.with(itemView.getContext())
+                    .load(pet.getAttachment().getUrl())
+                    .apply(new RequestOptions())
+                    .into(binding.petImage);
+            String price = StringHelper.currency(pet.getHarga());
+            binding.petPrice.setText(price);
+            itemView.setOnClickListener(v -> itemDetailAbstract.moveToDetailPet(viewParent, pet));
         }
     }
 }

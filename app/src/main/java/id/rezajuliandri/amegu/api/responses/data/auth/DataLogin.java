@@ -1,10 +1,13 @@
-package id.rezajuliandri.amegu.api.responses.data;
+package id.rezajuliandri.amegu.api.responses.data.auth;
 
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Hasil response dari data login yang diminta dari database
+ */
 public class DataLogin implements Parcelable {
 
     @SerializedName("token")

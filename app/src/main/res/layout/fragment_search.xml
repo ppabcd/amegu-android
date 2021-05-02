@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.fragment.SearchFragment">
 
-    <include layout="@layout/layout_toolbar" />
+    <include android:id="@+id/toolbar" layout="@layout/layout_toolbar" />
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout

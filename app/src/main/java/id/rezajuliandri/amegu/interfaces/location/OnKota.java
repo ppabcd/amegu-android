@@ -1,10 +1,13 @@
 package id.rezajuliandri.amegu.interfaces.location;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import id.rezajuliandri.amegu.api.responses.data.Kota;
+import id.rezajuliandri.amegu.api.responses.data.location.Kota;
 
+/**
+ * Interface untuk mengirim data kota ke server
+ */
 public interface OnKota {
-    void success(List<Kota> kotaList);
+    void success(ArrayList<Kota> kotaList);
     void error(String message);
 }

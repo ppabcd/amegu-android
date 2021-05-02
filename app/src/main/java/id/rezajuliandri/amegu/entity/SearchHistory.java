@@ -11,6 +11,9 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
+/**
+ * Class yang mengatur entity search yang memanage data search oleh user.
+ */
 @Entity
 public class SearchHistory implements Parcelable {
 

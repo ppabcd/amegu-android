@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
                 new SplashViewModelFactory(this.getApplication())
         ).get(SplashViewModel.class);
 
-        // Check user authentication
+        // Proses pengecekan data user apakah tersedia di database atau tidak
         splashViewModel.checkUserData(new OnProfile() {
             @Override
             public void success(Users users) {
@@ -57,18 +57,27 @@ public class SplashActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Mengarahkan ke halaman login jika data user tidak tersedia pada database
+     */
     private void goLogin() {
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
 
+    /**
+     * Mengarahkan ke halaman main jika data user tersedia pada database
+     */
     private void goMain() {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
+    /**
+     * Meminta alamat user jika user belum memasukkan alamat
+     */
     private void goAddress() {
         Intent intent = new Intent(SplashActivity.this, AlamatActivity.class);
         startActivity(intent);

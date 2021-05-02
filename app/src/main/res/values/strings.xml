@@ -60,4 +60,15 @@
     <string name="kota">Kota</string>
     <string name="kecamatan">Kecamatan</string>
     <string name="kelurahan">Kelurahan</string>
+    <string name="upload_gambar">Upload Gambar</string>
+    <string name="upload_text">Upload foto sebelum mengirimkan data</string>
+    <string name="upload_title">Yuk isi informasi hewanmu</string>
+    <string name="foto_product">Foto product</string>
+    <string name="mulai">Mulai</string>
+    <string name="nama_hewan">Nama Hewan</string>
+    <string name="berat_badan">Berat Badan</string>
+    <string name="betina">Betina</string>
+    <string name="jantan">Jantan</string>
+    <string name="harga">Harga</string>
+    <string name="ras">Ras</string>
 </resources>

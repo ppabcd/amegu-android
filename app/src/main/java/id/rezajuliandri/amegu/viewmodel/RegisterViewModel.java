@@ -13,6 +13,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * View model yang digunakan pada saat proses register
+ */
 public class RegisterViewModel extends ViewModel {
     public final int USERNAME = 1;
     public final int PASSWORD = 2;
@@ -32,6 +35,11 @@ public class RegisterViewModel extends ViewModel {
 
     }
 
+    /**
+     * Pengambilan error jika terjadi kesalahan
+     * @param type parameter field yang ingin dicek errornya
+     * @return
+     */
     public String getErrorMsg(int type) {
         switch (type) {
             case USERNAME:
@@ -46,6 +54,13 @@ public class RegisterViewModel extends ViewModel {
         return "";
     }
 
+    /**
+     * Proses validasi ketika ada perubahan data pada form
+     * @param firstName First name user
+     * @param lastName Last name user
+     * @param username Username user
+     * @param password Password user
+     */
     public void registerDataChanged(String firstName, String lastName, String username, String password) {
         errorMsgFirstName = ("".equals(firstName.trim())) ?
                 application.getResources().getString(R.string.invalid_first_name) : null;
@@ -58,6 +73,11 @@ public class RegisterViewModel extends ViewModel {
 
     }
 
+    /**
+     * Melakukan pengecekan username user
+     * @param username username user
+     * @return
+     */
     private boolean isUserNameValid(String username) {
         if (username == null) {
             return false;
@@ -69,7 +89,11 @@ public class RegisterViewModel extends ViewModel {
         }
     }
 
-    // A placeholder password validation check
+    /**
+     * Melakukan pengecekan password user
+     * @param password Password user
+     * @return
+     */
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 8;
     }

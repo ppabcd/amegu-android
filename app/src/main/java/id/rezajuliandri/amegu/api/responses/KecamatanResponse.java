@@ -6,16 +6,18 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
-import id.rezajuliandri.amegu.api.responses.data.Kecamatan;
-
+import id.rezajuliandri.amegu.api.responses.data.location.Kecamatan;
+/**
+ * Hasil response dari data kecamatan yang diminta dari database
+ */
 public class KecamatanResponse implements Serializable, Parcelable
 {
 
     @SerializedName("data")
     @Expose
-    private List<Kecamatan> data = null;
+    private ArrayList<Kecamatan> data = null;
     public final static Creator<KotaResponse> CREATOR = new Creator<KotaResponse>() {
 
 
@@ -49,16 +51,16 @@ public class KecamatanResponse implements Serializable, Parcelable
      *
      * @param data
      */
-    public KecamatanResponse(List<Kecamatan> data) {
+    public KecamatanResponse(ArrayList<Kecamatan> data) {
         super();
         this.data = data;
     }
 
-    public List<Kecamatan> getData() {
+    public ArrayList<Kecamatan> getData() {
         return data;
     }
 
-    public void setData(List<Kecamatan> data) {
+    public void setData(ArrayList<Kecamatan> data) {
         this.data = data;
     }
 

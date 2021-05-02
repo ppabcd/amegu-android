@@ -15,20 +15,23 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.Objects;
 
 import id.rezajuliandri.amegu.R;
+import id.rezajuliandri.amegu.databinding.ActivityRegisterBinding;
 import id.rezajuliandri.amegu.interfaces.auth.OnRegister;
+import id.rezajuliandri.amegu.ui.middleware.BaseActivity;
 import id.rezajuliandri.amegu.viewmodel.RegisterViewModel;
 import id.rezajuliandri.amegu.viewmodel.factory.RegisterViewModelFactory;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     RegisterViewModel registerViewModel;
-    EditText username, password, firstName, lastName;
-    Button registerBtn, actionLogin;
+    ActivityRegisterBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        changeValidateToken(false);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -39,14 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
                 new RegisterViewModelFactory(this.getApplication())
         ).get(RegisterViewModel.class);
 
-        // Init
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        firstName = findViewById(R.id.first_name);
-        lastName = findViewById(R.id.last_name);
-        registerBtn = findViewById(R.id.register);
-        actionLogin = findViewById(R.id.action_login);
-
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -55,33 +50,33 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                registerViewModel.registerDataChanged(firstName.getText().toString(),
-                        lastName.getText().toString(),
-                        username.getText().toString(),
-                        password.getText().toString());
+                registerViewModel.registerDataChanged(binding.firstName.getText().toString(),
+                        binding.lastName.getText().toString(),
+                        binding.username.getText().toString(),
+                        binding.password.getText().toString());
                 String checkUsername = registerViewModel.getErrorMsg(registerViewModel.USERNAME);
                 String checkPassword = registerViewModel.getErrorMsg(registerViewModel.PASSWORD);
                 String checkFirstName = registerViewModel.getErrorMsg(registerViewModel.FIRST_NAME);
                 String checkLastName = registerViewModel.getErrorMsg(registerViewModel.LAST_NAME);
-                registerBtn.setEnabled(false);
+                binding.register.setEnabled(false);
 
                 if (checkFirstName != null) {
-                    firstName.setError(checkFirstName);
+                    binding.firstName.setError(checkFirstName);
                     return;
                 }
                 if (checkLastName != null) {
-                    lastName.setError(checkLastName);
+                    binding.lastName.setError(checkLastName);
                     return;
                 }
                 if (checkUsername != null) {
-                    username.setError(checkUsername);
+                    binding.username.setError(checkUsername);
                     return;
                 }
                 if (checkPassword != null) {
-                    password.setError(checkPassword);
+                    binding.password.setError(checkPassword);
                     return;
                 }
-                registerBtn.setEnabled(true);
+                binding.register.setEnabled(true);
             }
 
             @Override
@@ -89,16 +84,16 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         };
-        firstName.addTextChangedListener(afterTextChangedListener);
-        lastName.addTextChangedListener(afterTextChangedListener);
-        username.addTextChangedListener(afterTextChangedListener);
-        password.addTextChangedListener(afterTextChangedListener);
+        binding.firstName.addTextChangedListener(afterTextChangedListener);
+        binding.lastName.addTextChangedListener(afterTextChangedListener);
+        binding.username.addTextChangedListener(afterTextChangedListener);
+        binding.password.addTextChangedListener(afterTextChangedListener);
 
 
         // If button register clicked
-        registerBtn.setOnClickListener(v -> {
-            registerBtn.setEnabled(false);
-            registerBtn.setText(R.string.loading);
+        binding.register.setOnClickListener(v -> {
+            binding.register.setEnabled(false);
+            binding.register.setText(R.string.loading);
             registerViewModel.register(
                     new OnRegister() {
                         @Override
@@ -112,18 +107,18 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void error(String message) {
                             Toast.makeText(RegisterActivity.this, "Failed created an account", Toast.LENGTH_SHORT).show();
-                            registerBtn.setText(R.string.action_register);
-                            registerBtn.setEnabled(true);
+                            binding.register.setText(R.string.action_register);
+                            binding.register.setEnabled(true);
                         }
                     },
-                    firstName.getText().toString().trim(),
-                    lastName.getText().toString().trim(),
-                    username.getText().toString().trim().toLowerCase(),
-                    password.getText().toString().trim()
+                    binding.firstName.getText().toString().trim(),
+                    binding.lastName.getText().toString().trim(),
+                    binding.username.getText().toString().trim().toLowerCase(),
+                    binding.password.getText().toString().trim()
             );
         });
         // If button action login clicked
-        actionLogin.setOnClickListener(v -> {
+        binding.actionLogin.setOnClickListener(v -> {
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();

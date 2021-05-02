@@ -6,15 +6,17 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
-import id.rezajuliandri.amegu.api.responses.data.Provinsi;
-
+import id.rezajuliandri.amegu.api.responses.data.location.Provinsi;
+/**
+ * Hasil response dari data provinsi yang diminta dari database
+ */
 public class ProvinsiResponse implements Serializable, Parcelable
 {
     @SerializedName("data")
     @Expose
-    private List<Provinsi> data = null;
+    private ArrayList<Provinsi> data = null;
     public final static Creator<ProvinsiResponse> CREATOR = new Creator<ProvinsiResponse>() {
 
 
@@ -48,16 +50,16 @@ public class ProvinsiResponse implements Serializable, Parcelable
      *
      * @param data
      */
-    public ProvinsiResponse(List<Provinsi> data) {
+    public ProvinsiResponse(ArrayList<Provinsi> data) {
         super();
         this.data = data;
     }
 
-    public List<Provinsi> getData() {
+    public ArrayList<Provinsi> getData() {
         return data;
     }
 
-    public void setData(List<Provinsi> data) {
+    public void setData(ArrayList<Provinsi> data) {
         this.data = data;
     }
 

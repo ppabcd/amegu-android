@@ -1,4 +1,4 @@
-package id.rezajuliandri.amegu.api.responses.data;
+package id.rezajuliandri.amegu.api.responses.data.location;
 
 import android.os.Parcelable;
 
@@ -6,8 +6,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
-public class Kelurahan implements Serializable, Parcelable
+/**
+ * Hasil response dari data kelurahan yang diminta dari database
+ */
+public class Kelurahan implements Serializable, Parcelable, Comparable<Kelurahan>
 {
 
     @SerializedName("id")
@@ -103,30 +105,7 @@ public class Kelurahan implements Serializable, Parcelable
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Kelurahan.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("id");
-        sb.append('=');
-        sb.append(this.id);
-        sb.append(',');
-        sb.append("nama");
-        sb.append('=');
-        sb.append(((this.nama == null)?"<null>":this.nama));
-        sb.append(',');
-        sb.append("kecamatanId");
-        sb.append('=');
-        sb.append(this.kecamatanId);
-        sb.append(',');
-        sb.append("kecamatan");
-        sb.append('=');
-        sb.append(((this.kecamatan == null)?"<null>":this.kecamatan));
-        sb.append(',');
-        if (sb.charAt((sb.length()- 1)) == ',') {
-            sb.setCharAt((sb.length()- 1), ']');
-        } else {
-            sb.append(']');
-        }
-        return sb.toString();
+        return nama;
     }
 
     public void writeToParcel(android.os.Parcel dest, int flags) {
@@ -140,4 +119,8 @@ public class Kelurahan implements Serializable, Parcelable
         return 0;
     }
 
+    @Override
+    public int compareTo(Kelurahan another) {
+        return (int) (this.id - another.getId());
+    }
 }

@@ -8,6 +8,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entity users yang menghandle semua data user serta juga mengatur kolom users yang ada pada database
+ */
 @Entity
 public class Users implements Parcelable {
     @PrimaryKey(autoGenerate = true)
@@ -28,6 +31,9 @@ public class Users implements Parcelable {
 
     @ColumnInfo(name = "alamat_id")
     private int alamatId;
+
+    @Ignore
+    private Alamat alamat;
 
     public int getAlamatId() {
         return alamatId;
@@ -55,7 +61,7 @@ public class Users implements Parcelable {
     }
 
     @Ignore
-    public Users(long id, String firstName, String lastName, String email,int alamatId) {
+    public Users(long id, String firstName, String lastName, String email, int alamatId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -128,6 +134,14 @@ public class Users implements Parcelable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Alamat getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(Alamat alamat) {
+        this.alamat = alamat;
     }
 
     @Override

@@ -2,6 +2,12 @@ package id.rezajuliandri.amegu.database;
 
 import android.app.Application;
 
+import androidx.room.Query;
+import androidx.room.Transaction;
+
+import java.util.List;
+
+import id.rezajuliandri.amegu.entity.UserAndAlamat;
 import id.rezajuliandri.amegu.entity.Users;
 import id.rezajuliandri.amegu.interfaces.auth.OnProfile;
 

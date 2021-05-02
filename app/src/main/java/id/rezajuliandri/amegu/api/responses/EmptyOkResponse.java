@@ -7,7 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
-
+/**
+ * Hasil response dari api dan hanya menampilkan pesan ok
+ */
 public class EmptyOkResponse implements Serializable, Parcelable {
 
     @SerializedName("data")

@@ -9,6 +9,9 @@ import java.util.List;
 
 import id.rezajuliandri.amegu.entity.SearchHistory;
 
+/**
+ * Bagian yang menghandle untuk memproses data ke database namun menggunakan layer baru yang terpisah dengan UI
+ */
 public class SearchHistoryRepository {
     private final SearchHistoryDao mSearchHistoryDao;
     private final LiveData<List<SearchHistory>> mAllSearchHistory;
@@ -19,14 +22,27 @@ public class SearchHistoryRepository {
         mAllSearchHistory = mSearchHistoryDao.getAllSearchHistory();
     }
 
+    /**
+     * Proses pengambilan data history dari database
+     * @return LiveData<List<SearchHistory>>
+     */
     public LiveData<List<SearchHistory>> getAllSearchHistory() {
         return mAllSearchHistory;
     }
 
+    /**
+     * Proses menambah data ke table search history
+     * @param searchHistory Data yang ingin dimasukkan kedalam table
+     */
     public void insert(SearchHistory searchHistory) {
         AmeguDatabase.databaseWriteExecutor.execute(() -> mSearchHistoryDao.insert(searchHistory));
     }
 
+    /**
+     * Proses insert atau update data search history
+     * @param keyword Keyword yang ingin dimasukkan kedalam table
+     * @param searchHistory Data yang ingin dimasukkan kedalam table
+     */
     public void updateOrInsert(String keyword, SearchHistory searchHistory) {
         AmeguDatabase.databaseWriteExecutor.execute(() -> {
             SearchHistory checkHistory = mSearchHistoryDao.getDataByKeyword(keyword);
@@ -39,10 +55,17 @@ public class SearchHistoryRepository {
         });
     }
 
+    /**
+     * Proses menghapus data
+     * @param searchHistory Data yang ingin dihapus
+     */
     public void delete(SearchHistory searchHistory) {
         AmeguDatabase.databaseWriteExecutor.execute(() -> mSearchHistoryDao.delete(searchHistory));
     }
 
+    /**
+     * Menghapus semua data dari database
+     */
     public void deleteAll() {
         AmeguDatabase.databaseWriteExecutor.execute(mSearchHistoryDao::deleteAll);
     }

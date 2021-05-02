@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -25,17 +27,13 @@ import com.google.android.material.appbar.AppBarLayout;
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.adapter.SearchHistoryAdapter;
 import id.rezajuliandri.amegu.database.AmeguDatabase;
+import id.rezajuliandri.amegu.databinding.DialogOnlyTextBinding;
+import id.rezajuliandri.amegu.databinding.FragmentSearchBinding;
 import id.rezajuliandri.amegu.helper.ActionBarHelper;
 import id.rezajuliandri.amegu.viewmodel.SearchViewModel;
 import id.rezajuliandri.amegu.viewmodel.factory.SearchViewModelFactory;
 
 public class SearchFragment extends Fragment {
-    EditText searchBox;
-    LinearLayout searchContent;
-    TextView errorEmptySearchHistory, removeHistory;
-    AppBarLayout appBarLayout;
-    RecyclerView recyclerView;
-
     ActionBarHelper actionBarHelper;
 
     AmeguDatabase ameguDatabase;
@@ -46,6 +44,8 @@ public class SearchFragment extends Fragment {
     InputMethodManager inputMethodManager;
 
     View view1;
+
+    FragmentSearchBinding binding;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -59,56 +59,56 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        binding = FragmentSearchBinding.inflate(getLayoutInflater());
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         searchViewModel = new ViewModelProvider(
                 this,
                 new SearchViewModelFactory(requireActivity().getApplication())
         ).get(SearchViewModel.class);
 
-        appBarLayout = view.findViewById(R.id.appBar);
-        searchBox = view.findViewById(R.id.search_box);
-        searchContent = view.findViewById(R.id.search_content);
-        errorEmptySearchHistory = view.findViewById(R.id.error_empty_search_history);
-        removeHistory = view.findViewById(R.id.remove_history);
-
-
-        searchBox.requestFocus();
-        appBarLayout.setOutlineProvider(null);
+        binding.toolbar.searchBox.requestFocus();
+        binding.toolbar.appBar.setOutlineProvider(null);
 
         actionBarHelper = new ActionBarHelper(getActivity(), view);
         actionBarHelper.showBackButton();
 
-        recyclerView = view.findViewById(R.id.rv_search);
-
         // Get all data from database
         ameguDatabase = AmeguDatabase.getDatabase(getContext());
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new SearchHistoryAdapter(getActivity(), requireActivity().getApplication(), view);
-        recyclerView.setAdapter(adapter);
+        binding.rvSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new SearchHistoryAdapter(binding.getRoot());
+        binding.rvSearch.setAdapter(adapter);
 
         getSearchHistory();
         removeHistoryData();
 
-        searchBox.setOnEditorActionListener((v, actionId, event) -> {
+        binding.toolbar.searchBox.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 searchData(view);
-                searchBox.setText("");
+                binding.toolbar.searchBox.setText("");
                 return true;
             }
             return false;
         });
-        return view;
+
     }
 
+    /**
+     * Menghapus history pencarian user di database lokal
+     */
+    DialogOnlyTextBinding dialogOnlyTextBinding;
     private void removeHistoryData() {
-        removeHistory.setOnClickListener(v -> {
+        binding.removeHistory.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 //            builder.setTitle("Apakah Anda yakin untuk menghapus semua riwayat pencarian?");
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_only_text, null);
-            builder.setView(view);
+            dialogOnlyTextBinding = DialogOnlyTextBinding.inflate(getLayoutInflater());
+            builder.setView(dialogOnlyTextBinding.getRoot());
             builder.setPositiveButton("Ya", ((dialog, which) -> {
                 searchViewModel.deleteAll();
                 getSearchHistory();
@@ -120,8 +120,12 @@ public class SearchFragment extends Fragment {
         });
     }
 
+    /**
+     * Proses untuk memindahkan ke halaman pencarian berdasarkan keyword yang diinputkan oleh user
+     * @param view
+     */
     private void searchData(View view) {
-        if ("".equals(searchBox.getText().toString())) {
+        if ("".equals(binding.toolbar.searchBox.getText().toString())) {
             Toast.makeText(getActivity(), "Mohon untuk mengisi text pada form search", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -132,19 +136,22 @@ public class SearchFragment extends Fragment {
         }
         inputMethodManager.hideSoftInputFromWindow(view1.getWindowToken(), 0);
 
-        SearchFragmentDirections.ActionSearchFragmentToSearchResultFragment toSearchResultFragment = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(searchBox.getText().toString().trim());
-        toSearchResultFragment.setKeyword(searchBox.getText().toString().trim());
+        SearchFragmentDirections.ActionSearchFragmentToSearchResultFragment toSearchResultFragment = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(binding.toolbar.searchBox.getText().toString().trim());
+        toSearchResultFragment.setKeyword(binding.toolbar.searchBox.getText().toString().trim());
         Navigation.findNavController(view).navigate(toSearchResultFragment);
     }
 
+    /**
+     * Mengambil history search dari user
+     */
     private void getSearchHistory() {
         searchViewModel.getAllSearchHistory().observe(requireActivity(), itemSearch -> {
             if (itemSearch != null) {
                 adapter.setData(itemSearch);
                 Log.i("SearchItemCount", String.valueOf(adapter.getItemCount()));
-                errorEmptySearchHistory.setVisibility((adapter.getItemCount() > 0) ? View.GONE : View.VISIBLE);
+                binding.errorEmptySearchHistory.setVisibility((adapter.getItemCount() > 0) ? View.GONE : View.VISIBLE);
             } else {
-                errorEmptySearchHistory.setVisibility(View.VISIBLE);
+                binding.errorEmptySearchHistory.setVisibility(View.VISIBLE);
             }
         });
     }

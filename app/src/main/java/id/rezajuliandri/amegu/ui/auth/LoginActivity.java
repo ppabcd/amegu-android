@@ -4,44 +4,42 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.Objects;
 
 import id.rezajuliandri.amegu.R;
+import id.rezajuliandri.amegu.databinding.ActivityLoginBinding;
 import id.rezajuliandri.amegu.entity.Users;
 import id.rezajuliandri.amegu.interfaces.auth.OnLogin;
 import id.rezajuliandri.amegu.ui.main.MainActivity;
+import id.rezajuliandri.amegu.ui.middleware.BaseActivity;
 import id.rezajuliandri.amegu.viewmodel.LoginViewModel;
 import id.rezajuliandri.amegu.viewmodel.factory.LoginViewModelFactory;
 
-public class LoginActivity extends AppCompatActivity {
-
-    EditText username, password;
-    Button loginBtn, actionRegister;
+public class LoginActivity extends BaseActivity {
     LoginViewModel loginViewModel;
+
+    ActivityLoginBinding activityLoginBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        changeValidateToken(false);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        activityLoginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(activityLoginBinding.getRoot());
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         Objects.requireNonNull(getSupportActionBar()).hide();
+        // View Model
         loginViewModel = new ViewModelProvider(
                 this,
                 new LoginViewModelFactory(this.getApplication())
         ).get(LoginViewModel.class);
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        loginBtn = findViewById(R.id.login);
-        actionRegister = findViewById(R.id.action_register);
+
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
@@ -51,21 +49,21 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                loginViewModel.loginDataChanged(username.getText().toString(),
-                        password.getText().toString());
+                loginViewModel.loginDataChanged(activityLoginBinding.username.getText().toString(),
+                        activityLoginBinding.password.getText().toString());
                 String checkUsername = loginViewModel.getErrorMsg(loginViewModel.USERNAME);
                 String checkPassword = loginViewModel.getErrorMsg(loginViewModel.PASSWORD);
                 if (checkUsername != null) {
-                    username.setError(checkUsername);
-                    loginBtn.setEnabled(false);
+                    activityLoginBinding.username.setError(checkUsername);
+                    activityLoginBinding.login.setEnabled(false);
                     return;
                 }
                 if (checkPassword != null) {
-                    password.setError(checkPassword);
-                    loginBtn.setEnabled(false);
+                    activityLoginBinding.password.setError(checkPassword);
+                    activityLoginBinding.login.setEnabled(false);
                     return;
                 }
-                loginBtn.setEnabled(true);
+                activityLoginBinding.login.setEnabled(true);
             }
 
             @Override
@@ -73,13 +71,13 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         };
-        username.addTextChangedListener(afterTextChangedListener);
-        password.addTextChangedListener(afterTextChangedListener);
+        activityLoginBinding.username.addTextChangedListener(afterTextChangedListener);
+        activityLoginBinding.password.addTextChangedListener(afterTextChangedListener);
 
 
-        loginBtn.setOnClickListener(v -> {
-            loginBtn.setEnabled(false);
-            loginBtn.setText(R.string.loading);
+        activityLoginBinding.login.setOnClickListener(v -> {
+            activityLoginBinding.login.setEnabled(false);
+            activityLoginBinding.login.setText(R.string.loading);
             // Request login to server
             loginViewModel.login(
                     new OnLogin() {
@@ -93,27 +91,29 @@ public class LoginActivity extends AppCompatActivity {
                                     new Intent(
                                             LoginActivity.this,
                                             MainActivity.class);
+//                            Intent intent  = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
                         }
 
                         @Override
                         public void error(String message) {
-                            loginBtn.setEnabled(true);
-                            loginBtn.setText(R.string.action_sign_in);
+                            activityLoginBinding.login.setEnabled(true);
+                            activityLoginBinding.login.setText(R.string.action_sign_in);
                             AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
-                            dialog.setTitle(getString(R.string.invalid_login));
+                            dialog.setTitle("Something went wrong");
+                            dialog.setMessage(message);
                             dialog.setPositiveButton("Ok", (dialog1, which) -> {
 
                             });
                             dialog.show();
                         }
                     },
-                    username.getText().toString().trim().toLowerCase(),
-                    password.getText().toString().trim()
+                    activityLoginBinding.username.getText().toString().trim().toLowerCase(),
+                    activityLoginBinding.password.getText().toString().trim()
             );
         });
-        actionRegister.setOnClickListener(v -> {
+        activityLoginBinding.actionRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
             finish();

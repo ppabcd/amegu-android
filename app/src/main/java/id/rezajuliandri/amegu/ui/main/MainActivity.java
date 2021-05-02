@@ -14,28 +14,35 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Objects;
 
 import id.rezajuliandri.amegu.R;
+import id.rezajuliandri.amegu.databinding.ActivityMainBinding;
+import id.rezajuliandri.amegu.ui.middleware.BaseActivity;
 
-public class MainActivity extends AppCompatActivity {
-    BottomNavigationView bottomNavigationView;
+public class MainActivity extends BaseActivity {
+    ActivityMainBinding activityMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).hide();
-        setContentView(R.layout.activity_main);
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(activityMainBinding.getRoot());
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Melakukan disable pada night mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         setupViews();
     }
 
+    /**
+     * View yang akan digunakan pada aplikasi
+     */
     private void setupViews() {
         NavController navController = Navigation.findNavController(this, R.id.container);
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.home, R.id.navigation_upload, R.id.navigation_account
         ).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        NavigationUI.setupWithNavController(activityMainBinding.bottomNavigation, navController);
     }
 }
