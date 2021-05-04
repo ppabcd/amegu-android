@@ -74,11 +74,11 @@ public class AccountFragment extends Fragment {
         });
         // Jika button account di klik
         binding.btnAccount.setOnClickListener(v -> {
-
+            Navigation.findNavController(view).navigate(R.id.action_navigation_account_to_accountDetailFragment);
         });
         // Jika button address di klik
         binding.btnAddress.setOnClickListener(v -> {
-
+            Navigation.findNavController(view).navigate(R.id.action_navigation_account_to_addressFragment);
         });
         // Jika button adoption di klik
         binding.btnAdoption.setOnClickListener(v -> {

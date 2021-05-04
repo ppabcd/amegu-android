@@ -53,6 +53,12 @@
         <action
             android:id="@+id/action_navigation_account_to_transactionFragment"
             app:destination="@id/transactionFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_accountDetailFragment"
+            app:destination="@id/accountDetailFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_addressFragment"
+            app:destination="@id/addressFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
@@ -105,4 +111,14 @@
         android:name="id.rezajuliandri.amegu.ui.main.fragment.TransactionFragment"
         android:label="fragment_transaction"
         tools:layout="@layout/fragment_transaction" />
+    <fragment
+        android:id="@+id/accountDetailFragment"
+        android:name="id.rezajuliandri.amegu.ui.main.fragment.AccountDetailFragment"
+        android:label="fragment_account_detail"
+        tools:layout="@layout/fragment_account_detail" />
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="id.rezajuliandri.amegu.ui.main.fragment.AddressFragment"
+        android:label="fragment_address"
+        tools:layout="@layout/fragment_address" />
 </navigation>
