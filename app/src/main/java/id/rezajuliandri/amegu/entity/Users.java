@@ -29,11 +29,41 @@ public class Users implements Parcelable {
     @ColumnInfo(name = "token")
     private String token;
 
+    @ColumnInfo(name = "phone_number")
+    private String phoneNumber;
+
+    @ColumnInfo(name = "is_admin")
+    private String isAdmin;
+
     @ColumnInfo(name = "alamat_id")
     private int alamatId;
 
     @Ignore
     private Alamat alamat;
+
+    protected Users(Parcel in) {
+        id = in.readLong();
+        firstName = in.readString();
+        lastName = in.readString();
+        email = in.readString();
+        token = in.readString();
+        phoneNumber = in.readString();
+        isAdmin = in.readString();
+        alamatId = in.readInt();
+        alamat = in.readParcelable(Alamat.class.getClassLoader());
+    }
+
+    public static final Creator<Users> CREATOR = new Creator<Users>() {
+        @Override
+        public Users createFromParcel(Parcel in) {
+            return new Users(in);
+        }
+
+        @Override
+        public Users[] newArray(int size) {
+            return new Users[size];
+        }
+    };
 
     public int getAlamatId() {
         return alamatId;
@@ -51,12 +81,14 @@ public class Users implements Parcelable {
     public Users() {
     }
 
-    public Users(long id, String firstName, String lastName, String email, String token, int alamatId) {
+    public Users(long id, String firstName, String lastName, String email, String token, String phoneNumber, String isAdmin, int alamatId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.token = token;
+        this.phoneNumber = phoneNumber;
+        this.isAdmin = isAdmin;
         this.alamatId = alamatId;
     }
 
@@ -74,27 +106,21 @@ public class Users implements Parcelable {
         this.token = token;
     }
 
-
-    protected Users(Parcel in) {
-        id = in.readLong();
-        firstName = in.readString();
-        lastName = in.readString();
-        email = in.readString();
-        token = in.readString();
-        alamatId = in.readInt();
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public static final Creator<Users> CREATOR = new Creator<Users>() {
-        @Override
-        public Users createFromParcel(Parcel in) {
-            return new Users(in);
-        }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-        @Override
-        public Users[] newArray(int size) {
-            return new Users[size];
-        }
-    };
+    public String getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(String isAdmin) {
+        this.isAdmin = isAdmin;
+    }
 
     public long getId() {
         return id;
@@ -151,11 +177,16 @@ public class Users implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+
         dest.writeLong(id);
         dest.writeString(firstName);
         dest.writeString(lastName);
         dest.writeString(email);
         dest.writeString(token);
+        dest.writeString(phoneNumber);
+        dest.writeString(isAdmin);
         dest.writeInt(alamatId);
+        dest.writeParcelable(alamat, flags);
     }
+
 }

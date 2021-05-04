@@ -25,12 +25,10 @@ public class LoginViewModel extends ViewModel {
     private String errorMsgUsername = null;
     private String errorMsgPassword = null;
 
-    private UsersRepository mRepository;
     private Session session;
 
     public LoginViewModel(Application application) {
         this.application = application;
-        mRepository = new UsersRepository(application);
         session = new Session(application);
     }
 

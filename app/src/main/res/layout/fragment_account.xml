@@ -74,6 +74,33 @@
             android:paddingLeft="16dp"
             android:paddingTop="16dp">
             <Button
+                android:id="@+id/btn_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="start|center"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/darker_gray"
+                android:text="@string/account"/>
+            <Button
+                android:id="@+id/btn_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="start|center"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/darker_gray"
+                android:text="@string/address"/>
+            <Button
+                android:id="@+id/btn_adoption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="start|center"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/darker_gray"
+                android:text="@string/adoption"/>
+            <Button
                 android:id="@+id/logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

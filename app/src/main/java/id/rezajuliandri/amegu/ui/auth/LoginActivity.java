@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -13,6 +15,8 @@ import java.util.Objects;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.databinding.ActivityLoginBinding;
+import id.rezajuliandri.amegu.databinding.ActivityMainBinding;
+import id.rezajuliandri.amegu.databinding.ItemPetRowBinding;
 import id.rezajuliandri.amegu.entity.Users;
 import id.rezajuliandri.amegu.interfaces.auth.OnLogin;
 import id.rezajuliandri.amegu.ui.main.MainActivity;
@@ -22,7 +26,6 @@ import id.rezajuliandri.amegu.viewmodel.factory.LoginViewModelFactory;
 
 public class LoginActivity extends BaseActivity {
     LoginViewModel loginViewModel;
-
     ActivityLoginBinding activityLoginBinding;
 
     @Override
@@ -34,6 +37,7 @@ public class LoginActivity extends BaseActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         Objects.requireNonNull(getSupportActionBar()).hide();
+
         // View Model
         loginViewModel = new ViewModelProvider(
                 this,
@@ -73,7 +77,6 @@ public class LoginActivity extends BaseActivity {
         };
         activityLoginBinding.username.addTextChangedListener(afterTextChangedListener);
         activityLoginBinding.password.addTextChangedListener(afterTextChangedListener);
-
 
         activityLoginBinding.login.setOnClickListener(v -> {
             activityLoginBinding.login.setEnabled(false);

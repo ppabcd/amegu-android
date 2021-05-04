@@ -46,10 +46,13 @@
         android:id="@+id/navigation_account"
         android:name="id.rezajuliandri.amegu.ui.main.fragment.AccountFragment"
         android:label="fragment_account"
-        tools:layout="@layout/fragment_upload" >
+        tools:layout="@layout/fragment_account" >
         <action
             android:id="@+id/action_navigation_account_to_loginActivity"
             app:destination="@id/loginActivity" />
+        <action
+            android:id="@+id/action_navigation_account_to_transactionFragment"
+            app:destination="@id/transactionFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
@@ -97,4 +100,9 @@
             android:name="pet"
             app:argType="id.rezajuliandri.amegu.entity.Pet" />
     </fragment>
+    <fragment
+        android:id="@+id/transactionFragment"
+        android:name="id.rezajuliandri.amegu.ui.main.fragment.TransactionFragment"
+        android:label="fragment_transaction"
+        tools:layout="@layout/fragment_transaction" />
 </navigation>

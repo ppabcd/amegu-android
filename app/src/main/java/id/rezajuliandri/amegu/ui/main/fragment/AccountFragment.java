@@ -26,14 +26,14 @@ import id.rezajuliandri.amegu.viewmodel.factory.LoginViewModelFactory;
 public class AccountFragment extends Fragment {
     LoginViewModel loginViewModel;
     Session session;
-    FragmentAccountBinding fragmentAccountBinding;
+    FragmentAccountBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        fragmentAccountBinding = FragmentAccountBinding.inflate(getLayoutInflater());
-        return fragmentAccountBinding.getRoot();
+        binding = FragmentAccountBinding.inflate(getLayoutInflater());
+        return binding.getRoot();
     }
 
     @Override
@@ -52,7 +52,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void success(Users users) {
                 String fullName = users.getFirstName() + " " + users.getLastName();
-                fragmentAccountBinding.name.setText(fullName);
+                binding.name.setText(fullName);
             }
 
             @Override
@@ -64,7 +64,7 @@ public class AccountFragment extends Fragment {
 
             @Override
             public void success(Alamat alamat) {
-                fragmentAccountBinding.location.setText(alamat.getProvinsiName());
+                binding.location.setText(alamat.getProvinsiName());
             }
 
             @Override
@@ -72,9 +72,21 @@ public class AccountFragment extends Fragment {
                 Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
             }
         });
+        // Jika button account di klik
+        binding.btnAccount.setOnClickListener(v -> {
+
+        });
+        // Jika button address di klik
+        binding.btnAddress.setOnClickListener(v -> {
+
+        });
+        // Jika button adoption di klik
+        binding.btnAdoption.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.action_navigation_account_to_transactionFragment);
+        });
 
         // Proses logout dari sistem dan akan menghapus user data dari database lokal
-        fragmentAccountBinding.logout.setOnClickListener(v -> {
+        binding.logout.setOnClickListener(v -> {
             session.logout(new OnLogout() {
                 @Override
                 public void success() {

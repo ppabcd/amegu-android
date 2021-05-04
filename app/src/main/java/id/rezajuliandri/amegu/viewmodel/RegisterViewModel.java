@@ -98,8 +98,8 @@ public class RegisterViewModel extends ViewModel {
         return password != null && password.trim().length() > 8;
     }
 
-    public final void register(OnRegister onRegister, String firstname, String lastName, String email, String password) {
-        Call<EmptyOkResponse> registerResponseCall = ApiConfig.getApiService().register(firstname, lastName, email, password);
+    public final void register(OnRegister onRegister, String firstname, String lastName, String email, String password, String phoneNumber) {
+        Call<EmptyOkResponse> registerResponseCall = ApiConfig.getApiService().register(firstname, lastName, email, password, phoneNumber);
         registerResponseCall.enqueue(new Callback<EmptyOkResponse>() {
             @Override
             public void onResponse(Call<EmptyOkResponse> call, Response<EmptyOkResponse> response) {

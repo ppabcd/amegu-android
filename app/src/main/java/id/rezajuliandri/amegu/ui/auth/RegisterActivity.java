@@ -114,7 +114,8 @@ public class RegisterActivity extends BaseActivity {
                     binding.firstName.getText().toString().trim(),
                     binding.lastName.getText().toString().trim(),
                     binding.username.getText().toString().trim().toLowerCase(),
-                    binding.password.getText().toString().trim()
+                    binding.password.getText().toString().trim(),
+                    binding.phoneNumber.getText().toString().trim()
             );
         });
         // If button action login clicked
