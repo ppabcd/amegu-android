@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EDEDED"
-    tools:context=".ui.main.fragment.PetDetailFragment">
+    tools:context=".ui.pet_detail.PetDetailFragment">
 
     <include layout="@layout/layout_toolbar" />
 
@@ -72,10 +72,10 @@
                         </LinearLayout>
 
 
-                        <ImageView
+                        <ImageButton
                             android:id="@+id/btnShare"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_baseline_share_24"
                             android:text="@string/button"
@@ -83,10 +83,10 @@
                             android:layout_marginEnd="5dp"
                             app:backgroundTint="#FFFFFF" />
 
-                        <ImageView
+                        <ImageButton
                             android:id="@+id/btnLike"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_baseline_favorite_border_24"
                             android:text="@string/button"

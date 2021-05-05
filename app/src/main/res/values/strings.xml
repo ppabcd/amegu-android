@@ -74,4 +74,6 @@
     <string name="account">Akun</string>
     <string name="address">Alamat</string>
     <string name="adoption">Adopsi</string>
+    <string name="pets">Hewan</string>
+    <string name="favorite">Hewan Favorite</string>
 </resources>

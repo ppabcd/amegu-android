@@ -1,6 +1,6 @@
 package id.rezajuliandri.amegu.interfaces.auth;
 
-import id.rezajuliandri.amegu.entity.Users;
+import id.rezajuliandri.amegu.data.entity.auth.Users;
 
 /**
  * Interface untuk callback ketika proses login

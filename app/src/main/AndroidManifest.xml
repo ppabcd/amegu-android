@@ -14,10 +14,10 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.Amegu">
-        <activity android:name=".ui.auth.AlamatActivity"></activity>
-        <activity android:name=".ui.auth.RegisterActivity" />
+        <activity android:name=".ui.address.AddressActivity"></activity>
+        <activity android:name=".ui.register.RegisterActivity" />
         <activity
-            android:name=".ui.auth.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>

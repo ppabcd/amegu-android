@@ -11,13 +11,12 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.Objects;
 
 import id.rezajuliandri.amegu.R;
-import id.rezajuliandri.amegu.entity.Users;
+import id.rezajuliandri.amegu.data.entity.auth.Users;
 import id.rezajuliandri.amegu.interfaces.auth.OnProfile;
-import id.rezajuliandri.amegu.ui.auth.AlamatActivity;
-import id.rezajuliandri.amegu.ui.auth.LoginActivity;
+import id.rezajuliandri.amegu.ui.address.AddressActivity;
+import id.rezajuliandri.amegu.ui.login.LoginActivity;
 import id.rezajuliandri.amegu.ui.main.MainActivity;
-import id.rezajuliandri.amegu.viewmodel.SplashViewModel;
-import id.rezajuliandri.amegu.viewmodel.factory.SplashViewModelFactory;
+import id.rezajuliandri.amegu.viewmodel.ViewModelFactory;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -30,9 +29,10 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_spash);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
+        ViewModelFactory viewModelFactory = ViewModelFactory.getInstance(this.getApplication());
         splashViewModel = new ViewModelProvider(
                 this,
-                new SplashViewModelFactory(this.getApplication())
+                viewModelFactory
         ).get(SplashViewModel.class);
 
         // Proses pengecekan data user apakah tersedia di database atau tidak
@@ -43,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
                     goLogin();
                     return;
                 }
-                if(users.getAlamatId() == 0){
+                if (users.getAlamatId() == 0) {
                     goAddress();
                     return;
                 }
@@ -79,7 +79,7 @@ public class SplashActivity extends AppCompatActivity {
      * Meminta alamat user jika user belum memasukkan alamat
      */
     private void goAddress() {
-        Intent intent = new Intent(SplashActivity.this, AlamatActivity.class);
+        Intent intent = new Intent(SplashActivity.this, AddressActivity.class);
         startActivity(intent);
         finish();
     }

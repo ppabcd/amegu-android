@@ -1,18 +1,15 @@
 package id.rezajuliandri.amegu.adapter;
 
 import android.app.Application;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.ShapeAppearanceModel;
 
@@ -20,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.rezajuliandri.amegu.R;
+import id.rezajuliandri.amegu.abstraction.ItemDetailAbstract;
 import id.rezajuliandri.amegu.databinding.ItemPetRowBinding;
-import id.rezajuliandri.amegu.entity.Pet;
-import id.rezajuliandri.amegu.helper.StringHelper;
-import id.rezajuliandri.amegu.ui.main.abstraction.ItemDetailAbstract;
+import id.rezajuliandri.amegu.data.entity.pet.Pet;
+import id.rezajuliandri.amegu.helpers.StringHelper;
 
 /**
  * Adapter yang digunakan untuk menampilkan data pet
@@ -40,7 +37,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ListViewHolder> 
         this.viewParent = viewParent;
         this.itemDetailAbstract = itemDetailAbstract;
     }
-    
+
     public void setData(List<Pet> pets) {
         this.petList = pets;
     }

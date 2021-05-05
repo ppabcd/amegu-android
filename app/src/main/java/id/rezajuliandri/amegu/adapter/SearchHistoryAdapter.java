@@ -1,11 +1,8 @@
 package id.rezajuliandri.amegu.adapter;
 
-import android.app.Application;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
@@ -14,19 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import id.rezajuliandri.amegu.R;
-import id.rezajuliandri.amegu.databinding.ItemPetRowBinding;
 import id.rezajuliandri.amegu.databinding.ItemSearchRowBinding;
-import id.rezajuliandri.amegu.entity.SearchHistory;
-import id.rezajuliandri.amegu.helper.StringHelper;
-import id.rezajuliandri.amegu.ui.main.fragment.SearchFragmentDirections;
+import id.rezajuliandri.amegu.data.entity.pet.SearchHistory;
+import id.rezajuliandri.amegu.helpers.StringHelper;
+import id.rezajuliandri.amegu.ui.search.SearchFragmentDirections;
+
 /**
  * Adapter yang digunakan untuk menampilkan data search
  */
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.ListViewHolder> {
     private final View viewParent;
-    private List<SearchHistory> searchHistoryList = new ArrayList<>();
     ItemSearchRowBinding itemSearchRowBinding;
+    private List<SearchHistory> searchHistoryList = new ArrayList<>();
 
     public SearchHistoryAdapter(View viewParent) {
         this.viewParent = viewParent;

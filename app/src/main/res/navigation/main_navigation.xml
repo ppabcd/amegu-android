@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="id.rezajuliandri.amegu.ui.main.fragment.HomeFragment"
+        android:name="id.rezajuliandri.amegu.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="id.rezajuliandri.amegu.ui.main.fragment.SearchFragment"
+        android:name="id.rezajuliandri.amegu.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_upload"
-        android:name="id.rezajuliandri.amegu.ui.main.fragment.UploadFragment"
+        android:name="id.rezajuliandri.amegu.ui.upload.UploadFragment"
         android:label="fragment_upload"
         tools:layout="@layout/fragment_upload" >
         <action
@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_account"
-        android:name="id.rezajuliandri.amegu.ui.main.fragment.AccountFragment"
+        android:name="id.rezajuliandri.amegu.ui.account.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" >
         <action
@@ -52,7 +52,11 @@
             app:destination="@id/loginActivity" />
         <action
             android:id="@+id/action_navigation_account_to_transactionFragment"
-            app:destination="@id/transactionFragment" />
+            app:destination="@id/transactionFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_navigation_account_to_accountDetailFragment"
             app:destination="@id/accountDetailFragment" />
@@ -62,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
-        android:name="id.rezajuliandri.amegu.ui.main.fragment.SearchResultFragment"
+        android:name="id.rezajuliandri.amegu.ui.search_result.SearchResultFragment"
         android:label="fragment_search_result"
         tools:layout="@layout/fragment_search_result">
         <argument
@@ -70,55 +74,59 @@
             app:argType="string" />
         <action
             android:id="@+id/action_searchResultFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_searchResultFragment_to_petDetailFragment"
             app:destination="@id/petDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/petDetailFragment"
-        android:name="id.rezajuliandri.amegu.ui.main.fragment.PetDetailFragment"
+        android:name="id.rezajuliandri.amegu.ui.pet_detail.PetDetailFragment"
         android:label="fragment_pet_detail"
         tools:layout="@layout/fragment_pet_detail">
         <argument
             android:name="pet"
-            app:argType="id.rezajuliandri.amegu.entity.Pet" />
+            app:argType="id.rezajuliandri.amegu.data.entity.pet.Pet" />
         <action
             android:id="@+id/action_petDetailFragment_to_adopsiFragment"
             app:destination="@id/adopsiFragment" />
     </fragment>
     <activity
         android:id="@+id/loginActivity"
-        android:name="id.rezajuliandri.amegu.ui.auth.LoginActivity"
+        android:name="id.rezajuliandri.amegu.ui.login.LoginActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login" />
     <activity
         android:id="@+id/registerActivity"
-        android:name="id.rezajuliandri.amegu.ui.auth.RegisterActivity"
+        android:name="id.rezajuliandri.amegu.ui.register.RegisterActivity"
         android:label="activity_register"
         tools:layout="@layout/activity_register" />
     <fragment
         android:id="@+id/adopsiFragment"
-        android:name="id.rezajuliandri.amegu.ui.main.fragment.AdopsiFragment"
+        android:name="id.rezajuliandri.amegu.ui.adopsi.AdopsiFragment"
         android:label="fragment_adopsi"
         tools:layout="@layout/fragment_adopsi" >
         <argument
             android:name="pet"
-            app:argType="id.rezajuliandri.amegu.entity.Pet" />
+            app:argType="id.rezajuliandri.amegu.data.entity.pet.Pet" />
     </fragment>
     <fragment
         android:id="@+id/transactionFragment"
-        android:name="id.rezajuliandri.amegu.ui.main.fragment.TransactionFragment"
+        android:name="id.rezajuliandri.amegu.ui.transaction.TransactionFragment"
         android:label="fragment_transaction"
         tools:layout="@layout/fragment_transaction" />
     <fragment
         android:id="@+id/accountDetailFragment"
-        android:name="id.rezajuliandri.amegu.ui.main.fragment.AccountDetailFragment"
+        android:name="id.rezajuliandri.amegu.ui.account_detail.AccountDetailFragment"
         android:label="fragment_account_detail"
         tools:layout="@layout/fragment_account_detail" />
     <fragment
         android:id="@+id/addressFragment"
-        android:name="id.rezajuliandri.amegu.ui.main.fragment.AddressFragment"
+        android:name="id.rezajuliandri.amegu.ui.address_detail.AddressDetailFragment"
         android:label="fragment_address"
         tools:layout="@layout/fragment_address" />
 </navigation>

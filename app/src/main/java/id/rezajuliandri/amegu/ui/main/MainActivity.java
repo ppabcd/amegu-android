@@ -2,20 +2,17 @@ package id.rezajuliandri.amegu.ui.main;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.Objects;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.databinding.ActivityMainBinding;
-import id.rezajuliandri.amegu.ui.middleware.BaseActivity;
+import id.rezajuliandri.amegu.middleware.BaseActivity;
 
 public class MainActivity extends BaseActivity {
     ActivityMainBinding activityMainBinding;
