@@ -27,11 +27,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import id.rezajuliandri.amegu.R;
+import id.rezajuliandri.amegu.data.entity.auth.Session;
 import id.rezajuliandri.amegu.data.entity.pet.Attachment;
 import id.rezajuliandri.amegu.data.entity.pet.Jenis;
 import id.rezajuliandri.amegu.data.entity.pet.Ras;
 import id.rezajuliandri.amegu.databinding.FragmentUploadBinding;
-import id.rezajuliandri.amegu.data.entity.auth.Session;
 import id.rezajuliandri.amegu.helpers.ActionBarHelper;
 import id.rezajuliandri.amegu.helpers.ImageFilePath;
 import id.rezajuliandri.amegu.interfaces.OnImageUploaded;
@@ -196,30 +196,39 @@ public class UploadFragment extends Fragment {
             session.getToken(new OnToken() {
                 @Override
                 public void success(String token) {
-                    uploadViewModel.uploadPet(
-                            ras1.getId(),
-                            binding.namaHewan.getText().toString(),
-                            Integer.parseInt(binding.usia.getText().toString()),
-                            Integer.parseInt(binding.beratBadan.getText().toString()),
-                            binding.kondisi.getText().toString(),
-                            selectedJenisKelamin.getText().toString().toLowerCase(),
-                            Integer.parseInt(binding.harga.getText().toString()),
-                            binding.deskripsi.getText().toString(),
-                            fileId,
-                            token,
-                            new OnPetUploaded() {
-                                @Override
-                                public void success() {
-                                    Toast.makeText(getContext(), "Berhasil menambahkan hewan", Toast.LENGTH_SHORT).show();
-                                    moveToHomeFragment(view);
-                                }
+                    try {
+                        uploadViewModel.uploadPet(
+                                ras1.getId(),
+                                binding.namaHewan.getText().toString(),
+                                Integer.parseInt(binding.usia.getText().toString()),
+                                Integer.parseInt(binding.beratBadan.getText().toString()),
+                                binding.kondisi.getText().toString(),
+                                selectedJenisKelamin.getText().toString().toLowerCase(),
+                                Integer.parseInt(binding.harga.getText().toString()),
+                                binding.deskripsi.getText().toString(),
+                                fileId,
+                                token,
+                                new OnPetUploaded() {
+                                    @Override
+                                    public void success() {
+                                        Toast.makeText(getContext(), "Berhasil menambahkan hewan", Toast.LENGTH_SHORT).show();
+                                        moveToHomeFragment(view);
+                                    }
 
-                                @Override
-                                public void error(String error) {
-                                    Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+                                    @Override
+                                    public void error(String error) {
+                                        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                    );
+                        );
+                    } catch (Exception e) {
+                        Log.e("UploadFragment@onViewCreated", e.getMessage());
+                        Toast.makeText(
+                                requireContext(),
+                                "Something went wrong. Please check your input or internet connection",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
                 }
 
                 @Override
