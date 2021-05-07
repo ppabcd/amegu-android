@@ -75,11 +75,11 @@ public class AccountDetailFragment extends Fragment {
                         if (
                                 !binding.edtSandiBaru.getText().toString().equals(binding.edtKonfirmSandi.getText().toString())
                         ) {
-                            Toast.makeText(requireActivity(), "Password dengan password konfirmasi harus sama", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Password dengan password konfirmasi harus sama", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (binding.edtSandiBaru.getText().toString().length() < 8) {
-                            Toast.makeText(requireContext(), "Password harus lebih dari 8 karakter", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Password harus lebih dari 8 karakter", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         withPassword = true;
@@ -89,7 +89,7 @@ public class AccountDetailFragment extends Fragment {
                                     binding.edtNamaBelakang.getText().toString().equals("") ||
                                     binding.edtNomorTelepon.getText().toString().equals("")
                     ) {
-                        Toast.makeText(requireContext(), "Mohon untuk mengisi semua field yang dibutuhkan", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Mohon untuk mengisi semua field yang dibutuhkan", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if(!withPassword){
@@ -106,13 +106,13 @@ public class AccountDetailFragment extends Fragment {
                                 session.refreshUserData(new OnProfile() {
                                     @Override
                                     public void success(Users users) {
-                                        Toast.makeText(requireContext(), "Berhasil mengupdate data profile", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), "Berhasil mengupdate data profile", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
 
                                     @Override
                                     public void error(String message) {
-                                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                 });
@@ -120,7 +120,7 @@ public class AccountDetailFragment extends Fragment {
 
                             @Override
                             public void onFailure(Call<EmptyOkResponse> call, Throwable t) {
-                                Toast.makeText(requireContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                                 return;
                             }
                         });
@@ -138,13 +138,13 @@ public class AccountDetailFragment extends Fragment {
                             session.refreshUserData(new OnProfile() {
                                 @Override
                                 public void success(Users users) {
-                                    Toast.makeText(requireContext(), "Berhasil mengupdate data profile", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Berhasil mengupdate data profile", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
                                 @Override
                                 public void error(String message) {
-                                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                                     return;
                                 }
                             });
@@ -152,7 +152,7 @@ public class AccountDetailFragment extends Fragment {
 
                         @Override
                         public void onFailure(Call<EmptyOkResponse> call, Throwable t) {
-                            Toast.makeText(requireContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                             return;
                         }
                     });
@@ -160,7 +160,7 @@ public class AccountDetailFragment extends Fragment {
 
                 @Override
                 public void error(String error) {
-                    Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
                 }
             });
         });
