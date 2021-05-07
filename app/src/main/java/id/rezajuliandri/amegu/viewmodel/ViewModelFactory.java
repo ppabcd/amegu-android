@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import id.rezajuliandri.amegu.data.entity.auth.Session;
 import id.rezajuliandri.amegu.ui.account_detail.AccountDetailViewModel;
 import id.rezajuliandri.amegu.ui.address.AddressViewModel;
+import id.rezajuliandri.amegu.ui.favorite.FavoriteViewModel;
 import id.rezajuliandri.amegu.ui.home.HomeViewModel;
 import id.rezajuliandri.amegu.ui.login.LoginViewModel;
 import id.rezajuliandri.amegu.ui.pet_detail.PetDetailViewModel;
@@ -25,9 +26,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         mApplication = application;
     }
 
-    public static ViewModelFactory getInstance(Application application){
-        if(INSTANCE == null){
-            synchronized (ViewModelFactory.class){
+    public static ViewModelFactory getInstance(Application application) {
+        if (INSTANCE == null) {
+            synchronized (ViewModelFactory.class) {
                 INSTANCE = new ViewModelFactory(application);
             }
         }
@@ -53,10 +54,12 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new SplashViewModel(mApplication);
         } else if (modelClass.isAssignableFrom(UploadViewModel.class)) {
             return (T) new UploadViewModel(mApplication);
-        } else if(modelClass.isAssignableFrom(AccountDetailViewModel.class)){
+        } else if (modelClass.isAssignableFrom(AccountDetailViewModel.class)) {
             return (T) new AccountDetailViewModel(mApplication);
-        } else if(modelClass.isAssignableFrom(Session.class)){
+        } else if (modelClass.isAssignableFrom(Session.class)) {
             return (T) new Session(mApplication);
+        } else if (modelClass.isAssignableFrom(FavoriteViewModel.class)) {
+            return (T) new FavoriteViewModel(mApplication);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

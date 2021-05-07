@@ -168,38 +168,42 @@ public class AddressViewModel extends ViewModel {
         session.getToken(new OnToken() {
             @Override
             public void success(String token) {
-                Call<EmptyOkResponse> emptyOkResponseCall = ApiConfig.
-                        getApiService().
-                        sendAlamat(
-                                alamat,
-                                kelurahan.getId(),
-                                kelurahan.getKecamatan().getId(),
-                                kelurahan.getKecamatan().getKota().getId(),
-                                kelurahan.getKecamatan().getKota().getProvinsi().getId(),
-                                token
-                        );
-                emptyOkResponseCall.enqueue(new Callback<EmptyOkResponse>() {
-                    @Override
-                    public void onResponse(Call<EmptyOkResponse> call, Response<EmptyOkResponse> response) {
-                        session.refreshUserData(new OnProfile() {
-                            @Override
-                            public void success(Users users) {
-                                onAlamatSent.success();
+                try {
+                    Call<EmptyOkResponse> emptyOkResponseCall = ApiConfig.
+                            getApiService().
+                            sendAlamat(
+                                    alamat,
+                                    kelurahan.getId(),
+                                    kelurahan.getKecamatan().getId(),
+                                    kelurahan.getKecamatan().getKota().getId(),
+                                    kelurahan.getKecamatan().getKota().getProvinsi().getId(),
+                                    token
+                            );
+                    emptyOkResponseCall.enqueue(new Callback<EmptyOkResponse>() {
+                        @Override
+                        public void onResponse(Call<EmptyOkResponse> call, Response<EmptyOkResponse> response) {
+                            session.refreshUserData(new OnProfile() {
+                                @Override
+                                public void success(Users users) {
+                                    onAlamatSent.success();
 
-                            }
+                                }
 
-                            @Override
-                            public void error(String message) {
-                                onAlamatSent.error(message);
-                            }
-                        });
-                    }
+                                @Override
+                                public void error(String message) {
+                                    onAlamatSent.error(message);
+                                }
+                            });
+                        }
 
-                    @Override
-                    public void onFailure(Call<EmptyOkResponse> call, Throwable t) {
-                        onAlamatSent.error(t.getMessage());
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<EmptyOkResponse> call, Throwable t) {
+                            onAlamatSent.error(t.getMessage());
+                        }
+                    });
+                } catch (Exception e){
+                    onAlamatSent.error(e.getMessage());
+                }
             }
 
             @Override

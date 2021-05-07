@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_navigation_account_to_addressFragment"
             app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
@@ -129,4 +132,16 @@
         android:name="id.rezajuliandri.amegu.ui.address_detail.AddressDetailFragment"
         android:label="fragment_address"
         tools:layout="@layout/fragment_address" />
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="id.rezajuliandri.amegu.ui.favorite.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_petDetailFragment"
+            app:destination="@id/petDetailFragment" />
+        <action
+            android:id="@+id/action_favoriteFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
 </navigation>

@@ -3,6 +3,7 @@ package id.rezajuliandri.amegu.data.database;
 import android.app.Application;
 
 import id.rezajuliandri.amegu.data.entity.pet.Favorite;
+import id.rezajuliandri.amegu.interfaces.pet.OnAllFavorites;
 import id.rezajuliandri.amegu.interfaces.pet.OnFavorite;
 
 public class FavoriteRepository {
@@ -16,6 +17,12 @@ public class FavoriteRepository {
     public void getFavorite(OnFavorite onFavorite, Favorite favorite) {
         AmeguDatabase.databaseWriteExecutor.execute(() ->
                 onFavorite.success(favoriteDao.getFavorite(favorite.getPetId()))
+        );
+    }
+
+    public void getAllFavorite(OnAllFavorites onAllFavorites){
+        AmeguDatabase.databaseWriteExecutor.execute(()->
+                onAllFavorites.success(favoriteDao.getAllFavorite())
         );
     }
 

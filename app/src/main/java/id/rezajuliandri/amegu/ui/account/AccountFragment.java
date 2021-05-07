@@ -86,7 +86,7 @@ public class AccountFragment extends Fragment {
         });
         // Jika button favorite di klik
         binding.btnFavorite.setOnClickListener(v -> {
-            
+            Navigation.findNavController(view).navigate(R.id.action_navigation_account_to_favoriteFragment);
         });
         // Jika button pets di klik
         binding.btnPets.setOnClickListener(v -> {

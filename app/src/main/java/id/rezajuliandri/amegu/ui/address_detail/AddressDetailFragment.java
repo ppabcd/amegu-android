@@ -97,6 +97,7 @@ public class AddressDetailFragment extends Fragment {
         kelurahans = new ArrayList<>();
 
         initData();
+        checkSubmitData();
 
         binding.alamat.addTextChangedListener(new TextWatcher() {
             @Override

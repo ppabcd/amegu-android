@@ -6,6 +6,7 @@ import id.rezajuliandri.amegu.data.entity.responses.KecamatanResponse;
 import id.rezajuliandri.amegu.data.entity.responses.KelurahanResponse;
 import id.rezajuliandri.amegu.data.entity.responses.KotaResponse;
 import id.rezajuliandri.amegu.data.entity.responses.LoginResponse;
+import id.rezajuliandri.amegu.data.entity.responses.PetDetailResponse;
 import id.rezajuliandri.amegu.data.entity.responses.PetResponse;
 import id.rezajuliandri.amegu.data.entity.responses.ProfileResponse;
 import id.rezajuliandri.amegu.data.entity.responses.ProvinsiResponse;
@@ -133,4 +134,7 @@ public interface ApiService {
 
     @GET("/v1/main/hewan/search/{query}")
     Call<PetResponse> searchPet(@Path("query") String query, @Query("token") String token);
+
+    @GET("/v1/main/hewan/{id}")
+    Call<PetDetailResponse> detailPet(@Path("id") long id, @Query("token") String token);
 }

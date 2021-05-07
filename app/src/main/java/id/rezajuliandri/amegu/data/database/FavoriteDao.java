@@ -3,6 +3,8 @@ package id.rezajuliandri.amegu.data.database;
 import androidx.room.Dao;
 import androidx.room.Query;
 
+import java.util.List;
+
 import id.rezajuliandri.amegu.data.entity.pet.Favorite;
 
 @Dao
@@ -20,4 +22,7 @@ public interface FavoriteDao {
 
     @Query("SELECT * FROM  favorite WHERE pet_id = :petId LIMIT 1")
     Favorite getFavorite(long petId);
+
+    @Query("SELECT * FROM favorite")
+    List<Favorite> getAllFavorite();
 }
