@@ -48,6 +48,12 @@ public class AddressActivity extends BaseActivity {
     Kecamatan kecamatan1;
     Kelurahan kelurahan1;
     ActivityAlamatBinding binding;
+
+    private ArrayList<Kecamatan> kecamatans;
+    private ArrayList<Kelurahan> kelurahans;
+    private ArrayList<Kota> kotas;
+    private ArrayList<Provinsi> provinsis;
+
     private final AdapterView.OnItemSelectedListener kelurahan_listener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -62,8 +68,6 @@ public class AddressActivity extends BaseActivity {
 
         }
     };
-    private ArrayList<Kecamatan> kecamatans;
-    private ArrayList<Kelurahan> kelurahans;
     private final AdapterView.OnItemSelectedListener kecamatan_listener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -128,7 +132,6 @@ public class AddressActivity extends BaseActivity {
 
         }
     };
-    private ArrayList<Kota> kotas;
     // Handle every change data in spinner
     private final AdapterView.OnItemSelectedListener provinsi_listener = new AdapterView.OnItemSelectedListener() {
         @Override
@@ -170,7 +173,6 @@ public class AddressActivity extends BaseActivity {
 
         }
     };
-    private ArrayList<Provinsi> provinsis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -3,6 +3,8 @@ package id.rezajuliandri.amegu.data.entity.auth;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.ViewModel;
+
 import id.rezajuliandri.amegu.data.api.ApiConfig;
 import id.rezajuliandri.amegu.data.entity.location.Alamat;
 import id.rezajuliandri.amegu.data.entity.responses.ProfileResponse;
@@ -19,7 +21,7 @@ import retrofit2.Response;
 /**
  * Class Session untuk memanipulasi data user dari server maupun dari database
  */
-public class Session {
+public class Session extends ViewModel {
     Application application;
     UsersRepository usersRepository;
     AlamatRepository alamatRepository;

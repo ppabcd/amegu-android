@@ -1,9 +1,11 @@
 package id.rezajuliandri.amegu.data.entity.location;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
@@ -13,55 +15,54 @@ import java.io.Serializable;
 
 @Entity
 public class Alamat implements Serializable, Parcelable {
-    public final static Creator<Alamat> CREATOR = new Creator<Alamat>() {
-
-
-        @SuppressWarnings({
-                "unchecked"
-        })
-        public Alamat createFromParcel(android.os.Parcel in) {
-            return new Alamat(in);
-        }
-
-        public Alamat[] newArray(int size) {
-            return (new Alamat[size]);
-        }
-
-    };
     private final static long serialVersionUID = -4116725329306222880L;
     @PrimaryKey
     @ColumnInfo(name = "_id")
     @SerializedName("_id")
     @Expose
     private long id;
+
     @SerializedName("alamat")
     @Expose
     private String alamat;
+
     @SerializedName("kelurahanName")
     @Expose
     private String kelurahanName;
+
+    @SerializedName("kelurahanId")
+    @Expose
+    private long kelurahanId;
+
     @SerializedName("kecamatanName")
     @Expose
     private String kecamatanName;
+
+    @SerializedName("kecamatanId")
+    @Expose
+    private long kecamatanId;
+
     @SerializedName("kotaName")
     @Expose
     private String kotaName;
+
+    @SerializedName("kotaId")
+    @Expose
+    private long kotaId;
+
     @SerializedName("provinsiName")
     @Expose
     private String provinsiName;
 
-    protected Alamat(android.os.Parcel in) {
-        this.id = ((long) in.readValue((long.class.getClassLoader())));
-        this.alamat = ((String) in.readValue((String.class.getClassLoader())));
-        this.kelurahanName = ((String) in.readValue((String.class.getClassLoader())));
-        this.kecamatanName = ((String) in.readValue((String.class.getClassLoader())));
-        this.kotaName = ((String) in.readValue((String.class.getClassLoader())));
-        this.provinsiName = ((String) in.readValue((String.class.getClassLoader())));
-    }
+    @SerializedName("provinsiId")
+    @Expose
+    private long provinsiId;
+
 
     /**
      * No args constructor for use in serialization
      */
+    @Ignore
     public Alamat() {
     }
 
@@ -77,14 +78,67 @@ public class Alamat implements Serializable, Parcelable {
      * @param id
      * @param kelurahanName
      */
-    public Alamat(long id, String alamat, long kelurahanId, String kelurahanName, long kecamatanId, String kecamatanName, long kotaId, String kotaName, Object provinsiId, String provinsiName) {
+    public Alamat(long id, String alamat, long kelurahanId, String kelurahanName, long kecamatanId, String kecamatanName, long kotaId, String kotaName, long provinsiId, String provinsiName) {
         super();
         this.id = id;
         this.alamat = alamat;
         this.kelurahanName = kelurahanName;
+        this.kelurahanId = kelurahanId;
         this.kecamatanName = kecamatanName;
+        this.kecamatanId = kecamatanId;
         this.kotaName = kotaName;
+        this.kotaId = kotaId;
         this.provinsiName = provinsiName;
+        this.provinsiId = provinsiId;
+    }
+
+    @Ignore
+    protected Alamat(Parcel in) {
+        id = in.readLong();
+        alamat = in.readString();
+        kelurahanName = in.readString();
+        kelurahanId = in.readLong();
+        kecamatanName = in.readString();
+        kecamatanId = in.readLong();
+        kotaName = in.readString();
+        kotaId = in.readLong();
+        provinsiName = in.readString();
+        provinsiId = in.readLong();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(alamat);
+        dest.writeString(kelurahanName);
+        dest.writeLong(kelurahanId);
+        dest.writeString(kecamatanName);
+        dest.writeLong(kecamatanId);
+        dest.writeString(kotaName);
+        dest.writeLong(kotaId);
+        dest.writeString(provinsiName);
+        dest.writeLong(provinsiId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Alamat> CREATOR = new Creator<Alamat>() {
+        @Override
+        public Alamat createFromParcel(Parcel in) {
+            return new Alamat(in);
+        }
+
+        @Override
+        public Alamat[] newArray(int size) {
+            return new Alamat[size];
+        }
+    };
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public long getId() {
@@ -111,6 +165,13 @@ public class Alamat implements Serializable, Parcelable {
         this.kelurahanName = kelurahanName;
     }
 
+    public long getKelurahanId() {
+        return kelurahanId;
+    }
+
+    public void setKelurahanId(long kelurahanId) {
+        this.kelurahanId = kelurahanId;
+    }
 
     public String getKecamatanName() {
         return kecamatanName;
@@ -120,6 +181,13 @@ public class Alamat implements Serializable, Parcelable {
         this.kecamatanName = kecamatanName;
     }
 
+    public long getKecamatanId() {
+        return kecamatanId;
+    }
+
+    public void setKecamatanId(long kecamatanId) {
+        this.kecamatanId = kecamatanId;
+    }
 
     public String getKotaName() {
         return kotaName;
@@ -129,6 +197,13 @@ public class Alamat implements Serializable, Parcelable {
         this.kotaName = kotaName;
     }
 
+    public long getKotaId() {
+        return kotaId;
+    }
+
+    public void setKotaId(long kotaId) {
+        this.kotaId = kotaId;
+    }
 
     public String getProvinsiName() {
         return provinsiName;
@@ -138,53 +213,27 @@ public class Alamat implements Serializable, Parcelable {
         this.provinsiName = provinsiName;
     }
 
+    public long getProvinsiId() {
+        return provinsiId;
+    }
+
+    public void setProvinsiId(long provinsiId) {
+        this.provinsiId = provinsiId;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Alamat.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("id");
-        sb.append('=');
-        sb.append(this.id);
-        sb.append(',');
-        sb.append("alamat");
-        sb.append('=');
-        sb.append(((this.alamat == null) ? "<null>" : this.alamat));
-        sb.append(',');
-        sb.append("kelurahanName");
-        sb.append('=');
-        sb.append(((this.kelurahanName == null) ? "<null>" : this.kelurahanName));
-        sb.append(',');
-        sb.append("kecamatanName");
-        sb.append('=');
-        sb.append(((this.kecamatanName == null) ? "<null>" : this.kecamatanName));
-        sb.append(',');
-        sb.append(',');
-        sb.append("kotaName");
-        sb.append('=');
-        sb.append(((this.kotaName == null) ? "<null>" : this.kotaName));
-        sb.append(',');
-        sb.append("provinsiName");
-        sb.append('=');
-        sb.append(((this.provinsiName == null) ? "<null>" : this.provinsiName));
-        sb.append(',');
-        if (sb.charAt((sb.length() - 1)) == ',') {
-            sb.setCharAt((sb.length() - 1), ']');
-        } else {
-            sb.append(']');
-        }
-        return sb.toString();
-    }
-
-    public void writeToParcel(android.os.Parcel dest, int flags) {
-        dest.writeValue(id);
-        dest.writeValue(alamat);
-        dest.writeValue(kelurahanName);
-        dest.writeValue(kecamatanName);
-        dest.writeValue(kotaName);
-        dest.writeValue(provinsiName);
-    }
-
-    public int describeContents() {
-        return 0;
+        return "Alamat{" +
+                "id=" + id +
+                ", alamat='" + alamat + '\'' +
+                ", kelurahanName='" + kelurahanName + '\'' +
+                ", kelurahanId=" + kelurahanId +
+                ", kecamatanName='" + kecamatanName + '\'' +
+                ", kecamatanId=" + kecamatanId +
+                ", kotaName='" + kotaName + '\'' +
+                ", kotaId=" + kotaId +
+                ", provinsiName='" + provinsiName + '\'' +
+                ", provinsiId=" + provinsiId +
+                '}';
     }
 }
