@@ -6,7 +6,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:orientation="vertical">
 
         <!--
@@ -69,9 +72,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/border"
             android:orientation="vertical"
@@ -94,8 +97,8 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/edtAlamatLengkap"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/alamat"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
@@ -103,7 +106,6 @@
                     android:inputType="textMultiLine" />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -112,44 +114,21 @@
                 android:paddingBottom="5dp">
 
                 <TextView
-                    android:id="@+id/textView18"
+                    android:id="@+id/provinsiTxt"
                     android:layout_width="115dp"
                     android:layout_height="wrap_content"
-                    android:text="Kecamatan"
+                    android:text="Provinsi"
+
                     android:textColor="#000000"
                     android:textStyle="bold" />
 
                 <Spinner
-                    android:id="@+id/spinKecamatan"
+                    android:id="@+id/provinsi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
-
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="115dp"
-                    android:layout_height="wrap_content"
-                    android:text="Kelurahan"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/spinKelurahan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -167,7 +146,7 @@
                     android:textStyle="bold" />
 
                 <Spinner
-                    android:id="@+id/spinKota"
+                    android:id="@+id/kota"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -181,16 +160,37 @@
                 android:paddingBottom="5dp">
 
                 <TextView
-                    android:id="@+id/textView23"
+                    android:id="@+id/textView18"
                     android:layout_width="115dp"
                     android:layout_height="wrap_content"
-                    android:text="Provinsi"
-
+                    android:text="Kecamatan"
                     android:textColor="#000000"
                     android:textStyle="bold" />
 
                 <Spinner
-                    android:id="@+id/spinProvinsi"
+                    android:id="@+id/kecamatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:text="Kelurahan"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/kelurahan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -223,7 +223,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnSimpanAlamat"
+            android:id="@+id/sendAddress"
             android:layout_width="241dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

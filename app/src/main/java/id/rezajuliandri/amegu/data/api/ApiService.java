@@ -36,6 +36,24 @@ public interface ApiService {
     Call<ProfileResponse> profile(@Query("token") String token);
 
     @FormUrlEncoded
+    @POST("v1/auth/profile")
+    Call<EmptyOkResponse> profile(
+            @Field("firstName") String firstName,
+            @Field("lastName") String lastName,
+            @Field("phoneNumber") String phoneNumber,
+            @Field("token") String token
+    );
+    @FormUrlEncoded
+    @POST("v1/auth/profile")
+    Call<EmptyOkResponse> profileWithPassword(
+            @Field("firstName") String firstName,
+            @Field("lastName") String lastName,
+            @Field("phoneNumber") String phoneNumber,
+            @Field("password") String password,
+            @Field("token") String token
+    );
+
+    @FormUrlEncoded
     @POST("v1/auth/register")
     Call<EmptyOkResponse> register(
             @Field("firstName") String firstName,

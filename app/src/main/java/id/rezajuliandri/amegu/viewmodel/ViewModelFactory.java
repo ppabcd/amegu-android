@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import id.rezajuliandri.amegu.data.entity.auth.Session;
+import id.rezajuliandri.amegu.ui.account_detail.AccountDetailViewModel;
 import id.rezajuliandri.amegu.ui.address.AddressViewModel;
 import id.rezajuliandri.amegu.ui.home.HomeViewModel;
 import id.rezajuliandri.amegu.ui.login.LoginViewModel;
@@ -51,6 +53,10 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new SplashViewModel(mApplication);
         } else if (modelClass.isAssignableFrom(UploadViewModel.class)) {
             return (T) new UploadViewModel(mApplication);
+        } else if(modelClass.isAssignableFrom(AccountDetailViewModel.class)){
+            return (T) new AccountDetailViewModel(mApplication);
+        } else if(modelClass.isAssignableFrom(Session.class)){
+            return (T) new Session(mApplication);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

@@ -143,7 +143,7 @@ public class UploadFragment extends Fragment {
                 jenisList.add(new Jenis(0, "Pilih jenis hewan"));
                 Collections.sort(jenisList);
                 jenisArrayAdapter = new ArrayAdapter<>(
-                        getContext(),
+                        requireContext(),
                         R.layout.support_simple_spinner_dropdown_item,
                         jenisList
                 );
