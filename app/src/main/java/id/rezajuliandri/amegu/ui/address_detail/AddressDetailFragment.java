@@ -21,6 +21,7 @@ import java.util.Collections;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.data.entity.auth.Session;
+import id.rezajuliandri.amegu.data.entity.auth.Users;
 import id.rezajuliandri.amegu.data.entity.location.Alamat;
 import id.rezajuliandri.amegu.data.entity.location.Kecamatan;
 import id.rezajuliandri.amegu.data.entity.location.Kelurahan;
@@ -28,6 +29,7 @@ import id.rezajuliandri.amegu.data.entity.location.Kota;
 import id.rezajuliandri.amegu.data.entity.location.Provinsi;
 import id.rezajuliandri.amegu.databinding.FragmentAddressBinding;
 import id.rezajuliandri.amegu.interfaces.auth.OnAlamat;
+import id.rezajuliandri.amegu.interfaces.auth.OnProfile;
 import id.rezajuliandri.amegu.interfaces.location.OnAlamatSent;
 import id.rezajuliandri.amegu.interfaces.location.OnKecamatan;
 import id.rezajuliandri.amegu.interfaces.location.OnKelurahan;
@@ -94,18 +96,6 @@ public class AddressDetailFragment extends Fragment {
         kecamatans = new ArrayList<>();
         kelurahans = new ArrayList<>();
 
-        session.getAlamat(new OnAlamat() {
-            @Override
-            public void success(Alamat alamat) {
-                System.out.println(alamat.toString());
-            }
-
-            @Override
-            public void error(String error) {
-
-            }
-        });
-
         initData();
 
         binding.alamat.addTextChangedListener(new TextWatcher() {
@@ -142,6 +132,17 @@ public class AddressDetailFragment extends Fragment {
                     @Override
                     public void success() {
                         Toast.makeText(requireContext(), "Berhasil mengupdate alamat", Toast.LENGTH_SHORT).show();
+                        session.refreshUserData(new OnProfile() {
+                            @Override
+                            public void success(Users users) {
+                                initData();
+                            }
+
+                            @Override
+                            public void error(String message) {
+                                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
 
                     @Override
@@ -228,6 +229,25 @@ public class AddressDetailFragment extends Fragment {
 
         kelurahanArrayAdapter = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, kelurahans);
         binding.kelurahan.setAdapter(kelurahanArrayAdapter);
+        binding.alamat.setText("");
+
+        // Mengambil data alamat dari database
+        session.getAlamat(new OnAlamat() {
+
+            @Override
+            public void success(Alamat alamat) {
+                binding.txtAlamat.setText(alamat.getAlamat());
+                binding.txtProvinsi.setText(alamat.getProvinsiName());
+                binding.txtKota.setText(alamat.getKotaName());
+                binding.txtKecamatan.setText(alamat.getKecamatanName());
+                binding.txtKelurahan.setText(alamat.getKelurahanName());
+            }
+
+            @Override
+            public void error(String error) {
+                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private final AdapterView.OnItemSelectedListener kelurahan_listener = new AdapterView.OnItemSelectedListener() {

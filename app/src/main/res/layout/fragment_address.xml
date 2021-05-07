@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,60 +12,147 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:orientation="vertical">
-
-        <!--
         <TextView
-            android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:text="Unggah Foto Profil"
-            android:textAlignment="viewStart"
+            android:layout_marginTop="15dp"
+            android:text="Alamat"
             android:textColor="#E17810"
             android:textSize="18sp"
             android:textStyle="bold" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/border"
             android:orientation="vertical"
+            android:paddingLeft="10dp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp">
 
-            <ImageView
-                android:id="@+id/imageViewPP"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_baseline_account_circle_24" />
-
-            <Button
-                android:id="@+id/btnUploadPP"
-                android:layout_width="192dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:backgroundTint="#FFAD5C"
-                android:text="Pilih foto" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:text="Alamat"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtAlamat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|top"
+                    tools:text="Alamat"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+
+                <TextView
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:text="Provinsi"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/txtProvinsi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|top"
+                    tools:text="Provinsi"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+
+                <TextView
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:text="Kota"
+
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtKota"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|top"
+                    tools:text="Kota"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+
+                <TextView
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:text="Kecamatan"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtKecamatan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|top"
+                    tools:text="Kecamatan"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+
+                <TextView
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:text="Kelurahan"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtKelurahan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|top"
+                    tools:text="Kelurahan"/>
+
+            </LinearLayout>
         </LinearLayout>
-        -->
+
         <TextView
             android:id="@+id/textView16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
-            android:text="Informasi Alamat"
+            android:text="Ubah Alamat"
             android:textColor="#E17810"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -72,9 +160,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="15dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/border"
             android:orientation="vertical"
@@ -196,40 +282,15 @@
                     android:layout_weight="1" />
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
-
-                <TextView
-                    android:id="@+id/textView24"
-                    android:layout_width="115dp"
-                    android:layout_height="wrap_content"
-                    android:text="Catatan"
-
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/edtCatatanAlamat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:gravity="start|top"
-                    android:inputType="textMultiLine" />
-            </LinearLayout>
         </LinearLayout>
 
         <Button
             android:id="@+id/sendAddress"
-            android:layout_width="241dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
-            android:backgroundTint="#FFAD5C"
+            android:backgroundTint="@color/Oren"
             android:text="simpan" />
 
 

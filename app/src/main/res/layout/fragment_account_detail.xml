@@ -11,59 +11,11 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:orientation="vertical">
-
-        <!--
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:text="Unggah Foto Profil"
-            android:textAlignment="viewStart"
-            android:textColor="#E17810"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/border"
-            android:orientation="vertical"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-
-            <ImageView
-                android:id="@+id/imageViewPP"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_baseline_account_circle_24" />
-
-            <Button
-                android:id="@+id/btnUploadPP"
-                android:layout_width="192dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:backgroundTint="#FFAD5C"
-                android:text="Pilih foto" />
-
-        </LinearLayout>
-        -->
         <TextView
             android:id="@+id/textView16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
             android:text="Informasi Pengguna"
             android:textColor="#E17810"
             android:textSize="18sp"
@@ -72,9 +24,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/border"
             android:orientation="vertical"
@@ -187,9 +137,7 @@
             android:id="@+id/textView21"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
             android:text="Ubah Kata Sandi"
             android:textColor="#E17810"
             android:textSize="18sp"
@@ -198,9 +146,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/border"
             android:orientation="vertical"
@@ -244,7 +190,8 @@
                     android:layout_height="wrap_content"
                     android:text="Konfirmasi kata sandi"
                     android:textColor="#000000"
-                    android:textStyle="bold" />
+                    android:minLines="3"
+                    android:textStyle="bold"/>
 
                 <EditText
                     android:id="@+id/edtKonfirmSandi"
@@ -261,10 +208,9 @@
 
         <Button
             android:id="@+id/btnSimpanAkun"
-            android:layout_width="241dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
             android:backgroundTint="#FFAD5C"
             android:text="simpan" />
