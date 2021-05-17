@@ -6,6 +6,9 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Config yang digunakan untuk API
+ */
 public class ApiConfig {
     private static final String API_URL = BuildConfig.API_URL;
 

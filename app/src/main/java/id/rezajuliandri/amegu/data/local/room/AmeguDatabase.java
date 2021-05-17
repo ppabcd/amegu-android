@@ -29,6 +29,9 @@ import id.rezajuliandri.amegu.data.local.room.dao.RasDao;
 import id.rezajuliandri.amegu.data.local.room.dao.SearchDao;
 import id.rezajuliandri.amegu.data.local.room.dao.UserDao;
 
+/**
+ * Bagian yang mengatur database pada aplikasi
+ */
 @Database(entities = {
         ProvinsiEntity.class,
         KotaEntity.class,

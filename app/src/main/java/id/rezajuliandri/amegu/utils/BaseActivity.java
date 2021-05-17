@@ -8,6 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import id.rezajuliandri.amegu.utils.middleware.session.CheckSessionMiddleware;
 
+/**
+ * Class yang digunakan untuk melakukan pengecekan koneksi pada user ketika menggunakan aplikasi.
+ * Jika terdapat masalah koneksi akan memberikan notifikasi serta juga tidak bisa melakukan beberapa
+ * aksi yang memerlukan jaringan internet.
+ */
 public class BaseActivity extends AppCompatActivity {
     protected boolean shouldCheckValidToken = true;
 

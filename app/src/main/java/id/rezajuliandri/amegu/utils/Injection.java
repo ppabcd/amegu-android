@@ -7,6 +7,9 @@ import id.rezajuliandri.amegu.data.local.LocalDataSource;
 import id.rezajuliandri.amegu.data.local.room.AmeguDatabase;
 import id.rezajuliandri.amegu.data.remote.RemoteDataSource;
 
+/**
+ * Class yang digunakan untuk melakukan injection repository ke view model.
+ */
 public class Injection {
     public static AmeguRepository provideRepository(Context context) {
         RemoteDataSource remoteDataSource = RemoteDataSource.getInstance();

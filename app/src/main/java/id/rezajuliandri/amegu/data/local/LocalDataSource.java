@@ -1,7 +1,5 @@
 package id.rezajuliandri.amegu.data.local;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 
 import java.util.ArrayList;
@@ -16,8 +14,10 @@ import id.rezajuliandri.amegu.data.local.entity.pet.AttachmentEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
 import id.rezajuliandri.amegu.data.local.entity.user.UserEntity;
 import id.rezajuliandri.amegu.data.local.room.AmeguDatabase;
-import kotlin.collections.ArraysKt;
 
+/**
+ * Bagian yang menghandle proses data ke database lokal
+ */
 public class LocalDataSource {
     private static LocalDataSource INSTANCE = null;
     public AmeguDatabase ameguDatabase;
@@ -68,6 +68,7 @@ public class LocalDataSource {
     public void insertUser(UserEntity userEntity) {
         ameguDatabase.userDao().insert(userEntity);
     }
+
     public void deleteUser() {
         ameguDatabase.userDao().delete();
     }
@@ -77,23 +78,25 @@ public class LocalDataSource {
     }
 
     ArrayList<Long> listFavorite = new ArrayList<>();
+
     public void insertPetsAndDelete(ArrayList<PetEntity> petEntities) {
         List<PetEntity> listFavoritePets = ameguDatabase.petDao().getFavoritesEntities();
-        for(PetEntity pet: listFavoritePets){
+        for (PetEntity pet : listFavoritePets) {
             listFavorite.add(pet.getId());
         }
         ameguDatabase.petDao().delete();
         this.insertPets(petEntities);
     }
+
     public void insertPets(ArrayList<PetEntity> petEntities) {
         ArrayList<PetEntity> insertData = new ArrayList<>();
         ArrayList<PetEntity> updateData = new ArrayList<>();
-        for(PetEntity entity: petEntities){
+        for (PetEntity entity : petEntities) {
             PetEntity checkPet = ameguDatabase.petDao().getPetDetailEntity(entity.getId());
-            if(listFavorite.contains(entity.getId())){
+            if (listFavorite.contains(entity.getId())) {
                 entity.setIsFavorite(1);
             }
-            if(checkPet == null){
+            if (checkPet == null) {
                 insertData.add(entity);
                 continue;
             }

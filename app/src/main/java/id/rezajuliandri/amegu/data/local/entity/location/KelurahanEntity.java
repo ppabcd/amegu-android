@@ -5,6 +5,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entity kelurahan pada database lokal
+ */
 @Entity
 public class KelurahanEntity implements Comparable<KelurahanEntity> {
     @PrimaryKey

@@ -2,6 +2,9 @@ package id.rezajuliandri.amegu.data.remote.response;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Response yang digunakan dimana hanya berisi status tanpa data
+ */
 public class SimpleResponse {
 
     @SerializedName("code")

@@ -7,6 +7,10 @@ import static id.rezajuliandri.amegu.vo.Status.ERROR;
 import static id.rezajuliandri.amegu.vo.Status.LOADING;
 import static id.rezajuliandri.amegu.vo.Status.SUCCESS;
 
+/**
+ * Digunakan sebagai output dari network yang digunakan oleh fragment / activity
+ * @param <T>
+ */
 public class Resource<T> {
 
     @NonNull

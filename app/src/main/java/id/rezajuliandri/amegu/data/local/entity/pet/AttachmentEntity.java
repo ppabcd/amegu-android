@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entity attachment pada database lokal
+ */
 @Entity
 public class AttachmentEntity {
     @PrimaryKey

@@ -17,6 +17,9 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class yang menangani gambar
+ */
 public class ImageFilePath {
 
     /**

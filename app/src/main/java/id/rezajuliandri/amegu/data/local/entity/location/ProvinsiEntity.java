@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entity provinsi pada database lokal
+ */
 @Entity
 public class ProvinsiEntity implements Comparable<ProvinsiEntity> {
     @PrimaryKey

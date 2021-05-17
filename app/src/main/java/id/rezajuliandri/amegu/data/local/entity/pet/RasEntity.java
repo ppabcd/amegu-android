@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entity ras pada database lokal
+ */
 @Entity
 public class RasEntity implements Comparable<RasEntity> {
     @PrimaryKey

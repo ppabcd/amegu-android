@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 
 import id.rezajuliandri.amegu.R;
 
+/**
+ * Bagian yang mengatur action bar pada beberapa halaman
+ */
 public class ActionBarHelper {
     private final Activity activity;
     private final View view;

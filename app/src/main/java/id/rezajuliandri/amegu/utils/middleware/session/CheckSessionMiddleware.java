@@ -11,6 +11,9 @@ import id.rezajuliandri.amegu.ui.auth.login.LoginActivity;
 import id.rezajuliandri.amegu.utils.NetworkUtils;
 import id.rezajuliandri.amegu.viewmodel.ViewModelFactory;
 
+/**
+ * Bagian yang mengatur apakah data user tersedia di server
+ */
 public class CheckSessionMiddleware {
     private static CheckSessionMiddleware INSTANCE = null;
     private final Context mContext;

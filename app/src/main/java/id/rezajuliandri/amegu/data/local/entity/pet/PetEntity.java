@@ -7,6 +7,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entity pet pada database lokal
+ */
 @Entity
 public class PetEntity implements Parcelable {
     public static final Creator<PetEntity> CREATOR = new Creator<PetEntity>() {

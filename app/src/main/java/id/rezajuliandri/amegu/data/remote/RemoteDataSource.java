@@ -40,6 +40,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Bagian yang digunakan untuk memanage permintaan data ke API
+ */
 public class RemoteDataSource {
     private static RemoteDataSource INSTANCE;
 

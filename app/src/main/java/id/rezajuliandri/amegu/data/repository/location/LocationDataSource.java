@@ -10,6 +10,9 @@ import id.rezajuliandri.amegu.data.local.entity.location.KotaEntity;
 import id.rezajuliandri.amegu.data.local.entity.location.ProvinsiEntity;
 import id.rezajuliandri.amegu.vo.Resource;
 
+/**
+ * Ringkasan class LocationRepository
+ */
 public interface LocationDataSource {
     LiveData<Resource<List<ProvinsiEntity>>> getAllProvince();
 

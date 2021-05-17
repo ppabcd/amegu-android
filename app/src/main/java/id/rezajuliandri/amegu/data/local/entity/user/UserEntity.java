@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entity user pada database lokal
+ */
 @Entity
 public class UserEntity {
     @ColumnInfo(name = "alamat_id")

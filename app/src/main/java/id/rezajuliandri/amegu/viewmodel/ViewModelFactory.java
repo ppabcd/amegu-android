@@ -25,6 +25,9 @@ import id.rezajuliandri.amegu.ui.user.pets.PetUserViewModel;
 import id.rezajuliandri.amegu.utils.Injection;
 import id.rezajuliandri.amegu.utils.middleware.session.CheckSessionViewModel;
 
+/**
+ * Bagian yang menghandle semua view model yang ada pada aplikasi
+ */
 public class ViewModelFactory implements ViewModelProvider.Factory {
     private static volatile ViewModelFactory INSTANCE;
     private final AmeguRepository ameguRepository;

@@ -3,6 +3,10 @@ package id.rezajuliandri.amegu.data.remote;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * Class yang memproses data dari API
+ * @param <T>
+ */
 public class ApiResponse<T> {
 
     @NonNull

@@ -8,6 +8,10 @@ import androidx.annotation.VisibleForTesting;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+/**
+ * Class yang digunakan untuk melakukan eksekusi diluar thread ui sehingga tidak memberatkan
+ * aplikasi ketika menjalankan sebuah proses yang memakan waktu.
+ */
 public class AppExecutors {
 
     private static final int THREAD_COUNT = 3;

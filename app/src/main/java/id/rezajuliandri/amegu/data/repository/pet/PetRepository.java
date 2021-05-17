@@ -1,4 +1,4 @@
-package id.rezajuliandri.amegu.data.repository;
+package id.rezajuliandri.amegu.data.repository.pet;
 
 import android.content.Context;
 
@@ -24,11 +24,12 @@ import id.rezajuliandri.amegu.data.remote.response.attachment.upload.AttachmentR
 import id.rezajuliandri.amegu.data.remote.response.pet.jenis.JenisResponse;
 import id.rezajuliandri.amegu.data.remote.response.pet.pets.PetResponse;
 import id.rezajuliandri.amegu.data.remote.response.pet.ras.RasResponse;
+import id.rezajuliandri.amegu.data.repository.user.UserRepository;
 import id.rezajuliandri.amegu.utils.AppExecutors;
 import id.rezajuliandri.amegu.utils.NetworkUtils;
 import id.rezajuliandri.amegu.vo.Resource;
 
-public class PetRepository {
+public class PetRepository implements PetDataSource{
     private volatile static PetRepository INSTANCE = null;
 
     private final RemoteDataSource remoteDataSource;

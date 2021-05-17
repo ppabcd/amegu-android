@@ -6,11 +6,18 @@ import androidx.annotation.NonNull;
 
 import id.rezajuliandri.amegu.data.local.LocalDataSource;
 import id.rezajuliandri.amegu.data.remote.RemoteDataSource;
-import id.rezajuliandri.amegu.data.repository.PetRepository;
-import id.rezajuliandri.amegu.data.repository.UserRepository;
+import id.rezajuliandri.amegu.data.repository.pet.PetRepository;
+import id.rezajuliandri.amegu.data.repository.user.UserRepository;
 import id.rezajuliandri.amegu.data.repository.location.LocationRepository;
 import id.rezajuliandri.amegu.utils.AppExecutors;
 
+/**
+ * Bagian yang menangani pengambilan data dan menghubungkan ke network serta local database.
+ * Repository dibagi menjadi beberapa bagian sesaui subjectnya.
+ * - LocationRepository yang menghandle semua data mengenai lokasi
+ * - UserRepository yang menghandle semua data mengenai user
+ * - PetRepository yang menghandle semua data mengenai hewan
+ */
 public class AmeguRepository implements AmeguDataSource{
     private volatile static AmeguRepository INSTANCE = null;
 

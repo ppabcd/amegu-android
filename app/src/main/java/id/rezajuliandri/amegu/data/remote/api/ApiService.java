@@ -26,6 +26,9 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+/**
+ * Proses call API dan datanya dimasukkan ke class Response
+ */
 public interface ApiService {
     @GET("v1/location/provinsi")
     Call<ProvinsiResponseParent> getProvinsi();

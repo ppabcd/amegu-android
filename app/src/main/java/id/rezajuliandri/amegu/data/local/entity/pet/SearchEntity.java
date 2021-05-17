@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
+/**
+ * Entity search pada database lokal
+ */
 @Entity
 public class SearchEntity {
     @PrimaryKey(autoGenerate = true)

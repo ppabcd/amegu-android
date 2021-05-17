@@ -1,4 +1,4 @@
-package id.rezajuliandri.amegu.data.repository;
+package id.rezajuliandri.amegu.data.repository.user;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -15,7 +15,7 @@ import id.rezajuliandri.amegu.data.remote.response.auth.profile.UserProfileRespo
 import id.rezajuliandri.amegu.utils.AppExecutors;
 import id.rezajuliandri.amegu.vo.Resource;
 
-public class UserRepository {
+public class UserRepository implements UserDataSource{
     private volatile static UserRepository INSTANCE = null;
 
     private final RemoteDataSource remoteDataSource;
