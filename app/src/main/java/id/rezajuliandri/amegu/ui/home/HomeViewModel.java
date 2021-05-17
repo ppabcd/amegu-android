@@ -1,5 +1,6 @@
 package id.rezajuliandri.amegu.ui.home;
 
+<<<<<<< HEAD
 import android.app.Application;
 import android.util.Log;
 
@@ -73,5 +74,25 @@ public class HomeViewModel extends ViewModel {
             Log.e("HomeViewmodel@searchPet", e.getMessage());
             onPet.error(e.getMessage());
         }
+=======
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
+
+import java.util.List;
+
+import id.rezajuliandri.amegu.data.AmeguRepository;
+import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
+import id.rezajuliandri.amegu.vo.Resource;
+
+public class HomeViewModel extends ViewModel {
+    AmeguRepository ameguRepository;
+
+    public HomeViewModel(AmeguRepository ameguRepository) {
+        this.ameguRepository = ameguRepository;
+    }
+
+    public LiveData<Resource<List<PetEntity>>> getPets() {
+        return ameguRepository.petRepository().getPets();
+>>>>>>> v2
     }
 }

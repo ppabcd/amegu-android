@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+<<<<<<< HEAD
 import id.rezajuliandri.amegu.adapter.SearchHistoryAdapter;
 import id.rezajuliandri.amegu.data.database.AmeguDatabase;
 import id.rezajuliandri.amegu.databinding.DialogOnlyTextBinding;
@@ -51,6 +52,26 @@ public class SearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+=======
+import id.rezajuliandri.amegu.databinding.DialogOnlyTextBinding;
+import id.rezajuliandri.amegu.databinding.FragmentSearchBinding;
+import id.rezajuliandri.amegu.utils.ActionBarHelper;
+import id.rezajuliandri.amegu.viewmodel.ViewModelFactory;
+
+
+public class SearchFragment extends Fragment {
+    FragmentSearchBinding binding;
+    SearchViewModel searchViewModel;
+    SearchAdapter adapter;
+    DialogOnlyTextBinding dialogOnlyTextBinding;
+    /**
+     * Proses untuk memindahkan ke halaman pencarian berdasarkan keyword yang diinputkan oleh user
+     *
+     * @param view
+     */
+    InputMethodManager inputMethodManager;
+    View view1;
+>>>>>>> v2
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +83,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+<<<<<<< HEAD
 
         ViewModelFactory viewModelFactory = ViewModelFactory.getInstance(requireActivity().getApplication());
         searchViewModel = new ViewModelProvider(
@@ -88,11 +110,37 @@ public class SearchFragment extends Fragment {
         binding.toolbar.searchBox.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 searchData(view);
+=======
+        setViewModel();
+        setActionBar();
+        getData();
+    }
+
+    private void setActionBar() {
+        ActionBarHelper actionBarHelper = new ActionBarHelper(getActivity(), binding.getRoot());
+        actionBarHelper.showBackButton();
+    }
+
+    private void getData() {
+        binding.toolbar.searchBox.requestFocus();
+        binding.toolbar.appBar.setOutlineProvider(null);
+
+        binding.rvSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new SearchAdapter(binding.getRoot());
+        binding.rvSearch.setAdapter(adapter);
+
+        getSearchHistory();
+
+        binding.toolbar.searchBox.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                searchData(binding.getRoot());
+>>>>>>> v2
                 binding.toolbar.searchBox.setText("");
                 return true;
             }
             return false;
         });
+<<<<<<< HEAD
 
     }
 
@@ -104,6 +152,14 @@ public class SearchFragment extends Fragment {
             builder.setView(dialogOnlyTextBinding.getRoot());
             builder.setPositiveButton("Ya", ((dialog, which) -> {
                 searchViewModel.deleteAll();
+=======
+        binding.removeHistory.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            dialogOnlyTextBinding = DialogOnlyTextBinding.inflate(getLayoutInflater());
+            builder.setView(dialogOnlyTextBinding.getRoot());
+            builder.setPositiveButton("Ya", ((dialog, which) -> {
+                searchViewModel.deleteAllSearchHistory();
+>>>>>>> v2
                 getSearchHistory();
                 Toast.makeText(getContext(), "Berhasil menghapus riwayat pencarian", Toast.LENGTH_SHORT).show();
             }));
@@ -113,11 +169,14 @@ public class SearchFragment extends Fragment {
         });
     }
 
+<<<<<<< HEAD
     /**
      * Proses untuk memindahkan ke halaman pencarian berdasarkan keyword yang diinputkan oleh user
      *
      * @param view
      */
+=======
+>>>>>>> v2
     private void searchData(View view) {
         if ("".equals(binding.toolbar.searchBox.getText().toString())) {
             Toast.makeText(getActivity(), "Mohon untuk mengisi text pada form search", Toast.LENGTH_SHORT).show();
@@ -135,6 +194,17 @@ public class SearchFragment extends Fragment {
         Navigation.findNavController(view).navigate(toSearchResultFragment);
     }
 
+<<<<<<< HEAD
+=======
+    private void setViewModel() {
+        ViewModelFactory viewModelFactory = ViewModelFactory.getInstance(getContext());
+        searchViewModel = new ViewModelProvider(
+                this,
+                viewModelFactory
+        ).get(SearchViewModel.class);
+    }
+
+>>>>>>> v2
     /**
      * Mengambil history search dari user
      */

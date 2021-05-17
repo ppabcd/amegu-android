@@ -5,21 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EDEDED"
+<<<<<<< HEAD
     tools:context=".ui.pet_detail.PetDetailFragment">
 
     <include layout="@layout/layout_toolbar" />
+=======
+    tools:context=".ui.pet.detail.PetDetailFragment">
+
+    <include android:id="@+id/toolbar" layout="@layout/layout_toolbar" />
+>>>>>>> v2
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingBottom="55dp">
+<<<<<<< HEAD
 
+=======
+>>>>>>> v2
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="?attr/actionBarSize">
+<<<<<<< HEAD
+=======
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+>>>>>>> v2
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
@@ -327,6 +344,7 @@
                     android:id="@+id/btnAdopt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+<<<<<<< HEAD
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
@@ -334,6 +352,36 @@
                     android:background="#FFAD5C"
                     android:text="@string/adopsi_sekarang"
                     app:backgroundTint="#FFAD5C" />
+=======
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:background="#FFAD5C"
+                    android:text="@string/adopsi_sekarang"
+                    app:backgroundTint="#FFAD5C" />
+                <Button
+                    android:id="@+id/btnEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:background="#FFAD5C"
+                    android:text="@string/edit_hewan"
+                    app:backgroundTint="#FFAD5C"
+                    android:visibility="gone"/>
+                <Button
+                    android:id="@+id/btnDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:background="@android:color/holo_red_light"
+                    android:text="@string/hapus_hewan"
+                    app:backgroundTint="@android:color/holo_red_dark"
+                    android:visibility="gone"/>
+>>>>>>> v2
             </LinearLayout>
 
         </LinearLayout>

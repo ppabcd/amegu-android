@@ -76,4 +76,12 @@
     <string name="adoption">Adopsi</string>
     <string name="pets">Hewan</string>
     <string name="favorite">Hewan Favorite</string>
+<<<<<<< HEAD
+=======
+    <string name="tidak_ada_hewan_yang_tersedia">Tidak ada hewan yang tersedia</string>
+    <string name="hewan_saya">Hewan Saya</string>
+    <string name="simpan">Simpan</string>
+    <string name="edit_hewan">Edit Hewan</string>
+    <string name="hapus_hewan">Hapus hewan</string>
+>>>>>>> v2
 </resources>

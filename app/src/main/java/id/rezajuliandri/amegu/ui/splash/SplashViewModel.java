@@ -1,5 +1,6 @@
 package id.rezajuliandri.amegu.ui.splash;
 
+<<<<<<< HEAD
 import android.app.Application;
 
 import androidx.lifecycle.ViewModel;
@@ -24,5 +25,22 @@ public class SplashViewModel extends ViewModel {
      */
     public void checkUserData(OnProfile onProfile) {
         session.getUser(onProfile);
+=======
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
+
+import id.rezajuliandri.amegu.data.AmeguRepository;
+import id.rezajuliandri.amegu.data.local.entity.user.UserEntity;
+
+public class SplashViewModel extends ViewModel {
+    AmeguRepository ameguRepository;
+
+    public SplashViewModel(AmeguRepository ameguRepository) {
+        this.ameguRepository = ameguRepository;
+    }
+
+    public LiveData<UserEntity> checkUserLogin() {
+        return ameguRepository.userRepository().getUser();
+>>>>>>> v2
     }
 }

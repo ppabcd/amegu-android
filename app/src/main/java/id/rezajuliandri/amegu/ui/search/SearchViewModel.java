@@ -1,12 +1,16 @@
 package id.rezajuliandri.amegu.ui.search;
 
+<<<<<<< HEAD
 import android.app.Application;
 
+=======
+>>>>>>> v2
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
+<<<<<<< HEAD
 import id.rezajuliandri.amegu.data.database.SearchHistoryRepository;
 import id.rezajuliandri.amegu.data.entity.pet.SearchHistory;
 
@@ -66,5 +70,23 @@ public class SearchViewModel extends ViewModel {
      */
     public void deleteAll() {
         mRepository.deleteAll();
+=======
+import id.rezajuliandri.amegu.data.AmeguRepository;
+import id.rezajuliandri.amegu.data.local.entity.pet.SearchEntity;
+
+public class SearchViewModel extends ViewModel {
+    AmeguRepository ameguRepository;
+
+    public SearchViewModel(AmeguRepository ameguRepository) {
+        this.ameguRepository = ameguRepository;
+    }
+
+    public void deleteAllSearchHistory() {
+        ameguRepository.petRepository().removeSearchData();
+    }
+
+    public LiveData<List<SearchEntity>> getAllSearchHistory() {
+        return ameguRepository.petRepository().getSearchData();
+>>>>>>> v2
     }
 }

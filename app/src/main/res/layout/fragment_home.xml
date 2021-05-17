@@ -55,6 +55,22 @@
                 android:nestedScrollingEnabled="false"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp" />
+<<<<<<< HEAD
+=======
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/emptyResponse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tidak_ada_hewan_yang_tersedia"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone"/>
+>>>>>>> v2
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

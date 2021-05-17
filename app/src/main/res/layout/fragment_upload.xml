@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context=".ui.upload.UploadFragment">
+=======
+    tools:context=".ui.pet.upload.UploadFragment">
+>>>>>>> v2
     <include layout="@layout/layout_toolbar" />
     <androidx.core.widget.NestedScrollView android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -65,7 +69,16 @@
                     android:layout_height="80dp"
                     android:layout_marginEnd="20dp"
                     android:visibility="gone" />
+<<<<<<< HEAD
 
+=======
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"/>
+>>>>>>> v2
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -78,6 +91,10 @@
                         android:text="@string/upload_text"
                         android:textAlignment="center" />
                 </LinearLayout>
+<<<<<<< HEAD
+=======
+
+>>>>>>> v2
             </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
@@ -102,7 +119,12 @@
                 android:id="@+id/usia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:hint="@string/usia"/>
+=======
+                android:hint="@string/usia"
+                android:inputType="number"/>
+>>>>>>> v2
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
