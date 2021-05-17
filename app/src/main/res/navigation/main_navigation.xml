@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/navigation_home">
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="id.rezajuliandri.amegu.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_navigation_home_to_petDetailFragment"
+            app:destination="@id/petDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="id.rezajuliandri.amegu.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/petDetailFragment"
+        android:name="id.rezajuliandri.amegu.ui.pet.detail.PetDetailFragment"
+        android:label="fragment_pet_detail"
+        tools:layout="@layout/fragment_pet_detail">
+        <argument
+            android:name="petId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_petDetailFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_petDetailFragment_to_petsUserFragment"
+            app:destination="@id/petsUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="id.rezajuliandri.amegu.ui.search.result.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result">
+        <argument
+            android:name="keyword"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_searchResultFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_searchResultFragment_to_petDetailFragment"
+            app:destination="@id/petDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="id.rezajuliandri.amegu.ui.user.account.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_navigation_account_to_loginActivity"
+            app:destination="@id/loginActivity" />
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_account_to_transactionFragment"-->
+<!--            app:destination="@id/transactionFragment"-->
+<!--            app:enterAnim="@anim/nav_default_enter_anim"-->
+<!--            app:exitAnim="@anim/nav_default_exit_anim"-->
+<!--            app:popEnterAnim="@anim/nav_default_pop_enter_anim"-->
+<!--            app:popExitAnim="@anim/nav_default_pop_exit_anim" />-->
+        <action
+            android:id="@+id/action_navigation_account_to_accountDetailFragment"
+            app:destination="@id/accountDetailFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_petsUserFragment"
+            app:destination="@id/petsUserFragment"/>
+        <action
+            android:id="@+id/action_navigation_account_to_addressUserFragment"
+            app:destination="@id/addressUserFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountDetailFragment"
+        android:name="id.rezajuliandri.amegu.ui.user.account.detail.AccountDetailFragment"
+        android:label="fragment_account_detail"
+        tools:layout="@layout/fragment_account_detail" />
+    <fragment
+        android:id="@+id/petsUserFragment"
+        android:name="id.rezajuliandri.amegu.ui.user.pets.PetsUserFragment"
+        android:label="fragment_pets_user"
+        tools:layout="@layout/fragment_pets_user" >
+        <action
+            android:id="@+id/action_petsUserFragment_to_petDetailFragment"
+            app:destination="@id/petDetailFragment" />
+        <action
+            android:id="@+id/action_petsUserFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="id.rezajuliandri.amegu.ui.user.favorite.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_petDetailFragment"
+            app:destination="@id/petDetailFragment" />
+        <action
+            android:id="@+id/action_favoriteFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressUserFragment"
+        android:name="id.rezajuliandri.amegu.ui.user.address.AddressUserFragment"
+        android:label="fragment_address_user"
+        tools:layout="@layout/fragment_address_user" >
+        <action
+            android:id="@+id/action_addressUserFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_upload"
+        android:name="id.rezajuliandri.amegu.ui.pet.upload.UploadFragment"
+        android:label="fragment_upload"
+        tools:layout="@layout/fragment_upload" >
+        <action
+            android:id="@+id/action_navigation_upload_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_upload_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_navigation_upload_to_petsUserFragment"
+            app:destination="@id/petsUserFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="id.rezajuliandri.amegu.ui.auth.login.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+</navigation>
+<!--    <?xml version="1.0" encoding="utf-8"?>-->
+<!--<navigation xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:id="@+id/main_navigation"-->
+<!--app:startDestination="@id/navigation_home">-->
+
+<!--<fragment-->
+<!--    android:id="@+id/navigation_upload"-->
+<!--    android:name="id.rezajuliandri.amegu.ui.upload.UploadFragment"-->
+<!--    android:label="fragment_upload"-->
+<!--    tools:layout="@layout/fragment_upload" >-->
+<!--    <action-->
+<!--        android:id="@+id/action_navigation_upload_to_navigation_home2"-->
+<!--        app:destination="@id/navigation_home" />-->
+<!--</fragment>-->
+<!--<fragment-->
+<!--    android:id="@+id/searchResultFragment"-->
+<!--    android:name="id.rezajuliandri.amegu.ui.search_result.SearchResultFragment"-->
+<!--    android:label="fragment_search_result"-->
+<!--    tools:layout="@layout/fragment_search_result">-->
+<!--    <argument-->
+<!--        android:name="keyword"-->
+<!--        app:argType="string" />-->
+<!--    <action-->
+<!--        android:id="@+id/action_searchResultFragment_to_searchFragment"-->
+<!--        app:destination="@id/searchFragment"-->
+<!--        app:enterAnim="@anim/nav_default_enter_anim"-->
+<!--        app:exitAnim="@anim/nav_default_exit_anim"-->
+<!--        app:popEnterAnim="@anim/nav_default_pop_enter_anim"-->
+<!--        app:popExitAnim="@anim/nav_default_pop_exit_anim" />-->
+<!--    <action-->
+<!--        android:id="@+id/action_searchResultFragment_to_petDetailFragment"-->
+<!--        app:destination="@id/petDetailFragment" />-->
+<!--</fragment>-->
+<!--<activity-->
+<!--    android:id="@+id/loginActivity"-->
+<!--    android:name="id.rezajuliandri.amegu.ui.login.LoginActivity"-->
+<!--    android:label="activity_login"-->
+<!--    tools:layout="@layout/activity_login" />-->
+<!--<activity-->
+<!--    android:id="@+id/registerActivity"-->
+<!--    android:name="id.rezajuliandri.amegu.ui.register.RegisterActivity"-->
+<!--    android:label="activity_register"-->
+<!--    tools:layout="@layout/activity_register" />-->
+<!--<fragment-->
+<!--    android:id="@+id/adopsiFragment"-->
+<!--    android:name="id.rezajuliandri.amegu.ui.adopsi.AdopsiFragment"-->
+<!--    android:label="fragment_adopsi"-->
+<!--    tools:layout="@layout/fragment_adopsi" >-->
+<!--    <argument-->
+<!--        android:name="pet"-->
+<!--        app:argType="id.rezajuliandri.amegu.data.entity.pet.Pet" />-->
+<!--</fragment>-->
+<!--<fragment-->
+<!--    android:id="@+id/transactionFragment"-->
+<!--    android:name="id.rezajuliandri.amegu.ui.transaction.TransactionFragment"-->
+<!--    android:label="fragment_transaction"-->
+<!--    tools:layout="@layout/fragment_transaction" />-->
