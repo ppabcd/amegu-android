@@ -11,7 +11,7 @@ import id.rezajuliandri.amegu.data.repository.UserRepository;
 import id.rezajuliandri.amegu.data.repository.location.LocationRepository;
 import id.rezajuliandri.amegu.utils.AppExecutors;
 
-public class AmeguRepository {
+public class AmeguRepository implements AmeguDataSource{
     private volatile static AmeguRepository INSTANCE = null;
 
     private final RemoteDataSource remoteDataSource;
