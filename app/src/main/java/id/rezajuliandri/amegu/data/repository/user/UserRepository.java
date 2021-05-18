@@ -15,6 +15,38 @@ import id.rezajuliandri.amegu.data.remote.response.auth.profile.UserProfileRespo
 import id.rezajuliandri.amegu.utils.AppExecutors;
 import id.rezajuliandri.amegu.vo.Resource;
 
+/**
+ * Bagian yang mengurus data user baik itu pengambilan data secara online maupun offline pada local
+ * database.
+ * Jika hanya diambil secara online maka return akan langsung ke remoteDataSource.
+ * Namun jika diambil hanya dari database melakukan return data LiveData namun untuk pengambilannya
+ * dengan menggunakan appExecutors.diskIO().execute(() -> {});
+ *
+ * Jika data yang diambil berasal dari internet dan juga lokal dimana jika data tidak tersedia pada
+ * lokal maka akan memanggil api dan menyimpannya di lokal namun jika data sudah tersedia langsung
+ * melakukan pengambilan data dari local tanpa perlu memanggil api. Untuk hal ini mereturn object
+ * dari NetworkBoundResource dan mengembalikan Resource<entity>.
+ * Berikut adalah penjelasan beberapa method override yang ada pada NetworkBoundResource.
+ * - loadFromDB
+ * -+ Method ini digunakan untuk mengambil data dari database sehingga ketika sudah berhasil
+ * -+ mengambil data dari API maka bagian ini yang akan dipanggil. Selain itu bagian ini juga akan
+ * -+ dipanggil ketika ingin mengetahui apakah sudah ada data tersebut di database atau belum.
+ * - shoudFetch
+ * -+ Method ini digunakan sebagai indikator apakah memerlukan pengambilan data ke api atau tidak.
+ * -+ method ini akan memanggil loadFromDB dan melakukan pemeriksaan kondisi yg ada di dalamnya.
+ * -+ jika bernilai true maka akan mengambil data dari api namun jika false maka akan mereturn data
+ * -+ dari loadFromDB.
+ * - createCall
+ * -+ Method ini digunakan untuk melakukan pengambilan data dari api. Bagian ini akan terpanggil
+ * -+ jika shouldFetch bernilai true. Hasil dari method ini akan dikirimkan ke method saveCallResult
+ * -+ untuk disimpan kedalam database lokal.
+ * - saveCallResult
+ * -+ Method ini digunakan untuk melakukan konversi response dari api ke entity lokal. Sehingga yang
+ * -+ diambil adalah data yang dibutuhkan saja serta melakukan penyesuaian pada data agar sesuai
+ * -+ dengan struktur database lokal. Setelah melakukan konversi langkah selanjutnya adalah mengirimkan
+ * -+ kedalam database local melalui localDataSource. Setelah selesai maka akan mengembalikan kembali
+ * -+ nilai dari dalam database untuk digunakan di viewModel.
+ */
 public class UserRepository implements UserDataSource{
     private volatile static UserRepository INSTANCE = null;
 
