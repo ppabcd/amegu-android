@@ -55,6 +55,8 @@ import id.rezajuliandri.amegu.vo.Resource;
  * -+ dengan struktur database lokal. Setelah melakukan konversi langkah selanjutnya adalah mengirimkan
  * -+ kedalam database local melalui localDataSource. Setelah selesai maka akan mengembalikan kembali
  * -+ nilai dari dalam database untuk digunakan di viewModel.
+ *
+ * Informasi lebih lanjut mengenai tiap method ada pada LocationDataSource.java
  */
 public class LocationRepository implements LocationDataSource {
     private volatile static LocationRepository INSTANCE = null;

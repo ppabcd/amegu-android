@@ -60,6 +60,8 @@ import id.rezajuliandri.amegu.vo.Resource;
  * -+ dengan struktur database lokal. Setelah melakukan konversi langkah selanjutnya adalah mengirimkan
  * -+ kedalam database local melalui localDataSource. Setelah selesai maka akan mengembalikan kembali
  * -+ nilai dari dalam database untuk digunakan di viewModel.
+ *
+ * Informasi lebih lanjut mengenai tiap method ada pada PetDataSource.java
  */
 public class PetRepository implements PetDataSource{
     private volatile static PetRepository INSTANCE = null;

@@ -46,6 +46,8 @@ import id.rezajuliandri.amegu.vo.Resource;
  * -+ dengan struktur database lokal. Setelah melakukan konversi langkah selanjutnya adalah mengirimkan
  * -+ kedalam database local melalui localDataSource. Setelah selesai maka akan mengembalikan kembali
  * -+ nilai dari dalam database untuk digunakan di viewModel.
+ *
+ * Informasi lebih lanjut mengenai tiap method ada pada UserDataSource.java
  */
 public class UserRepository implements UserDataSource{
     private volatile static UserRepository INSTANCE = null;
