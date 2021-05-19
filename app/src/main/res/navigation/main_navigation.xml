@@ -100,6 +100,9 @@
         <action
             android:id="@+id/action_navigation_account_to_favoriteFragment"
             app:destination="@id/favoriteFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_bankAccountFragment"
+            app:destination="@id/bankAccountFragment"/>
     </fragment>
     <fragment
         android:id="@+id/accountDetailFragment"
@@ -120,6 +123,15 @@
             app:destination="@id/petDetailFragment" />
         <action
             android:id="@+id/action_petsUserFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bankAccountFragment"
+        android:name="id.rezajuliandri.amegu.ui.user.bankAccount.BankAccountFragment"
+        android:label="fragment_bank_account"
+        tools:layout="@layout/fragment_bank_account" >
+        <action
+            android:id="@+id/action_bankAccountFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
     </fragment>
     <fragment

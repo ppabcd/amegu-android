@@ -83,4 +83,5 @@
     <string name="hapus_hewan">Hapus hewan</string>
     <string name="ubah">Ubah</string>
     <string name="update_pet_title">Ubah informasi hewanmu</string>
+    <string name="bank_account">Rekening</string>
 </resources>
