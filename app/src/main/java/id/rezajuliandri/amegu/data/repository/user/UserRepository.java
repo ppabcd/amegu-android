@@ -175,7 +175,7 @@ public class UserRepository implements UserDataSource{
 
             @Override
             protected void saveCallResult(UserProfileResponse data) {
-                UserEntity userEntity = new UserEntity(1,
+                UserEntity userEntity = new UserEntity(data.getId(),
                         data.getFirstName(),
                         data.getLastName(),
                         data.getEmail(),
@@ -195,6 +195,7 @@ public class UserRepository implements UserDataSource{
                         data.getAlamat().getProvinsiName(),
                         data.getAlamat().getProvinsiId()
                 );
+                localDataSource.deleteUser();
                 localDataSource.insertUser(userEntity);
                 localDataSource.insertAlamat(alamatEntity);
             }

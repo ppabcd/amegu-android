@@ -28,9 +28,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.data.local.entity.pet.AttachmentEntity;
@@ -97,9 +99,10 @@ public class PetUpdateFragment extends BaseFragment {
         binding.usia.addTextChangedListener(textListener);
         binding.beratBadan.addTextChangedListener(textListener);
         binding.kondisi.addTextChangedListener(textListener);
-        binding.harga.addTextChangedListener(textListener);
+        binding.harga.addTextChangedListener(currencyListener);
         binding.deskripsi.addTextChangedListener(textListener);
     }
+
     private final RadioGroup.OnCheckedChangeListener jenisKelaminListener = (group, checkedId) -> checkButton();
     TextWatcher textListener = new TextWatcher() {
         @Override
@@ -110,6 +113,40 @@ public class PetUpdateFragment extends BaseFragment {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             checkButton();
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+    TextWatcher currencyListener = new TextWatcher() {
+        private String current = "";
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            checkButton();
+            if (!s.toString().equals(current)) {
+                binding.harga.removeTextChangedListener(this);
+
+                Locale myIndonesianLocale = new Locale("id", "ID");
+                String replaceable = String.format("[%s,.]", NumberFormat.getCurrencyInstance(myIndonesianLocale).getCurrency().getSymbol());
+                String cleanString = s.toString().replaceAll(replaceable, "");
+
+                double parsed = Double.parseDouble(cleanString);
+                String formatted = NumberFormat.getCurrencyInstance(myIndonesianLocale).format(parsed);
+
+                current = formatted;
+                binding.harga.setText(formatted);
+                binding.harga.setSelection(formatted.length());
+
+                binding.harga.addTextChangedListener(this);
+            }
         }
 
         @Override
@@ -139,11 +176,11 @@ public class PetUpdateFragment extends BaseFragment {
                                     );
                                     binding.ras.setAdapter(rasEntityArrayAdapter);
                                     binding.ras.setOnItemSelectedListener(rasListener);
-                                    if(rasId != 0){
+                                    if (rasId != 0) {
                                         int countRas = binding.ras.getCount();
-                                        for(int i = 0; i < countRas; i++){
+                                        for (int i = 0; i < countRas; i++) {
                                             RasEntity cekRas = (RasEntity) binding.ras.getItemAtPosition(i);
-                                            if(cekRas.getId() == rasId){
+                                            if (cekRas.getId() == rasId) {
                                                 binding.ras.setSelection(i, true);
                                             }
                                         }
@@ -215,11 +252,7 @@ public class PetUpdateFragment extends BaseFragment {
             return;
         }
 
-        if("".equals(binding.harga.getText().toString())){
-            return;
-        }
-
-        if (Integer.parseInt(binding.harga.getText().toString()) < 0) {
+        if ("".equals(binding.harga.getText().toString())) {
             return;
         }
         binding.send.setEnabled(true);
@@ -264,12 +297,12 @@ public class PetUpdateFragment extends BaseFragment {
                                                 binding.jenis.setAdapter(jenisEntityArrayAdapter);
                                                 binding.jenis.setOnItemSelectedListener(jenisListener);
                                                 viewModel.getRasLocal(pet.getRasId()).observe(getViewLifecycleOwner(), rasEntity -> {
-                                                    if(rasEntity != null){
+                                                    if (rasEntity != null) {
                                                         rasId = rasEntity.getId();
                                                         int countJenis = binding.jenis.getCount();
                                                         for (int i = 0; i < countJenis; i++) {
                                                             JenisEntity cekJenis = (JenisEntity) binding.jenis.getItemAtPosition(i);
-                                                            if(cekJenis.getId() == rasEntity.getJenisId()){
+                                                            if (cekJenis.getId() == rasEntity.getJenisId()) {
                                                                 binding.jenis.setSelection(i, true);
                                                             }
                                                         }
@@ -325,7 +358,7 @@ public class PetUpdateFragment extends BaseFragment {
                                     binding.send.setText(R.string.loading);
                                     viewModel.uploadPet(
                                             pet.getId(),
-                                            ((RasEntity)binding.ras.getSelectedItem()).getId(),
+                                            ((RasEntity) binding.ras.getSelectedItem()).getId(),
                                             binding.namaHewan.getText().toString(),
                                             Integer.parseInt(binding.usia.getText().toString()),
                                             Integer.parseInt(binding.beratBadan.getText().toString()),
@@ -336,7 +369,7 @@ public class PetUpdateFragment extends BaseFragment {
                                             fileId,
                                             userEntity.getToken()
                                     ).observe(getViewLifecycleOwner(), status -> {
-                                        if(status.toLowerCase().equals("ok")){
+                                        if (status.toLowerCase().equals("ok")) {
                                             Toast.makeText(requireContext(), "Berhasil mengupdate data hewan", Toast.LENGTH_SHORT).show();
                                             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_petUpdateFragment_to_petsUserFragment);
                                             return;
