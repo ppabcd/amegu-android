@@ -53,6 +53,6 @@ public class AddressViewModel extends ViewModel {
     }
 
     public LiveData<Resource<UserEntity>> getProfile(String token) {
-        return ameguRepository.userRepository().getProfile(token);
+        return ameguRepository.userRepository().updateProfile(token);
     }
 }
