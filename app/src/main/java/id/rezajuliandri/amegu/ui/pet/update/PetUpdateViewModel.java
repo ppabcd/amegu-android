@@ -25,12 +25,12 @@ public class PetUpdateViewModel extends ViewModel {
         return ameguRepository.petRepository().getPetDetail(petId);
     }
 
-    public LiveData<Resource<List<JenisEntity>>> getJenis() {
-        return ameguRepository.petRepository().getJenis();
+    public LiveData<Resource<List<RasEntity>>> getRas(long jenisId) {
+        return ameguRepository.petRepository().getRas(jenisId);
     }
 
-    public LiveData<Resource<List<RasEntity>>> getRas(long id) {
-        return ameguRepository.petRepository().getRas(id);
+    public LiveData<Resource<List<JenisEntity>>> getJenis() {
+        return ameguRepository.petRepository().getJenis();
     }
 
     public LiveData<UserEntity> getUser() {
@@ -43,5 +43,13 @@ public class PetUpdateViewModel extends ViewModel {
 
     public LiveData<AttachmentEntity> getAttachment(int attachmentId) {
         return ameguRepository.petRepository().getAttachment(attachmentId);
+    }
+
+    public LiveData<RasEntity> getRasLocal(int rasId) {
+        return ameguRepository.petRepository().getRasLocal(rasId);
+    }
+
+    public LiveData<String> uploadPet(long id, long rasId, String namaHewan, int usia, int beratBadan, String kondisi, String jenisKelamin, int harga, String deskripsi, long attachmentId, String token) {
+        return ameguRepository.petRepository().updatePet(id, rasId, namaHewan, usia, beratBadan, kondisi, jenisKelamin, harga, deskripsi, attachmentId, token);
     }
 }

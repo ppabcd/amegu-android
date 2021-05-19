@@ -4,7 +4,6 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -108,7 +107,7 @@ public class PetRepository implements PetDataSource{
             @Override
             protected void saveCallResult(List<PetResponse> petResponses) {
                 ArrayList<PetEntity> petEntities = new ArrayList<>();
-                ArrayList<AttachmentEntity> attachmentEntities = new ArrayList<>();
+                ArrayList<RasEntity> rasEntities = new ArrayList<>();
                 for (PetResponse response : petResponses) {
                     PetEntity petEntity = new PetEntity(
                             response.getId(),
@@ -144,8 +143,18 @@ public class PetRepository implements PetDataSource{
                         );
                         localDataSource.insertAttachment(attachmentEntity);
                     }
+                    if(response.getRas() != null){
+                        RasResponse rasResponse = response.getRas();
+                        RasEntity rasEntity = new RasEntity(
+                                rasResponse.getId(),
+                                rasResponse.getRas(),
+                                rasResponse.getJenisId()
+                        );
+                        rasEntities.add(rasEntity);
+                    }
                     petEntities.add(petEntity);
                 }
+                localDataSource.insertRas(rasEntities);
                 localDataSource.insertPetsAndDelete(petEntities);
             }
         }.asLiveData();
@@ -427,9 +436,25 @@ public class PetRepository implements PetDataSource{
             }
         }.asLiveData();
     }
-
+    @Override
     public LiveData<String> uploadPet(long rasId, String namaHewan, int usia, int beratBadan, String kondisi, String jenisKelamin, int harga, String deskripsi, long attachmentId, String token) {
         return remoteDataSource.uploadPet(
+                rasId,
+                namaHewan,
+                usia,
+                beratBadan,
+                kondisi,
+                jenisKelamin,
+                harga,
+                deskripsi,
+                attachmentId,
+                token
+        );
+    }
+    @Override
+    public LiveData<String> updatePet(long id, long rasId, String namaHewan, int usia, int beratBadan, String kondisi, String jenisKelamin, int harga, String deskripsi, long attachmentId, String token) {
+        return remoteDataSource.updatePet(
+                id,
                 rasId,
                 namaHewan,
                 usia,
@@ -449,5 +474,9 @@ public class PetRepository implements PetDataSource{
 
     public LiveData<AttachmentEntity> getAttachment(int attachmentId) {
         return localDataSource.getAttachment(attachmentId);
+    }
+
+    public LiveData<RasEntity> getRasLocal(int rasId) {
+        return localDataSource.getRasLocal(rasId);
     }
 }

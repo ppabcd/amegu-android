@@ -1,18 +1,10 @@
 package id.rezajuliandri.amegu.ui.pet.update;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
-
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
@@ -21,7 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -32,16 +30,15 @@ import java.util.Collections;
 import java.util.List;
 
 import id.rezajuliandri.amegu.R;
-import id.rezajuliandri.amegu.data.AmeguRepository;
 import id.rezajuliandri.amegu.data.local.entity.pet.AttachmentEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.JenisEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.RasEntity;
 import id.rezajuliandri.amegu.databinding.FragmentPetUpdateBinding;
 import id.rezajuliandri.amegu.ui.pet.detail.PetDetailFragmentArgs;
+import id.rezajuliandri.amegu.utils.ActionBarHelper;
 import id.rezajuliandri.amegu.utils.BaseFragment;
 import id.rezajuliandri.amegu.utils.ImageFilePath;
-import id.rezajuliandri.amegu.utils.StringHelper;
 import id.rezajuliandri.amegu.viewmodel.ViewModelFactory;
 
 import static android.app.Activity.RESULT_CANCELED;
@@ -60,6 +57,7 @@ public class PetUpdateFragment extends BaseFragment {
 
     long petId;
     int fileId = 0;
+    long rasId = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,8 +72,10 @@ public class PetUpdateFragment extends BaseFragment {
         initData();
         super.onViewCreated(view, savedInstanceState);
     }
+
     ArrayAdapter<JenisEntity> jenisEntityArrayAdapter;
     ArrayAdapter<RasEntity> rasEntityArrayAdapter;
+
     private void initData() {
         jenisEntities = new ArrayList<>();
         rasEntities = new ArrayList<>();
@@ -90,6 +90,7 @@ public class PetUpdateFragment extends BaseFragment {
         binding.jenis.setAdapter(jenisEntityArrayAdapter);
         binding.ras.setAdapter(rasEntityArrayAdapter);
     }
+
     private AdapterView.OnItemSelectedListener jenisListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -112,6 +113,15 @@ public class PetUpdateFragment extends BaseFragment {
                                     );
                                     binding.ras.setAdapter(rasEntityArrayAdapter);
                                     binding.ras.setOnItemSelectedListener(rasListener);
+                                    if(rasId != 0){
+                                        int countRas = binding.ras.getCount();
+                                        for(int i = 0; i < countRas; i++){
+                                            RasEntity cekRas = (RasEntity) binding.ras.getItemAtPosition(i);
+                                            if(cekRas.getId() == rasId){
+                                                binding.ras.setSelection(i, true);
+                                            }
+                                        }
+                                    }
                                 }
                                 break;
                             case ERROR:
@@ -150,6 +160,7 @@ public class PetUpdateFragment extends BaseFragment {
 
         }
     };
+
     private void checkButton() {
         binding.send.setEnabled(false);
         if (!rasChecked) {
@@ -186,32 +197,6 @@ public class PetUpdateFragment extends BaseFragment {
 
     @Override
     protected void getData() {
-        viewModel.getJenis().observe(getViewLifecycleOwner(), jenisEntitiesResource -> {
-            if (jenisEntitiesResource != null) {
-                switch (jenisEntitiesResource.status) {
-                    case LOADING:
-                        break;
-                    case SUCCESS:
-                        if (jenisEntitiesResource.data != null) {
-                            List<JenisEntity> jenisEntities = jenisEntitiesResource.data;
-                            jenisEntities.add(new JenisEntity(0, "Pilih jenis hewan"));
-                            Collections.sort(jenisEntities);
-                            jenisEntityArrayAdapter = new ArrayAdapter<>(
-                                    requireActivity(),
-                                    R.layout.support_simple_spinner_dropdown_item,
-                                    jenisEntities
-                            );
-                            binding.jenis.setAdapter(jenisEntityArrayAdapter);
-                            binding.jenis.setOnItemSelectedListener(jenisListener);
-                        }
-                        break;
-                    case ERROR:
-                        Toast.makeText(requireContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                        break;
-
-                }
-            }
-        });
         petId = PetDetailFragmentArgs.fromBundle(requireArguments()).getPetId();
         viewModel.getPetDetail(petId).observe(getViewLifecycleOwner(), petEntityResource -> {
             if (petEntityResource != null) {
@@ -226,12 +211,49 @@ public class PetUpdateFragment extends BaseFragment {
                             Log.i("PETTT", pet.toString());
                             binding.namaHewan.setText(pet.getNamaHewan());
                             binding.harga.setText(String.valueOf(pet.getHarga()));
-//                            binding.txtJenis.setText(pet.getRas());
                             binding.usia.setText(String.valueOf(pet.getUsia()));
                             binding.beratBadan.setText(String.valueOf(pet.getBeratBadan()));
-//                            binding.jenisKelamin.setText(pet.getJenisKelamin());
                             binding.deskripsi.setText(pet.getDeskripsi());
                             binding.kondisi.setText(pet.getKondisi());
+                            viewModel.getJenis().observe(getViewLifecycleOwner(), jenisEntitiesResource -> {
+                                if (jenisEntitiesResource != null) {
+                                    switch (jenisEntitiesResource.status) {
+                                        case LOADING:
+                                            break;
+                                        case SUCCESS:
+                                            if (jenisEntitiesResource.data != null) {
+                                                List<JenisEntity> jenisEntities = jenisEntitiesResource.data;
+                                                jenisEntities.add(new JenisEntity(0, "Pilih jenis hewan"));
+                                                Collections.sort(jenisEntities);
+                                                jenisEntityArrayAdapter = new ArrayAdapter<>(
+                                                        requireActivity(),
+                                                        R.layout.support_simple_spinner_dropdown_item,
+                                                        jenisEntities
+                                                );
+                                                binding.jenis.setAdapter(jenisEntityArrayAdapter);
+                                                binding.jenis.setOnItemSelectedListener(jenisListener);
+                                                viewModel.getRasLocal(pet.getRasId()).observe(getViewLifecycleOwner(), rasEntity -> {
+                                                    if(rasEntity != null){
+                                                        rasId = rasEntity.getId();
+                                                        int countJenis = binding.jenis.getCount();
+                                                        for (int i = 0; i < countJenis; i++) {
+                                                            JenisEntity cekJenis = (JenisEntity) binding.jenis.getItemAtPosition(i);
+                                                            if(cekJenis.getId() == rasEntity.getJenisId()){
+                                                                binding.jenis.setSelection(i, true);
+                                                            }
+                                                        }
+
+                                                    }
+                                                });
+                                            }
+                                            break;
+                                        case ERROR:
+                                            Toast.makeText(requireContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                                            break;
+
+                                    }
+                                }
+                            });
 
                             Glide.with(requireContext())
                                     .load(pet.getAttachmentUrl())
@@ -240,7 +262,7 @@ public class PetUpdateFragment extends BaseFragment {
                                     .into(binding.imageView);
                             binding.uploadText.setVisibility(View.GONE);
                             viewModel.getAttachment(pet.getAttachmentId()).observe(getViewLifecycleOwner(), attachmentEntity -> {
-                                if(attachmentEntity != null){
+                                if (attachmentEntity != null) {
                                     binding.uploadText.setText(attachmentEntity.getFileName());
                                     binding.uploadText.setVisibility(View.VISIBLE);
                                 }
@@ -260,6 +282,40 @@ public class PetUpdateFragment extends BaseFragment {
                                     requestPermissions(permissionsNeeded, PERMISSION_REQ_INTERNAL_STORAGE);
                                 }
                             });
+                            int count = binding.jenisKelamin.getChildCount();
+                            for (int i = 0; i < count; i++) {
+                                RadioButton child = (RadioButton) binding.jenisKelamin.getChildAt(i);
+                                child.setChecked(true);
+                            }
+                            binding.send.setOnClickListener(v -> {
+                                RadioButton selectedJenisKelamin = binding.getRoot().findViewById(binding.jenisKelamin.getCheckedRadioButtonId());
+                                viewModel.getUser().observe(getViewLifecycleOwner(), userEntity -> {
+                                    binding.send.setEnabled(false);
+                                    binding.send.setText(R.string.loading);
+                                    viewModel.uploadPet(
+                                            pet.getId(),
+                                            ((RasEntity)binding.ras.getSelectedItem()).getId(),
+                                            binding.namaHewan.getText().toString(),
+                                            Integer.parseInt(binding.usia.getText().toString()),
+                                            Integer.parseInt(binding.beratBadan.getText().toString()),
+                                            binding.kondisi.getText().toString(),
+                                            selectedJenisKelamin.getText().toString().toLowerCase(),
+                                            Integer.parseInt(binding.harga.getText().toString()),
+                                            binding.deskripsi.getText().toString(),
+                                            fileId,
+                                            userEntity.getToken()
+                                    ).observe(getViewLifecycleOwner(), status -> {
+                                        if(status.toLowerCase().equals("ok")){
+                                            Toast.makeText(requireContext(), "Berhasil mengupdate data hewan", Toast.LENGTH_SHORT).show();
+                                            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_petUpdateFragment_to_petsUserFragment);
+                                            return;
+                                        }
+                                        Toast.makeText(getContext(), "Gagal mengirim alamat", Toast.LENGTH_SHORT).show();
+                                        binding.send.setText(R.string.action_send);
+                                        binding.send.setEnabled(true);
+                                    });
+                                });
+                            });
                         }
 
                         break;
@@ -278,6 +334,7 @@ public class PetUpdateFragment extends BaseFragment {
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_IMAGE);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -377,7 +434,9 @@ public class PetUpdateFragment extends BaseFragment {
 
     @Override
     protected void setActionBar() {
-
+        ActionBarHelper actionBarHelper = new ActionBarHelper(getActivity(), binding.getRoot());
+        actionBarHelper.showBackButton();
+        ActionBarHelper.searchLayoutHandler(binding.getRoot(), this);
     }
 
     @Override
@@ -387,6 +446,6 @@ public class PetUpdateFragment extends BaseFragment {
 
     @Override
     protected void moveToSearchFragment(View view) {
-
+        Navigation.findNavController(view).navigate(R.id.action_petUpdateFragment_to_searchFragment);
     }
 }

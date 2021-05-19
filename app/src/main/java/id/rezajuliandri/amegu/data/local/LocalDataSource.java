@@ -12,6 +12,7 @@ import id.rezajuliandri.amegu.data.local.entity.location.KotaEntity;
 import id.rezajuliandri.amegu.data.local.entity.location.ProvinsiEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.AttachmentEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
+import id.rezajuliandri.amegu.data.local.entity.pet.RasEntity;
 import id.rezajuliandri.amegu.data.local.entity.user.UserEntity;
 import id.rezajuliandri.amegu.data.local.room.AmeguDatabase;
 
@@ -134,5 +135,13 @@ public class LocalDataSource {
 
     public LiveData<AttachmentEntity> getAttachment(int attachmentId) {
         return ameguDatabase.attachmentDao().getAttachment(attachmentId);
+    }
+
+    public void insertRas(ArrayList<RasEntity> rasEntities) {
+        ameguDatabase.rasDao().insert(rasEntities);
+    }
+
+    public LiveData<RasEntity> getRasLocal(int rasId) {
+        return ameguDatabase.rasDao().getRasEntity(rasId);
     }
 }

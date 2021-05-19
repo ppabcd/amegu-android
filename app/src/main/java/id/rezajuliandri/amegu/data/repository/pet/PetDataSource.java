@@ -43,4 +43,6 @@ public interface PetDataSource {
     LiveData<String> uploadPet(long rasId, String namaHewan, int usia, int beratBadan, String kondisi, String jenisKelamin, int harga, String deskripsi, long attachmentId, String token);
 
     LiveData<String> deleteHewan(long id, String token);
+
+    LiveData<String> updatePet(long id, long rasId, String namaHewan, int usia, int beratBadan, String kondisi, String jenisKelamin, int harga, String deskripsi, long attachmentId, String token);
 }

@@ -531,6 +531,29 @@ public class RemoteDataSource {
         });
         return resultPet;
     }
+    public LiveData<String> updatePet(long id, long rasId, String namaHewan, int usia, int beratBadan, String kondisi, String jenisKelamin, int harga, String deskripsi, long attachmentId, String token) {
+        MutableLiveData<String> resultPet = new MutableLiveData<>();
+        Call<SimpleResponse> call = ApiConfig.getApiService().updatePet(
+                id, rasId, namaHewan, usia, beratBadan, kondisi, jenisKelamin, harga, deskripsi, attachmentId, token);
+        call.enqueue(new Callback<SimpleResponse>() {
+            @Override
+            public void onResponse(Call<SimpleResponse> call, Response<SimpleResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        resultPet.setValue(response.message());
+                    }
+                } else {
+                    resultPet.setValue(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SimpleResponse> call, Throwable t) {
+                resultPet.setValue(t.getMessage());
+            }
+        });
+        return resultPet;
+    }
 
     public LiveData<String> deletePet(long id, String token) {
         MutableLiveData<String> resultPet = new MutableLiveData<>();
@@ -554,6 +577,4 @@ public class RemoteDataSource {
         });
         return resultPet;
     }
-
-
 }

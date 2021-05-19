@@ -96,6 +96,7 @@ public interface ApiService {
                                     @Field("token") String token
     );
 
+    @FormUrlEncoded
     @PUT("/v1/main/hewan")
     Call<SimpleResponse> updatePet(@Field("id") long id,
                                     @Field("rasId") long rasId,
