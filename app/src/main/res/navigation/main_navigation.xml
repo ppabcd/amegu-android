@@ -105,7 +105,11 @@
         android:id="@+id/accountDetailFragment"
         android:name="id.rezajuliandri.amegu.ui.user.account.detail.AccountDetailFragment"
         android:label="fragment_account_detail"
-        tools:layout="@layout/fragment_account_detail" />
+        tools:layout="@layout/fragment_account_detail" >
+        <action
+            android:id="@+id/action_accountDetailFragment_to_searchFragment"
+            app:destination="@id/searchFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/petsUserFragment"
         android:name="id.rezajuliandri.amegu.ui.user.pets.PetsUserFragment"

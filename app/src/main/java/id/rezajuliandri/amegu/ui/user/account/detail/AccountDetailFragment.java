@@ -4,20 +4,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import id.rezajuliandri.amegu.R;
+import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
 import id.rezajuliandri.amegu.data.local.entity.user.UserEntity;
 import id.rezajuliandri.amegu.databinding.FragmentAccountDetailBinding;
+import id.rezajuliandri.amegu.utils.ActionBarHelper;
+import id.rezajuliandri.amegu.utils.BaseFragment;
 import id.rezajuliandri.amegu.viewmodel.ViewModelFactory;
 import id.rezajuliandri.amegu.vo.Resource;
 
 
-public class AccountDetailFragment extends Fragment {
+public class AccountDetailFragment extends BaseFragment {
     FragmentAccountDetailBinding binding;
     AccountDetailViewModel viewModel;
 
@@ -32,11 +38,10 @@ public class AccountDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setViewModel();
-        getData();
     }
 
-    private void getData() {
+    @Override
+    protected void getData() {
         viewModel.getUser().observe(getViewLifecycleOwner(), userEntity -> {
             if (userEntity != null) {
                 binding.edtNamaDepan.setText(userEntity.getFirstName());
@@ -101,6 +106,22 @@ public class AccountDetailFragment extends Fragment {
         });
     }
 
+    @Override
+    protected void setupViewModel() {
+        ViewModelFactory viewModelFactory = ViewModelFactory.getInstance(requireContext());
+        viewModel = new ViewModelProvider(
+                this,
+                viewModelFactory
+        ).get(AccountDetailViewModel.class);
+    }
+
+    @Override
+    protected void setActionBar() {
+        ActionBarHelper actionBarHelper = new ActionBarHelper(getActivity(), binding.getRoot());
+        actionBarHelper.showBackButton();
+        ActionBarHelper.searchLayoutHandler(binding.getRoot(), this);
+    }
+
     private void checkProfile(Resource<UserEntity> userEntityResource) {
         if (userEntityResource != null) {
             switch (userEntityResource.status) {
@@ -117,11 +138,21 @@ public class AccountDetailFragment extends Fragment {
         }
     }
 
-    private void setViewModel() {
-        ViewModelFactory viewModelFactory = ViewModelFactory.getInstance(requireContext());
-        viewModel = new ViewModelProvider(
-                this,
-                viewModelFactory
-        ).get(AccountDetailViewModel.class);
+    @Override
+    public void moveToDetailPet(View view, PetEntity pet) {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EditText editText = binding.toolbar.searchBox;
+        editText.clearFocus();
+        editText.setFocusableInTouchMode(false);
+    }
+
+    @Override
+    protected void moveToSearchFragment(View view) {
+        Navigation.findNavController(view).navigate(R.id.action_accountDetailFragment_to_searchFragment);
     }
 }
