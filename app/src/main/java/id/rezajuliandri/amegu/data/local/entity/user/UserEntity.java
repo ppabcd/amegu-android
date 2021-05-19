@@ -10,7 +10,9 @@ import androidx.room.PrimaryKey;
 @Entity
 public class UserEntity {
     @ColumnInfo(name = "alamat_id")
-    int alamatId;
+    private int alamatId;
+    @ColumnInfo(name = "bank_account_id")
+    private int bankAccountId;
     @PrimaryKey
     @ColumnInfo(name = "_id")
     private final long id;
@@ -27,7 +29,7 @@ public class UserEntity {
     @ColumnInfo(name = "is_admin")
     private final String isAdmin;
 
-    public UserEntity(long id, String firstName, String lastName, String email, String token, String phoneNumber, String isAdmin, int alamatId) {
+    public UserEntity(long id, String firstName, String lastName, String email, String token, String phoneNumber, String isAdmin, int alamatId, int bankAccountId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,6 +38,7 @@ public class UserEntity {
         this.phoneNumber = phoneNumber;
         this.isAdmin = isAdmin;
         this.alamatId = alamatId;
+        this.bankAccountId = bankAccountId;
     }
 
     public long getId() {
@@ -68,5 +71,9 @@ public class UserEntity {
 
     public int getAlamatId() {
         return alamatId;
+    }
+
+    public int getBankAccountId() {
+        return bankAccountId;
     }
 }

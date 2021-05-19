@@ -106,6 +106,7 @@ public class UserRepository implements UserDataSource {
                         loginData.getToken(),
                         null,
                         null,
+                        0,
                         0);
                 localDataSource.insertUser(userEntity);
             }
@@ -138,7 +139,9 @@ public class UserRepository implements UserDataSource {
                         token,
                         data.getPhoneNumber(),
                         "",
-                        data.getAlamatId());
+                        data.getAlamatId(),
+                        data.getBankAccountId()
+                );
                 localDataSource.deleteUser();
                 localDataSource.insertUser(userEntity);
                 if (data.getAlamatId() != 0) {
@@ -209,7 +212,9 @@ public class UserRepository implements UserDataSource {
                         token,
                         data.getPhoneNumber(),
                         "",
-                        data.getAlamatId());
+                        data.getAlamatId(),
+                        data.getBankAccountId()
+                );
                 AlamatEntity alamatEntity = new AlamatEntity(
                         data.getAlamatId(),
                         data.getAlamat().getAlamat(),
