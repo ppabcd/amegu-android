@@ -23,7 +23,7 @@
                 android:id="@+id/nama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/upload_title"
+                android:text="@string/update_pet_title"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="20dp"/>
@@ -44,7 +44,7 @@
                     android:id="@+id/upload"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/mulai"
+                    android:text="@string/ubah"
                     android:layout_weight="1"
                     android:textSize="14sp"
                     android:gravity="right"

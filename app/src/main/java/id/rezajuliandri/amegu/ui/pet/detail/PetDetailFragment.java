@@ -21,6 +21,7 @@ import com.bumptech.glide.request.RequestOptions;
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
 import id.rezajuliandri.amegu.databinding.FragmentPetDetailBinding;
+import id.rezajuliandri.amegu.ui.search.result.SearchResultFragmentDirections;
 import id.rezajuliandri.amegu.utils.ActionBarHelper;
 import id.rezajuliandri.amegu.utils.ItemDetailAbstract;
 import id.rezajuliandri.amegu.utils.StringHelper;
@@ -104,6 +105,8 @@ public class PetDetailFragment extends ItemDetailAbstract {
                                         binding.btnDelete.setVisibility(View.VISIBLE);
 
                                         binding.btnEdit.setOnClickListener(v -> {
+                                            PetDetailFragmentDirections.ActionPetDetailFragmentToPetUpdateFragment toPetUpdateFragment = PetDetailFragmentDirections.actionPetDetailFragmentToPetUpdateFragment(pet.getId());
+                                            Navigation.findNavController(binding.getRoot()).navigate(toPetUpdateFragment);
                                         });
                                         binding.btnDelete.setOnClickListener(v -> {
                                             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -107,6 +108,7 @@ public class PetRepository implements PetDataSource{
             @Override
             protected void saveCallResult(List<PetResponse> petResponses) {
                 ArrayList<PetEntity> petEntities = new ArrayList<>();
+                ArrayList<AttachmentEntity> attachmentEntities = new ArrayList<>();
                 for (PetResponse response : petResponses) {
                     PetEntity petEntity = new PetEntity(
                             response.getId(),
@@ -128,6 +130,20 @@ public class PetRepository implements PetDataSource{
                             response.getCreatedAt(),
                             response.getUpdatedAt()
                     );
+                    if(response.getAttachment() != null){
+                        AttachmentResponse attachmentResponse = response.getAttachment();
+                        AttachmentEntity attachmentEntity = new AttachmentEntity(
+                                attachmentResponse.getId(),
+                                attachmentResponse.getUserId(),
+                                attachmentResponse.getHewanId(),
+                                attachmentResponse.getFilename(),
+                                attachmentResponse.getMimetype(),
+                                attachmentResponse.getUrl(),
+                                attachmentResponse.getCreatedAt(),
+                                attachmentResponse.getUpdatedAt()
+                        );
+                        localDataSource.insertAttachment(attachmentEntity);
+                    }
                     petEntities.add(petEntity);
                 }
                 localDataSource.insertPetsAndDelete(petEntities);
@@ -429,5 +445,9 @@ public class PetRepository implements PetDataSource{
 
     public LiveData<String> deleteHewan(long id, String token) {
         return remoteDataSource.deletePet(id, token);
+    }
+
+    public LiveData<AttachmentEntity> getAttachment(int attachmentId) {
+        return localDataSource.getAttachment(attachmentId);
     }
 }

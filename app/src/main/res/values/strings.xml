@@ -81,4 +81,6 @@
     <string name="simpan">Simpan</string>
     <string name="edit_hewan">Edit Hewan</string>
     <string name="hapus_hewan">Hapus hewan</string>
+    <string name="ubah">Ubah</string>
+    <string name="update_pet_title">Ubah informasi hewanmu</string>
 </resources>

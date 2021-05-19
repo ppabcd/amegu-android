@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_petDetailFragment_to_petsUserFragment"
             app:destination="@id/petsUserFragment" />
+        <action
+            android:id="@+id/action_petDetailFragment_to_petUpdateFragment"
+            app:destination="@id/petUpdateFragment"/>
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"

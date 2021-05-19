@@ -132,4 +132,7 @@ public class LocalDataSource {
     }
 
 
+    public LiveData<AttachmentEntity> getAttachment(int attachmentId) {
+        return ameguDatabase.attachmentDao().getAttachment(attachmentId);
+    }
 }
