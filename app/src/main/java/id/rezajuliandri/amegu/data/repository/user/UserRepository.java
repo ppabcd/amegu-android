@@ -135,21 +135,23 @@ public class UserRepository implements UserDataSource{
                         data.getPhoneNumber(),
                         "",
                         data.getAlamatId());
-                AlamatEntity alamatEntity = new AlamatEntity(
-                        data.getAlamatId(),
-                        data.getAlamat().getAlamat(),
-                        data.getAlamat().getKelurahanName(),
-                        data.getAlamat().getKelurahanId(),
-                        data.getAlamat().getKecamatanName(),
-                        data.getAlamat().getKecamatanId(),
-                        data.getAlamat().getKotaName(),
-                        data.getAlamat().getKotaId(),
-                        data.getAlamat().getProvinsiName(),
-                        data.getAlamat().getProvinsiId()
-                );
                 localDataSource.deleteUser();
                 localDataSource.insertUser(userEntity);
-                localDataSource.insertAlamat(alamatEntity);
+                if(data.getAlamatId() != 0){
+                    AlamatEntity alamatEntity = new AlamatEntity(
+                            data.getAlamatId(),
+                            data.getAlamat().getAlamat(),
+                            data.getAlamat().getKelurahanName(),
+                            data.getAlamat().getKelurahanId(),
+                            data.getAlamat().getKecamatanName(),
+                            data.getAlamat().getKecamatanId(),
+                            data.getAlamat().getKotaName(),
+                            data.getAlamat().getKotaId(),
+                            data.getAlamat().getProvinsiName(),
+                            data.getAlamat().getProvinsiId()
+                    );
+                    localDataSource.insertAlamat(alamatEntity);
+                }
             }
         }.asLiveData();
     }
