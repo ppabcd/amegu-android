@@ -28,11 +28,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.data.local.entity.pet.AttachmentEntity;
@@ -99,7 +97,7 @@ public class PetUpdateFragment extends BaseFragment {
         binding.usia.addTextChangedListener(textListener);
         binding.beratBadan.addTextChangedListener(textListener);
         binding.kondisi.addTextChangedListener(textListener);
-        binding.harga.addTextChangedListener(currencyListener);
+        binding.harga.addTextChangedListener(textListener);
         binding.deskripsi.addTextChangedListener(textListener);
     }
 
@@ -113,40 +111,6 @@ public class PetUpdateFragment extends BaseFragment {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             checkButton();
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
-    TextWatcher currencyListener = new TextWatcher() {
-        private String current = "";
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            checkButton();
-            if (!s.toString().equals(current)) {
-                binding.harga.removeTextChangedListener(this);
-
-                Locale myIndonesianLocale = new Locale("id", "ID");
-                String replaceable = String.format("[%s,.]", NumberFormat.getCurrencyInstance(myIndonesianLocale).getCurrency().getSymbol());
-                String cleanString = s.toString().replaceAll(replaceable, "");
-
-                double parsed = Double.parseDouble(cleanString);
-                String formatted = NumberFormat.getCurrencyInstance(myIndonesianLocale).format(parsed);
-
-                current = formatted;
-                binding.harga.setText(formatted);
-                binding.harga.setSelection(formatted.length());
-
-                binding.harga.addTextChangedListener(this);
-            }
         }
 
         @Override
@@ -252,7 +216,8 @@ public class PetUpdateFragment extends BaseFragment {
             return;
         }
 
-        if ("".equals(binding.harga.getText().toString())) {
+        if ("".equals(binding.harga.getText().toString()) ||
+                Integer.parseInt(binding.harga.getText().toString()) < 0) {
             return;
         }
         binding.send.setEnabled(true);
