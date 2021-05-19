@@ -310,7 +310,7 @@ public class PetUpdateFragment extends BaseFragment {
                                             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_petUpdateFragment_to_petsUserFragment);
                                             return;
                                         }
-                                        Toast.makeText(getContext(), "Gagal mengirim alamat", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "Gagal mengirim hewan", Toast.LENGTH_SHORT).show();
                                         binding.send.setText(R.string.action_send);
                                         binding.send.setEnabled(true);
                                     });
