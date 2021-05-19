@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -89,8 +92,31 @@ public class PetUpdateFragment extends BaseFragment {
 
         binding.jenis.setAdapter(jenisEntityArrayAdapter);
         binding.ras.setAdapter(rasEntityArrayAdapter);
+        binding.jenisKelamin.setOnCheckedChangeListener(jenisKelaminListener);
+        binding.namaHewan.addTextChangedListener(textListener);
+        binding.usia.addTextChangedListener(textListener);
+        binding.beratBadan.addTextChangedListener(textListener);
+        binding.kondisi.addTextChangedListener(textListener);
+        binding.harga.addTextChangedListener(textListener);
+        binding.deskripsi.addTextChangedListener(textListener);
     }
+    private final RadioGroup.OnCheckedChangeListener jenisKelaminListener = (group, checkedId) -> checkButton();
+    TextWatcher textListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            checkButton();
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
     private AdapterView.OnItemSelectedListener jenisListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -189,6 +215,10 @@ public class PetUpdateFragment extends BaseFragment {
             return;
         }
 
+        if("".equals(binding.harga.getText().toString())){
+            return;
+        }
+
         if (Integer.parseInt(binding.harga.getText().toString()) < 0) {
             return;
         }
@@ -197,6 +227,7 @@ public class PetUpdateFragment extends BaseFragment {
 
     @Override
     protected void getData() {
+        checkButton();
         petId = PetDetailFragmentArgs.fromBundle(requireArguments()).getPetId();
         viewModel.getPetDetail(petId).observe(getViewLifecycleOwner(), petEntityResource -> {
             if (petEntityResource != null) {

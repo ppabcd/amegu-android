@@ -271,7 +271,9 @@ public class UploadFragment extends BaseFragment {
         if ("".equals(binding.deskripsi.getText().toString())) {
             return;
         }
-
+        if("".equals(binding.harga.getText().toString())){
+            return;
+        }
         if (Integer.parseInt(binding.harga.getText().toString()) < 0) {
             return;
         }
