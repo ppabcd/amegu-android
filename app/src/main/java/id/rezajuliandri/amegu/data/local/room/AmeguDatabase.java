@@ -16,9 +16,13 @@ import id.rezajuliandri.amegu.data.local.entity.pet.JenisEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.RasEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.SearchEntity;
+import id.rezajuliandri.amegu.data.local.entity.user.BankAccountEntity;
+import id.rezajuliandri.amegu.data.local.entity.user.BankEntity;
 import id.rezajuliandri.amegu.data.local.entity.user.UserEntity;
 import id.rezajuliandri.amegu.data.local.room.dao.AlamatDao;
 import id.rezajuliandri.amegu.data.local.room.dao.AttachmentDao;
+import id.rezajuliandri.amegu.data.local.room.dao.BankAccountDao;
+import id.rezajuliandri.amegu.data.local.room.dao.BankDao;
 import id.rezajuliandri.amegu.data.local.room.dao.JenisDao;
 import id.rezajuliandri.amegu.data.local.room.dao.KecamatanDao;
 import id.rezajuliandri.amegu.data.local.room.dao.KelurahanDao;
@@ -43,7 +47,9 @@ import id.rezajuliandri.amegu.data.local.room.dao.UserDao;
         AlamatEntity.class,
         AttachmentEntity.class,
         RasEntity.class,
-        JenisEntity.class
+        JenisEntity.class,
+        BankAccountEntity.class,
+        BankEntity.class
 }, version = 1, exportSchema = false)
 public abstract class AmeguDatabase extends RoomDatabase {
     public static volatile AmeguDatabase INSTANCE;
@@ -88,4 +94,8 @@ public abstract class AmeguDatabase extends RoomDatabase {
     public abstract RasDao rasDao();
 
     public abstract JenisDao jenisDao();
+
+    public abstract BankAccountDao bankAccountDao();
+
+    public abstract BankDao bankDao();
 }

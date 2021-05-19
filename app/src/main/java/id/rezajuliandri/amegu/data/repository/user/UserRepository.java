@@ -7,10 +7,14 @@ import androidx.lifecycle.MutableLiveData;
 import id.rezajuliandri.amegu.data.NetworkBoundResource;
 import id.rezajuliandri.amegu.data.local.LocalDataSource;
 import id.rezajuliandri.amegu.data.local.entity.location.AlamatEntity;
+import id.rezajuliandri.amegu.data.local.entity.user.BankAccountEntity;
+import id.rezajuliandri.amegu.data.local.entity.user.BankEntity;
 import id.rezajuliandri.amegu.data.local.entity.user.UserEntity;
 import id.rezajuliandri.amegu.data.remote.ApiResponse;
 import id.rezajuliandri.amegu.data.remote.RemoteDataSource;
 import id.rezajuliandri.amegu.data.remote.response.auth.login.UserLoginResponse;
+import id.rezajuliandri.amegu.data.remote.response.auth.profile.BankAccountResponse;
+import id.rezajuliandri.amegu.data.remote.response.auth.profile.BankResponse;
 import id.rezajuliandri.amegu.data.remote.response.auth.profile.UserProfileResponse;
 import id.rezajuliandri.amegu.utils.AppExecutors;
 import id.rezajuliandri.amegu.vo.Resource;
@@ -21,7 +25,7 @@ import id.rezajuliandri.amegu.vo.Resource;
  * Jika hanya diambil secara online maka return akan langsung ke remoteDataSource.
  * Namun jika diambil hanya dari database melakukan return data LiveData namun untuk pengambilannya
  * dengan menggunakan appExecutors.diskIO().execute(() -> {});
- *
+ * <p>
  * Jika data yang diambil berasal dari internet dan juga lokal dimana jika data tidak tersedia pada
  * lokal maka akan memanggil api dan menyimpannya di lokal namun jika data sudah tersedia langsung
  * melakukan pengambilan data dari local tanpa perlu memanggil api. Untuk hal ini mereturn object
@@ -46,10 +50,10 @@ import id.rezajuliandri.amegu.vo.Resource;
  * -+ dengan struktur database lokal. Setelah melakukan konversi langkah selanjutnya adalah mengirimkan
  * -+ kedalam database local melalui localDataSource. Setelah selesai maka akan mengembalikan kembali
  * -+ nilai dari dalam database untuk digunakan di viewModel.
- *
+ * <p>
  * Informasi lebih lanjut mengenai tiap method ada pada UserDataSource.java
  */
-public class UserRepository implements UserDataSource{
+public class UserRepository implements UserDataSource {
     private volatile static UserRepository INSTANCE = null;
 
     private final RemoteDataSource remoteDataSource;
@@ -137,7 +141,7 @@ public class UserRepository implements UserDataSource{
                         data.getAlamatId());
                 localDataSource.deleteUser();
                 localDataSource.insertUser(userEntity);
-                if(data.getAlamatId() != 0){
+                if (data.getAlamatId() != 0) {
                     AlamatEntity alamatEntity = new AlamatEntity(
                             data.getAlamatId(),
                             data.getAlamat().getAlamat(),
@@ -151,6 +155,29 @@ public class UserRepository implements UserDataSource{
                             data.getAlamat().getProvinsiId()
                     );
                     localDataSource.insertAlamat(alamatEntity);
+                }
+                if (data.getBankAccount() != null) {
+                    BankAccountResponse bankAccountResponse = data.getBankAccount();
+                    BankAccountEntity bankAccountEntity = new BankAccountEntity(
+                            bankAccountResponse.getId(),
+                            bankAccountResponse.getBankId(),
+                            bankAccountResponse.getBankAccount(),
+                            bankAccountResponse.getOwnerName(),
+                            bankAccountResponse.getCreatedAt(),
+                            bankAccountResponse.getUpdatedAt()
+                    );
+                    localDataSource.insertBankAccount(bankAccountEntity);
+                    if (bankAccountResponse.getBank() != null) {
+                        BankResponse bankResponse = bankAccountResponse.getBank();
+                        BankEntity bankEntity = new BankEntity(
+                                bankResponse.getId(),
+                                bankResponse.getCode(),
+                                bankResponse.getName(),
+                                bankResponse.getCreatedAt(),
+                                bankResponse.getUpdatedAt()
+                        );
+                        localDataSource.insertBank(bankEntity);
+                    }
                 }
             }
         }.asLiveData();
@@ -195,6 +222,29 @@ public class UserRepository implements UserDataSource{
                         data.getAlamat().getProvinsiName(),
                         data.getAlamat().getProvinsiId()
                 );
+                if (data.getBankAccount() != null) {
+                    BankAccountResponse bankAccountResponse = data.getBankAccount();
+                    BankAccountEntity bankAccountEntity = new BankAccountEntity(
+                            bankAccountResponse.getId(),
+                            bankAccountResponse.getBankId(),
+                            bankAccountResponse.getBankAccount(),
+                            bankAccountResponse.getOwnerName(),
+                            bankAccountResponse.getCreatedAt(),
+                            bankAccountResponse.getUpdatedAt()
+                    );
+                    localDataSource.insertBankAccount(bankAccountEntity);
+                    if (bankAccountResponse.getBank() != null) {
+                        BankResponse bankResponse = bankAccountResponse.getBank();
+                        BankEntity bankEntity = new BankEntity(
+                                bankResponse.getId(),
+                                bankResponse.getCode(),
+                                bankResponse.getName(),
+                                bankResponse.getCreatedAt(),
+                                bankResponse.getUpdatedAt()
+                        );
+                        localDataSource.insertBank(bankEntity);
+                    }
+                }
                 localDataSource.deleteUser();
                 localDataSource.insertUser(userEntity);
                 localDataSource.insertAlamat(alamatEntity);

@@ -13,6 +13,8 @@ import id.rezajuliandri.amegu.data.local.entity.location.ProvinsiEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.AttachmentEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.RasEntity;
+import id.rezajuliandri.amegu.data.local.entity.user.BankAccountEntity;
+import id.rezajuliandri.amegu.data.local.entity.user.BankEntity;
 import id.rezajuliandri.amegu.data.local.entity.user.UserEntity;
 import id.rezajuliandri.amegu.data.local.room.AmeguDatabase;
 
@@ -143,5 +145,13 @@ public class LocalDataSource {
 
     public LiveData<RasEntity> getRasLocal(int rasId) {
         return ameguDatabase.rasDao().getRasEntity(rasId);
+    }
+
+    public void insertBankAccount(BankAccountEntity bankAccountEntity) {
+        ameguDatabase.bankAccountDao().insert(bankAccountEntity);
+    }
+
+    public void insertBank(BankEntity bankEntity) {
+        ameguDatabase.bankDao().insert(bankEntity);
     }
 }

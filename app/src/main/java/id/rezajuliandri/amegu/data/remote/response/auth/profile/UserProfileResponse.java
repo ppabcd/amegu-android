@@ -21,6 +21,9 @@ public class UserProfileResponse {
     @SerializedName("alamatId")
     private int alamatId;
 
+    @SerializedName("bankAccountId")
+    private int bankAccountId;
+
     @SerializedName("emailVerifiedAt")
     private Object emailVerifiedAt;
 
@@ -35,6 +38,9 @@ public class UserProfileResponse {
 
     @SerializedName("alamat")
     private AlamatResponse alamat;
+
+    @SerializedName("bankAccount")
+    private BankAccountResponse bankAccount;
 
     @SerializedName("updatedAt")
     private String updatedAt;
@@ -59,6 +65,10 @@ public class UserProfileResponse {
         return alamatId;
     }
 
+    public int getBankAccountId() {
+        return bankAccountId;
+    }
+
     public Object getEmailVerifiedAt() {
         return emailVerifiedAt;
     }
@@ -77,6 +87,10 @@ public class UserProfileResponse {
 
     public AlamatResponse getAlamat() {
         return alamat;
+    }
+
+    public BankAccountResponse getBankAccount() {
+        return bankAccount;
     }
 
     public String getUpdatedAt() {

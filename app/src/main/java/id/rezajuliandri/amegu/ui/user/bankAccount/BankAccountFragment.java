@@ -1,6 +1,7 @@
 package id.rezajuliandri.amegu.ui.user.bankAccount;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -37,6 +39,7 @@ public class BankAccountFragment extends BaseFragment {
 
     BankAccountViewModel viewModel;
     FragmentBankAccountBinding binding;
+    boolean isBack = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -68,9 +71,10 @@ public class BankAccountFragment extends BaseFragment {
             });
             Log.i("URLL", "https://amegu.netlify.app/android/?token="+userEntity.getToken()+"&&target=profile/rekening");
             binding.webView.loadUrl("https://amegu.netlify.app/android/?token="+userEntity.getToken()+"&&target=profile/rekening");
+            binding.toolbar.backNavigation.setOnClickListener(null);
             binding.toolbar.backNavigation.setOnClickListener(v -> {
+                isBack = true;
                 refreshData();
-                getActivity().onBackPressed();
             });
         });
     }
@@ -97,6 +101,9 @@ public class BankAccountFragment extends BaseFragment {
                                 break;
                             case SUCCESS:
                                 Toast.makeText(requireContext(), "Berhasil merefresh data", Toast.LENGTH_SHORT).show();
+                                if(isBack){
+                                    requireActivity().onBackPressed();
+                                }
                                 break;
                             case ERROR:
                                 Toast.makeText(requireContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
