@@ -1,66 +1,141 @@
 package id.rezajuliandri.amegu.ui.pet.update;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import java.util.ArrayList;
 
 import id.rezajuliandri.amegu.R;
+import id.rezajuliandri.amegu.data.AmeguRepository;
+import id.rezajuliandri.amegu.data.local.entity.pet.JenisEntity;
+import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
+import id.rezajuliandri.amegu.data.local.entity.pet.RasEntity;
+import id.rezajuliandri.amegu.databinding.FragmentPetUpdateBinding;
+import id.rezajuliandri.amegu.ui.pet.detail.PetDetailFragmentArgs;
+import id.rezajuliandri.amegu.utils.BaseFragment;
+import id.rezajuliandri.amegu.utils.StringHelper;
+import id.rezajuliandri.amegu.viewmodel.ViewModelFactory;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PetUpdateFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class PetUpdateFragment extends Fragment {
+public class PetUpdateFragment extends BaseFragment {
+    FragmentPetUpdateBinding binding;
+    PetUpdateViewModel viewModel;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final int REQUEST_IMAGE = 1;
+    private static final int PERMISSION_REQ_INTERNAL_STORAGE = 2;
+    public String[] permissionsNeeded;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    ArrayList<JenisEntity> jenisEntities;
+    ArrayList<RasEntity> rasEntities;
 
-    public PetUpdateFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PetUpdateFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PetUpdateFragment newInstance(String param1, String param2) {
-        PetUpdateFragment fragment = new PetUpdateFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    long petId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pet_update, container, false);
+        binding = FragmentPetUpdateBinding.inflate(getLayoutInflater());
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        initData();
+        super.onViewCreated(view, savedInstanceState);
+    }
+    ArrayAdapter<JenisEntity> jenisEntityArrayAdapter;
+    ArrayAdapter<RasEntity> rasEntityArrayAdapter;
+    private void initData() {
+        jenisEntities = new ArrayList<>();
+        rasEntities = new ArrayList<>();
+        JenisEntity jenisEntity = new JenisEntity(0, "Pilih henis hewan");
+        RasEntity rasEntity = new RasEntity(0, "Pilih ras", 0);
+        jenisEntities.add(jenisEntity);
+        rasEntities.add(rasEntity);
+
+        jenisEntityArrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, jenisEntities);
+        rasEntityArrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, rasEntities);
+
+        binding.jenis.setAdapter(jenisEntityArrayAdapter);
+        binding.ras.setAdapter(rasEntityArrayAdapter);
+    }
+
+    @Override
+    protected void getData() {
+        petId = PetDetailFragmentArgs.fromBundle(requireArguments()).getPetId();
+        viewModel.getPetDetail(petId).observe(getViewLifecycleOwner(), petEntityResource -> {
+            if (petEntityResource != null) {
+                switch (petEntityResource.status) {
+                    case LOADING:
+                        binding.progressBar.setVisibility(View.VISIBLE);
+                        break;
+                    case SUCCESS:
+                        binding.progressBar.setVisibility(View.GONE);
+                        PetEntity pet = petEntityResource.data;
+                        if (pet != null) {
+                            Log.i("PETTT", pet.toString());
+                            binding.namaHewan.setText(pet.getNamaHewan());
+                            binding.harga.setText(StringHelper.currency(pet.getHarga()));
+//                            binding.txtJenis.setText(pet.getRas());
+                            binding.usia.setText(String.valueOf(pet.getUsia()));
+                            binding.beratBadan.setText(String.valueOf(pet.getBeratBadan()));
+//                            binding.jenisKelamin.setText(pet.getJenisKelamin());
+                            binding.deskripsi.setText(pet.getDeskripsi());
+
+                            Glide.with(requireContext())
+                                    .load(pet.getAttachmentUrl())
+                                    .apply(new RequestOptions())
+                                    .placeholder(R.drawable.anjing)
+                                    .into(binding.imageView);
+                        }
+
+                        break;
+                    case ERROR:
+                        binding.progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getActivity(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                        break;
+
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void setupViewModel() {
+        ViewModelFactory viewModelFactory = ViewModelFactory.getInstance(requireContext());
+        viewModel = new ViewModelProvider(
+                this,
+                viewModelFactory
+        ).get(PetUpdateViewModel.class);
+    }
+
+    @Override
+    protected void setActionBar() {
+
+    }
+
+    @Override
+    public void moveToDetailPet(View view, PetEntity pet) {
+
+    }
+
+    @Override
+    protected void moveToSearchFragment(View view) {
+
     }
 }

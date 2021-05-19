@@ -151,6 +151,24 @@
             android:id="@+id/action_navigation_upload_to_petsUserFragment"
             app:destination="@id/petsUserFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/petUpdateFragment"
+        android:name="id.rezajuliandri.amegu.ui.pet.update.PetUpdateFragment"
+        android:label="fragment_pet_update"
+        tools:layout="@layout/fragment_pet_update" >
+        <argument
+            android:name="petId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_petUpdateFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_petUpdateFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_petUpdateFragment_to_petsUserFragment"
+            app:destination="@id/petsUserFragment" />
+    </fragment>
     <activity
         android:id="@+id/loginActivity"
         android:name="id.rezajuliandri.amegu.ui.auth.login.LoginActivity"

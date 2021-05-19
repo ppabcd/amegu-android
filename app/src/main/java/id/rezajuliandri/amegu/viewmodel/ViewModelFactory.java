@@ -13,6 +13,8 @@ import id.rezajuliandri.amegu.ui.auth.register.RegisterViewModel;
 import id.rezajuliandri.amegu.ui.home.HomeViewModel;
 import id.rezajuliandri.amegu.ui.main.MainViewModel;
 import id.rezajuliandri.amegu.ui.pet.detail.PetDetailViewModel;
+import id.rezajuliandri.amegu.ui.pet.update.PetUpdateFragment;
+import id.rezajuliandri.amegu.ui.pet.update.PetUpdateViewModel;
 import id.rezajuliandri.amegu.ui.pet.upload.UploadViewModel;
 import id.rezajuliandri.amegu.ui.search.SearchViewModel;
 import id.rezajuliandri.amegu.ui.search.result.SearchResultViewModel;
@@ -83,6 +85,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new UploadViewModel(ameguRepository);
         } else if(modelClass.isAssignableFrom(RegisterViewModel.class)){
             return (T) new RegisterViewModel(ameguRepository);
+        } else if(modelClass.isAssignableFrom(PetUpdateViewModel.class)){
+            return (T) new PetUpdateViewModel(ameguRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
