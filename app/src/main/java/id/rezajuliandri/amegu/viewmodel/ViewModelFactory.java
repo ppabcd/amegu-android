@@ -12,7 +12,9 @@ import id.rezajuliandri.amegu.ui.auth.login.LoginViewModel;
 import id.rezajuliandri.amegu.ui.auth.register.RegisterViewModel;
 import id.rezajuliandri.amegu.ui.home.HomeViewModel;
 import id.rezajuliandri.amegu.ui.main.MainViewModel;
+import id.rezajuliandri.amegu.ui.pet.adoption.PetAdoptionViewModel;
 import id.rezajuliandri.amegu.ui.pet.detail.PetDetailViewModel;
+import id.rezajuliandri.amegu.ui.pet.payment.PetPaymentViewModel;
 import id.rezajuliandri.amegu.ui.pet.update.PetUpdateFragment;
 import id.rezajuliandri.amegu.ui.pet.update.PetUpdateViewModel;
 import id.rezajuliandri.amegu.ui.pet.upload.UploadViewModel;
@@ -22,8 +24,11 @@ import id.rezajuliandri.amegu.ui.splash.SplashViewModel;
 import id.rezajuliandri.amegu.ui.user.account.AccountViewModel;
 import id.rezajuliandri.amegu.ui.user.account.detail.AccountDetailViewModel;
 import id.rezajuliandri.amegu.ui.user.address.AddressUserViewModel;
+import id.rezajuliandri.amegu.ui.user.adoption.UserPetAdoptionViewModel;
+import id.rezajuliandri.amegu.ui.user.adoptiondetail.UserPetAdoptionDetailViewModel;
 import id.rezajuliandri.amegu.ui.user.bankAccount.BankAccountViewModel;
 import id.rezajuliandri.amegu.ui.user.favorite.FavoriteViewModel;
+import id.rezajuliandri.amegu.ui.user.payment.UserPaymentViewModel;
 import id.rezajuliandri.amegu.ui.user.pets.PetUserViewModel;
 import id.rezajuliandri.amegu.utils.Injection;
 import id.rezajuliandri.amegu.utils.middleware.session.CheckSessionViewModel;
@@ -90,6 +95,16 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new PetUpdateViewModel(ameguRepository);
         } else if(modelClass.isAssignableFrom(BankAccountViewModel.class)){
             return (T) new BankAccountViewModel(ameguRepository);
+        } else if(modelClass.isAssignableFrom(PetAdoptionViewModel.class)){
+            return (T) new PetAdoptionViewModel(ameguRepository);
+        } else if(modelClass.isAssignableFrom(PetPaymentViewModel.class)){
+            return (T) new PetPaymentViewModel(ameguRepository);
+        } else if(modelClass.isAssignableFrom(UserPetAdoptionViewModel.class)){
+            return (T) new UserPetAdoptionViewModel(ameguRepository);
+        } else if(modelClass.isAssignableFrom(UserPetAdoptionDetailViewModel.class)){
+            return (T) new UserPetAdoptionDetailViewModel(ameguRepository);
+        } else if(modelClass.isAssignableFrom(UserPaymentViewModel.class)){
+            return (T) new UserPaymentViewModel(ameguRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

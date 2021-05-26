@@ -84,4 +84,6 @@
     <string name="ubah">Ubah</string>
     <string name="update_pet_title">Ubah informasi hewanmu</string>
     <string name="bank_account">Rekening</string>
+    <string name="payment">Payment</string>
+    <string name="check_connection">Mohon untuk memeriksa koneksi internet</string>
 </resources>

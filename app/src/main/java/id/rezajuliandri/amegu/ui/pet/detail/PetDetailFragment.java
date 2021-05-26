@@ -93,6 +93,9 @@ public class PetDetailFragment extends ItemDetailAbstract {
                                     .placeholder(R.drawable.anjing)
                                     .into(binding.imageView);
                             binding.btnAdopt.setOnClickListener(v -> {
+                                PetDetailFragmentDirections.ActionPetDetailFragmentToPetAdoptionFragment toPetAdoptionFragment = PetDetailFragmentDirections.actionPetDetailFragmentToPetAdoptionFragment(petId);
+                                toPetAdoptionFragment.setPetId(pet.getId());
+                                Navigation.findNavController(binding.getRoot()).navigate(toPetAdoptionFragment);
                             });
                             viewModel.getUser().observe(getViewLifecycleOwner(), userEntity -> {
                                 if (userEntity != null) {

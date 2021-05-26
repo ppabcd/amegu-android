@@ -105,7 +105,7 @@ public class UserRepository implements UserDataSource {
                         null,
                         loginData.getToken(),
                         null,
-                        null,
+                        0,
                         0,
                         0);
                 localDataSource.insertUser(userEntity);
@@ -138,7 +138,7 @@ public class UserRepository implements UserDataSource {
                         data.getEmail(),
                         token,
                         data.getPhoneNumber(),
-                        "",
+                        data.getIsAdmin(),
                         data.getAlamatId(),
                         data.getBankAccountId()
                 );
@@ -211,7 +211,7 @@ public class UserRepository implements UserDataSource {
                         data.getEmail(),
                         token,
                         data.getPhoneNumber(),
-                        "",
+                        data.getIsAdmin(),
                         data.getAlamatId(),
                         data.getBankAccountId()
                 );

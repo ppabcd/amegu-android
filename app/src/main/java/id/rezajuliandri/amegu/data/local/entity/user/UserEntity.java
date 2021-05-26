@@ -27,9 +27,18 @@ public class UserEntity {
     @ColumnInfo(name = "phone_number")
     private final String phoneNumber;
     @ColumnInfo(name = "is_admin")
-    private final String isAdmin;
+    private final int isAdmin;
 
-    public UserEntity(long id, String firstName, String lastName, String email, String token, String phoneNumber, String isAdmin, int alamatId, int bankAccountId) {
+    public UserEntity(
+            long id,
+            String firstName,
+            String lastName,
+            String email,
+            String token,
+            String phoneNumber,
+            int isAdmin,
+            int alamatId,
+            int bankAccountId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -65,7 +74,7 @@ public class UserEntity {
         return phoneNumber;
     }
 
-    public String getIsAdmin() {
+    public int getIsAdmin() {
         return isAdmin;
     }
 

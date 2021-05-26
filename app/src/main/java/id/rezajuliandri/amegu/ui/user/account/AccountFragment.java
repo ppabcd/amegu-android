@@ -45,6 +45,13 @@ public class AccountFragment extends Fragment {
                     binding.location.setText(alamatEntity.getProvinsiName());
                 });
             }
+            if(userEntity.getIsAdmin() == 1){
+                binding.btnPayment.setOnClickListener(v ->{
+                    Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_account_to_userPaymentFragment);
+                });
+            } else {
+                binding.btnPayment.setVisibility(View.GONE);
+            }
         });
 
         binding.btnAccount.setOnClickListener(v -> {
@@ -54,7 +61,7 @@ public class AccountFragment extends Fragment {
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_account_to_addressUserFragment);
         });
         binding.btnAdoption.setOnClickListener(v -> {
-
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_account_to_userPetAdoptionFragment);
         });
         binding.btnBankAccount.setOnClickListener(v -> {
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_account_to_bankAccountFragment);

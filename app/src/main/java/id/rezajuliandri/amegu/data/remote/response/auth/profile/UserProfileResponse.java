@@ -42,6 +42,9 @@ public class UserProfileResponse {
     @SerializedName("bankAccount")
     private BankAccountResponse bankAccount;
 
+    @SerializedName("isAdmin")
+    private int isAdmin;
+
     @SerializedName("updatedAt")
     private String updatedAt;
 
@@ -95,5 +98,9 @@ public class UserProfileResponse {
 
     public String getUpdatedAt() {
         return updatedAt;
+    }
+
+    public int getIsAdmin(){
+        return this.isAdmin;
     }
 }
