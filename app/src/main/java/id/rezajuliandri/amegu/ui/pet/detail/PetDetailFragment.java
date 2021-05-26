@@ -92,11 +92,6 @@ public class PetDetailFragment extends ItemDetailAbstract {
                                     .apply(new RequestOptions())
                                     .placeholder(R.drawable.anjing)
                                     .into(binding.imageView);
-                            binding.btnAdopt.setOnClickListener(v -> {
-                                PetDetailFragmentDirections.ActionPetDetailFragmentToPetAdoptionFragment toPetAdoptionFragment = PetDetailFragmentDirections.actionPetDetailFragmentToPetAdoptionFragment(petId);
-                                toPetAdoptionFragment.setPetId(pet.getId());
-                                Navigation.findNavController(binding.getRoot()).navigate(toPetAdoptionFragment);
-                            });
                             viewModel.getUser().observe(getViewLifecycleOwner(), userEntity -> {
                                 if (userEntity != null) {
                                     binding.btnAdopt.setVisibility(View.VISIBLE);
@@ -128,7 +123,18 @@ public class PetDetailFragment extends ItemDetailAbstract {
                                             })));
                                             builder.show();
                                         });
+
                                     }
+                                    binding.btnAdopt.setOnClickListener(v -> {
+                                        if(userEntity.getBankAccountId() == 0){
+                                            Toast.makeText(requireContext(), "User harus menambahkan rekening sebelum melakukan adopsi", Toast.LENGTH_SHORT).show();
+                                            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_petDetailFragment_to_bankAccountFragment);
+                                            return;
+                                        }
+                                        PetDetailFragmentDirections.ActionPetDetailFragmentToPetAdoptionFragment toPetAdoptionFragment = PetDetailFragmentDirections.actionPetDetailFragmentToPetAdoptionFragment(petId);
+                                        toPetAdoptionFragment.setPetId(pet.getId());
+                                        Navigation.findNavController(binding.getRoot()).navigate(toPetAdoptionFragment);
+                                    });
                                 }
                             });
                         }

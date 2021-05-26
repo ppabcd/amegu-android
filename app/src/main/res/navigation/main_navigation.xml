@@ -59,6 +59,9 @@
         <action
             android:id="@+id/action_petDetailFragment_to_petAdoptionFragment"
             app:destination="@+id/petAdoptionFragment"/>
+        <action
+            android:id="@+id/action_petDetailFragment_to_bankAccountFragment"
+            app:destination="@+id/bankAccountFragment"/>
     </fragment>
     <!-- petAdoptionFragment -->
     <fragment android:id="@+id/petAdoptionFragment"
