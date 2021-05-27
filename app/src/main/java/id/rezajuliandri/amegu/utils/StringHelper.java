@@ -3,6 +3,10 @@ package id.rezajuliandri.amegu.utils;
 import android.text.TextUtils;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -55,6 +59,27 @@ public class StringHelper {
     public static String firstUpper(String str) {
         str = str.toLowerCase();
         return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    public static String deadlineHelper(String time) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyy HH:mm:ss", Locale.getDefault());
+        try {
+            Date date = format.parse(time);
+            date = StringHelper.addDays(date, 1);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return time;
+    }
+
+    private static Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
     }
 
 }

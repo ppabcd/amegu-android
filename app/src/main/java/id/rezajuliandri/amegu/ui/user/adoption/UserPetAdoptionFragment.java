@@ -1,21 +1,25 @@
 package id.rezajuliandri.amegu.ui.user.adoption;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
 import id.rezajuliandri.amegu.databinding.FragmentPetPaymentBinding;
 import id.rezajuliandri.amegu.databinding.FragmentUserPetAdoptionBinding;
+import id.rezajuliandri.amegu.ui.search.result.SearchResultFragmentDirections;
 import id.rezajuliandri.amegu.ui.user.adoptiondetail.UserPetAdoptionDetailViewModel;
 import id.rezajuliandri.amegu.utils.ActionBarHelper;
 import id.rezajuliandri.amegu.utils.BaseFragment;
@@ -45,6 +49,7 @@ public class UserPetAdoptionFragment extends BaseFragment {
                         return true;
                     }
                 });
+                binding.webView.addJavascriptInterface(new UserPetAdoptionBridge(requireContext(), binding), "bridge");
                 binding.webView.loadUrl("https://amegu.netlify.app/android/?token="+userEntity.getToken()+"&&target=history");
             });
         } else {
@@ -77,5 +82,24 @@ public class UserPetAdoptionFragment extends BaseFragment {
     @Override
     protected void moveToSearchFragment(View view) {
 
+    }
+    static class UserPetAdoptionBridge{
+        Context context;
+        FragmentUserPetAdoptionBinding binding;
+        public UserPetAdoptionBridge(Context context, FragmentUserPetAdoptionBinding binding){
+            this.context = context;
+            this.binding = binding;
+        }
+        @JavascriptInterface
+        public void changePage(long id, String type){
+            switch (type){
+                case "payment":
+                    UserPetAdoptionFragmentDirections.ActionUserPetAdoptionFragmentToPetAdoptionFragment toPetAdoptionFragment = UserPetAdoptionFragmentDirections.actionUserPetAdoptionFragmentToPetAdoptionFragment(id);
+                    toPetAdoptionFragment.setPetId(id);
+                    Navigation.findNavController(binding.getRoot()).navigate(toPetAdoptionFragment);
+                    break;
+            }
+            Log.i("CHANGEPAGE", "id"+id+"type"+type);
+        }
     }
 }

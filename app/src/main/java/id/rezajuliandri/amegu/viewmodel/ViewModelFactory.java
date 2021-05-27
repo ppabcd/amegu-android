@@ -14,7 +14,6 @@ import id.rezajuliandri.amegu.ui.home.HomeViewModel;
 import id.rezajuliandri.amegu.ui.main.MainViewModel;
 import id.rezajuliandri.amegu.ui.pet.adoption.PetAdoptionViewModel;
 import id.rezajuliandri.amegu.ui.pet.detail.PetDetailViewModel;
-import id.rezajuliandri.amegu.ui.pet.payment.PetPaymentViewModel;
 import id.rezajuliandri.amegu.ui.pet.update.PetUpdateFragment;
 import id.rezajuliandri.amegu.ui.pet.update.PetUpdateViewModel;
 import id.rezajuliandri.amegu.ui.pet.upload.UploadViewModel;
@@ -97,8 +96,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new BankAccountViewModel(ameguRepository);
         } else if(modelClass.isAssignableFrom(PetAdoptionViewModel.class)){
             return (T) new PetAdoptionViewModel(ameguRepository);
-        } else if(modelClass.isAssignableFrom(PetPaymentViewModel.class)){
-            return (T) new PetPaymentViewModel(ameguRepository);
         } else if(modelClass.isAssignableFrom(UserPetAdoptionViewModel.class)){
             return (T) new UserPetAdoptionViewModel(ameguRepository);
         } else if(modelClass.isAssignableFrom(UserPetAdoptionDetailViewModel.class)){

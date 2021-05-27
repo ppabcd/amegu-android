@@ -9,6 +9,7 @@ import id.rezajuliandri.amegu.data.remote.response.location.kecamatan.KecamatanR
 import id.rezajuliandri.amegu.data.remote.response.location.kelurahan.KelurahanResponseParent;
 import id.rezajuliandri.amegu.data.remote.response.location.kota.KotaResponseParent;
 import id.rezajuliandri.amegu.data.remote.response.location.provinsi.ProvinsiResponseParent;
+import id.rezajuliandri.amegu.data.remote.response.pet.adopsidetail.AdopsiDetailResponseParent;
 import id.rezajuliandri.amegu.data.remote.response.pet.detail.PetDetailResponse;
 import id.rezajuliandri.amegu.data.remote.response.pet.jenis.JenisResponseParent;
 import id.rezajuliandri.amegu.data.remote.response.pet.pets.PetsResponseParent;
@@ -149,4 +150,19 @@ public interface ApiService {
 
     @GET("/v1/main/ras/{jenis}")
     Call<RasResponseParent> getRas(@Path("jenis") long jenis);
+
+    @FormUrlEncoded
+    @POST("v1/main/adopsi")
+    Call<SimpleResponse> adopsi(@Field("hewanId") long petId, @Field("token") String token);
+
+    @GET("v1/main/adopsi/detail")
+    Call<AdopsiDetailResponseParent> adopsiDetail(@Query("hewanId") long hewanId, @Query("token") String token);
+
+    @FormUrlEncoded
+    @POST("v1/main/adopsi/payment")
+    Call<SimpleResponse> uploadPayment(
+            @Field("hewanId") long hewanId,
+            @Field("attachmentId") int attachmentId,
+            @Field("token") String token
+    );
 }

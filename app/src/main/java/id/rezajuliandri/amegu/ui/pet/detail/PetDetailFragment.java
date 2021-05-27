@@ -131,9 +131,13 @@ public class PetDetailFragment extends ItemDetailAbstract {
                                             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_petDetailFragment_to_bankAccountFragment);
                                             return;
                                         }
-                                        PetDetailFragmentDirections.ActionPetDetailFragmentToPetAdoptionFragment toPetAdoptionFragment = PetDetailFragmentDirections.actionPetDetailFragmentToPetAdoptionFragment(petId);
-                                        toPetAdoptionFragment.setPetId(pet.getId());
-                                        Navigation.findNavController(binding.getRoot()).navigate(toPetAdoptionFragment);
+                                        viewModel.adopt(pet.getId(), userEntity.getToken()).observe(getViewLifecycleOwner(), status -> {
+                                            if (status.toLowerCase().equals("ok")) {
+                                                PetDetailFragmentDirections.ActionPetDetailFragmentToPetAdoptionFragment toPetAdoptionFragment = PetDetailFragmentDirections.actionPetDetailFragmentToPetAdoptionFragment(petId);
+                                                toPetAdoptionFragment.setPetId(pet.getId());
+                                                Navigation.findNavController(binding.getRoot()).navigate(toPetAdoptionFragment);
+                                            }
+                                        });
                                     });
                                 }
                             });

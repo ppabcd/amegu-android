@@ -30,4 +30,8 @@ public class PetDetailViewModel extends ViewModel {
     public LiveData<String> deleteHewan(long id, String token) {
         return ameguRepository.petRepository().deleteHewan(id, token);
     }
+
+    public LiveData<String> adopt(long petId, String token) {
+        return ameguRepository.petRepository().adopt(petId, token);
+    }
 }

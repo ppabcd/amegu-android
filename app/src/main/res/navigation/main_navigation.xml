@@ -58,10 +58,10 @@
             app:destination="@id/petUpdateFragment"/>
         <action
             android:id="@+id/action_petDetailFragment_to_petAdoptionFragment"
-            app:destination="@+id/petAdoptionFragment"/>
+            app:destination="@id/petAdoptionFragment"/>
         <action
             android:id="@+id/action_petDetailFragment_to_bankAccountFragment"
-            app:destination="@+id/bankAccountFragment"/>
+            app:destination="@id/bankAccountFragment"/>
     </fragment>
     <!-- petAdoptionFragment -->
     <fragment android:id="@+id/petAdoptionFragment"
@@ -71,6 +71,9 @@
         <argument
             android:name="petId"
             app:argType="long"/>
+        <action
+            android:id="@+id/action_petAdoptionFragment_to_userPetAdoptionFragment"
+            app:destination="@id/userPetAdoptionFragment"/>
     </fragment>
     <!-- searchResultFragment -->
     <fragment
@@ -118,7 +121,7 @@
             app:destination="@id/bankAccountFragment"/>
         <action
             android:id="@+id/action_navigation_account_to_userPetAdoptionFragment"
-            app:destination="@+id/userPetAdoptionFragment"/>
+            app:destination="@id/userPetAdoptionFragment"/>
         <action
             android:id="@+id/action_navigation_account_to_userPaymentFragment"
             app:destination="@+id/userPaymentFragment"/>
@@ -162,6 +165,9 @@
         android:name="id.rezajuliandri.amegu.ui.user.adoption.UserPetAdoptionFragment"
         android:label="fragment_user_pet_adoption"
         tools:layout="@layout/fragment_user_pet_adoption">
+        <action
+            android:id="@+id/action_userPetAdoptionFragment_to_petAdoptionFragment"
+            app:destination="@id/petAdoptionFragment"/>
     </fragment>
     <!-- favoriteFragment -->
     <fragment

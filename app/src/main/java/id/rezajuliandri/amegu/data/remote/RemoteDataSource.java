@@ -26,6 +26,8 @@ import id.rezajuliandri.amegu.data.remote.response.location.kota.KotaResponse;
 import id.rezajuliandri.amegu.data.remote.response.location.kota.KotaResponseParent;
 import id.rezajuliandri.amegu.data.remote.response.location.provinsi.ProvinsiResponse;
 import id.rezajuliandri.amegu.data.remote.response.location.provinsi.ProvinsiResponseParent;
+import id.rezajuliandri.amegu.data.remote.response.pet.adopsidetail.AdopsiDetailResponseParent;
+import id.rezajuliandri.amegu.data.remote.response.pet.adopsidetail.AdopsiResponse;
 import id.rezajuliandri.amegu.data.remote.response.pet.detail.PetDetailResponse;
 import id.rezajuliandri.amegu.data.remote.response.pet.jenis.JenisResponse;
 import id.rezajuliandri.amegu.data.remote.response.pet.jenis.JenisResponseParent;
@@ -576,5 +578,74 @@ public class RemoteDataSource {
             }
         });
         return resultPet;
+    }
+
+    public LiveData<String> adopt(long petId, String token) {
+        MutableLiveData<String> resultAdopsi = new MutableLiveData<>();
+        Call<SimpleResponse> call = ApiConfig.getApiService().adopsi(petId, token);
+        call.enqueue(new Callback<SimpleResponse>() {
+            @Override
+            public void onResponse(Call<SimpleResponse> call, Response<SimpleResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        resultAdopsi.setValue(response.message());
+                    }
+                } else {
+                    resultAdopsi.setValue(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SimpleResponse> call, Throwable t) {
+                resultAdopsi.setValue(t.getMessage());
+            }
+        });
+        return resultAdopsi;
+    }
+
+    public LiveData<ApiResponse<AdopsiResponse>> getAdoptionDetail(long petId, String token) {
+        MutableLiveData<ApiResponse<AdopsiResponse>> resultAdopsi = new MutableLiveData<>();
+        Call<AdopsiDetailResponseParent> call = ApiConfig.getApiService().adopsiDetail(petId, token);
+        call.enqueue(new Callback<AdopsiDetailResponseParent>() {
+            @Override
+            public void onResponse(Call<AdopsiDetailResponseParent> call, Response<AdopsiDetailResponseParent> response) {
+                if(response.isSuccessful()){
+                    if(response.body()!= null){
+                        resultAdopsi.setValue(ApiResponse.success(response.body().getAdopsiResponse()));
+                    }
+                } else {
+                    resultAdopsi.setValue(ApiResponse.error("onFailure: " + response.message(), null));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AdopsiDetailResponseParent> call, Throwable t) {
+                resultAdopsi.setValue(ApiResponse.error(t.getMessage(), null));
+            }
+        });
+        return resultAdopsi;
+    }
+
+    public LiveData<String> paymentConfirm(int hewanId, int fileId, String token) {
+        MutableLiveData<String> resultPayment = new MutableLiveData<>();
+        Call<SimpleResponse> call = ApiConfig.getApiService().uploadPayment(hewanId, fileId, token);
+        call.enqueue(new Callback<SimpleResponse>() {
+            @Override
+            public void onResponse(Call<SimpleResponse> call, Response<SimpleResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        resultPayment.setValue(response.message());
+                    }
+                } else {
+                    resultPayment.setValue(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SimpleResponse> call, Throwable t) {
+                resultPayment.setValue(t.getMessage());
+            }
+        });
+        return resultPayment;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,9 +19,13 @@ import id.rezajuliandri.amegu.data.local.entity.pet.JenisEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.RasEntity;
 import id.rezajuliandri.amegu.data.local.entity.pet.SearchEntity;
+import id.rezajuliandri.amegu.data.local.entity.user.AdopsiEntity;
+import id.rezajuliandri.amegu.data.local.entity.user.InvoiceEntity;
 import id.rezajuliandri.amegu.data.remote.ApiResponse;
 import id.rezajuliandri.amegu.data.remote.RemoteDataSource;
 import id.rezajuliandri.amegu.data.remote.response.attachment.upload.AttachmentResponse;
+import id.rezajuliandri.amegu.data.remote.response.pet.adopsidetail.AdopsiResponse;
+import id.rezajuliandri.amegu.data.remote.response.pet.adopsidetail.InvoiceResponse;
 import id.rezajuliandri.amegu.data.remote.response.pet.jenis.JenisResponse;
 import id.rezajuliandri.amegu.data.remote.response.pet.pets.PetResponse;
 import id.rezajuliandri.amegu.data.remote.response.pet.ras.RasResponse;
@@ -468,6 +473,11 @@ public class PetRepository implements PetDataSource{
         );
     }
 
+    @Override
+    public LiveData<String> adopt(long petId, String token) {
+        return remoteDataSource.adopt(petId, token);
+    }
+
     public LiveData<String> deleteHewan(long id, String token) {
         return remoteDataSource.deletePet(id, token);
     }
@@ -478,5 +488,74 @@ public class PetRepository implements PetDataSource{
 
     public LiveData<RasEntity> getRasLocal(int rasId) {
         return localDataSource.getRasLocal(rasId);
+    }
+
+    public LiveData<Resource<AdopsiEntity>> getAdoptionDetail(long petId, String token) {
+        return new NetworkBoundResource<AdopsiEntity, AdopsiResponse>(appExecutors) {
+            @Override
+            protected LiveData<AdopsiEntity> loadFromDB() {
+                return localDataSource.ameguDatabase.adopsiDao().getAdopsiByPetId(petId);
+            }
+
+            @Override
+            protected Boolean shouldFetch(AdopsiEntity data) {
+                return true;
+            }
+
+            @Override
+            protected LiveData<ApiResponse<AdopsiResponse>> createCall() {
+                return remoteDataSource.getAdoptionDetail(petId, token);
+            }
+
+            @Override
+            protected void saveCallResult(AdopsiResponse data) {
+                AdopsiEntity adopsiEntity = new AdopsiEntity(
+                        data.getId(),
+                        data.getUserId(),
+                        data.getHewanId(),
+                        data.getStatus(),
+                        data.getStatusText()
+                );
+                localDataSource.ameguDatabase.adopsiDao().insert(adopsiEntity);
+                if (data.getInvoiceResponse() != null) {
+                    InvoiceResponse invoiceResponse = data.getInvoiceResponse();
+                    InvoiceEntity invoiceEntity = new InvoiceEntity(
+                            invoiceResponse.getId(),
+                            invoiceResponse.getAmount(),
+                            invoiceResponse.getTotal(),
+                            invoiceResponse.getAdmin(),
+                            invoiceResponse.getAttachmentId(),
+                            invoiceResponse.getInvoiceNo(),
+                            invoiceResponse.getOwnerId(),
+                            invoiceResponse.getAdopsiId(),
+                            invoiceResponse.getCreatedAt(),
+                            invoiceResponse.getUpdatedAt()
+                    );
+                    localDataSource.ameguDatabase.invoiceDao().insert(invoiceEntity);
+                    if(invoiceResponse.getAttachment() != null){
+                        AttachmentResponse attachmentResponse = invoiceResponse.getAttachment();
+                        AttachmentEntity attachmentEntity = new AttachmentEntity(
+                                attachmentResponse.getId(),
+                                attachmentResponse.getUserId(),
+                                attachmentResponse.getHewanId(),
+                                attachmentResponse.getFilename(),
+                                attachmentResponse.getMimetype(),
+                                attachmentResponse.getUrl(),
+                                attachmentResponse.getCreatedAt(),
+                                attachmentResponse.getUpdatedAt()
+                        );
+                        localDataSource.ameguDatabase.attachmentDao().insert(attachmentEntity);
+                    }
+                }
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<InvoiceEntity> getInvoiceByAdopsiId(int id) {
+        return localDataSource.ameguDatabase.invoiceDao().getInvoiceByAdopsiId(id);
+    }
+
+    public LiveData<String> paymentConfirm(int hewanId, int fileId, String token) {
+        return remoteDataSource.paymentConfirm(hewanId, fileId, token);
     }
 }

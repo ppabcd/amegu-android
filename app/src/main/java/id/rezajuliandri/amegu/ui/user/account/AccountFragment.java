@@ -44,13 +44,13 @@ public class AccountFragment extends Fragment {
                 viewModel.getAlamat(userEntity.getAlamatId()).observe(getViewLifecycleOwner(), alamatEntity -> {
                     binding.location.setText(alamatEntity.getProvinsiName());
                 });
-            }
-            if(userEntity.getIsAdmin() == 1){
-                binding.btnPayment.setOnClickListener(v ->{
-                    Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_account_to_userPaymentFragment);
-                });
-            } else {
-                binding.btnPayment.setVisibility(View.GONE);
+                if(userEntity.getIsAdmin() == 1){
+                    binding.btnPayment.setOnClickListener(v ->{
+                        Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_account_to_userPaymentFragment);
+                    });
+                } else {
+                    binding.btnPayment.setVisibility(View.GONE);
+                }
             }
         });
 

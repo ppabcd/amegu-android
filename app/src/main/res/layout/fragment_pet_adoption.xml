@@ -353,6 +353,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/unggah"
                     android:layout_width="match_parent"
                     android:layout_height="218dp"
                     android:layout_marginLeft="20dp"
@@ -371,7 +372,7 @@
                     <ImageView
                         android:id="@+id/imgUploadBayar"
                         android:layout_width="match_parent"
-                        android:layout_height="81dp"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/anjing" />
 
@@ -382,7 +383,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="20dp"
-                        android:text="buktitransfer.jpg" />
+                        tools:text="buktitransfer.jpg" />
                 </LinearLayout>
 
             </LinearLayout>
