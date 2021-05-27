@@ -168,6 +168,17 @@
         <action
             android:id="@+id/action_userPetAdoptionFragment_to_petAdoptionFragment"
             app:destination="@id/petAdoptionFragment"/>
+        <action android:id="@+id/action_userPetAdoptionFragment_to_userPetAdoptionDetailFragment"
+            app:destination="@id/userPetAdoptionDetailFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/userPetAdoptionDetailFragment"
+        android:name="id.rezajuliandri.amegu.ui.user.adoptiondetail.UserPetAdoptionDetailFragment"
+        android:label="fragment_user_pet_adoption_detail"
+        tools:layout="@layout/fragment_user_pet_adoption_detail">
+        <argument
+            android:name="adopsiId"
+            app:argType="long" />
     </fragment>
     <!-- favoriteFragment -->
     <fragment

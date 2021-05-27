@@ -4,7 +4,6 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -505,6 +504,66 @@ public class PetRepository implements PetDataSource{
             @Override
             protected LiveData<ApiResponse<AdopsiResponse>> createCall() {
                 return remoteDataSource.getAdoptionDetail(petId, token);
+            }
+
+            @Override
+            protected void saveCallResult(AdopsiResponse data) {
+                AdopsiEntity adopsiEntity = new AdopsiEntity(
+                        data.getId(),
+                        data.getUserId(),
+                        data.getHewanId(),
+                        data.getStatus(),
+                        data.getStatusText()
+                );
+                localDataSource.ameguDatabase.adopsiDao().insert(adopsiEntity);
+                if (data.getInvoiceResponse() != null) {
+                    InvoiceResponse invoiceResponse = data.getInvoiceResponse();
+                    InvoiceEntity invoiceEntity = new InvoiceEntity(
+                            invoiceResponse.getId(),
+                            invoiceResponse.getAmount(),
+                            invoiceResponse.getTotal(),
+                            invoiceResponse.getAdmin(),
+                            invoiceResponse.getAttachmentId(),
+                            invoiceResponse.getInvoiceNo(),
+                            invoiceResponse.getOwnerId(),
+                            invoiceResponse.getAdopsiId(),
+                            invoiceResponse.getCreatedAt(),
+                            invoiceResponse.getUpdatedAt()
+                    );
+                    localDataSource.ameguDatabase.invoiceDao().insert(invoiceEntity);
+                    if(invoiceResponse.getAttachment() != null){
+                        AttachmentResponse attachmentResponse = invoiceResponse.getAttachment();
+                        AttachmentEntity attachmentEntity = new AttachmentEntity(
+                                attachmentResponse.getId(),
+                                attachmentResponse.getUserId(),
+                                attachmentResponse.getHewanId(),
+                                attachmentResponse.getFilename(),
+                                attachmentResponse.getMimetype(),
+                                attachmentResponse.getUrl(),
+                                attachmentResponse.getCreatedAt(),
+                                attachmentResponse.getUpdatedAt()
+                        );
+                        localDataSource.ameguDatabase.attachmentDao().insert(attachmentEntity);
+                    }
+                }
+            }
+        }.asLiveData();
+    }
+    public LiveData<Resource<AdopsiEntity>> getAdoptionDetailOwner(long adopsiId, String token){
+        return new NetworkBoundResource<AdopsiEntity, AdopsiResponse>(appExecutors) {
+            @Override
+            protected LiveData<AdopsiEntity> loadFromDB() {
+                return localDataSource.ameguDatabase.adopsiDao().getAdopsi(adopsiId);
+            }
+
+            @Override
+            protected Boolean shouldFetch(AdopsiEntity data) {
+                return true;
+            }
+
+            @Override
+            protected LiveData<ApiResponse<AdopsiResponse>> createCall() {
+                return remoteDataSource.getAdoptionOwner(adopsiId, token);
             }
 
             @Override

@@ -98,6 +98,11 @@ public class UserPetAdoptionFragment extends BaseFragment {
                     toPetAdoptionFragment.setPetId(id);
                     Navigation.findNavController(binding.getRoot()).navigate(toPetAdoptionFragment);
                     break;
+                case "history":
+                    UserPetAdoptionFragmentDirections.ActionUserPetAdoptionFragmentToUserPetAdoptionDetailFragment toUserPetAdoptionDetailFragment = UserPetAdoptionFragmentDirections.actionUserPetAdoptionFragmentToUserPetAdoptionDetailFragment(id);
+                    toUserPetAdoptionDetailFragment.setAdopsiId(id);
+                    Navigation.findNavController(binding.getRoot()).navigate(toUserPetAdoptionDetailFragment);
+                    break;
             }
             Log.i("CHANGEPAGE", "id"+id+"type"+type);
         }

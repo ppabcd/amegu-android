@@ -158,6 +158,9 @@ public interface ApiService {
     @GET("v1/main/adopsi/detail")
     Call<AdopsiDetailResponseParent> adopsiDetail(@Query("hewanId") long hewanId, @Query("token") String token);
 
+    @GET("v1/main/adopsi/detail/owner")
+    Call<AdopsiDetailResponseParent> adopsiDetailOwner(@Query("adopsiId") long adopsiId, @Query("token") String token);
+
     @FormUrlEncoded
     @POST("v1/main/adopsi/payment")
     Call<SimpleResponse> uploadPayment(

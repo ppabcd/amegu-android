@@ -625,6 +625,28 @@ public class RemoteDataSource {
         });
         return resultAdopsi;
     }
+    public LiveData<ApiResponse<AdopsiResponse>> getAdoptionOwner(long adopsiId, String token) {
+        MutableLiveData<ApiResponse<AdopsiResponse>> resultAdopsi = new MutableLiveData<>();
+        Call<AdopsiDetailResponseParent> call = ApiConfig.getApiService().adopsiDetailOwner(adopsiId, token);
+        call.enqueue(new Callback<AdopsiDetailResponseParent>() {
+            @Override
+            public void onResponse(Call<AdopsiDetailResponseParent> call, Response<AdopsiDetailResponseParent> response) {
+                if(response.isSuccessful()){
+                    if(response.body()!= null){
+                        resultAdopsi.setValue(ApiResponse.success(response.body().getAdopsiResponse()));
+                    }
+                } else {
+                    resultAdopsi.setValue(ApiResponse.error("onFailure: " + response.message(), null));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AdopsiDetailResponseParent> call, Throwable t) {
+                resultAdopsi.setValue(ApiResponse.error(t.getMessage(), null));
+            }
+        });
+        return resultAdopsi;
+    }
 
     public LiveData<String> paymentConfirm(int hewanId, int fileId, String token) {
         MutableLiveData<String> resultPayment = new MutableLiveData<>();
