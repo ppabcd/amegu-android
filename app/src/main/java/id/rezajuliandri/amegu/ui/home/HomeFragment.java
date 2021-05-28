@@ -56,7 +56,7 @@ public class HomeFragment extends ItemDetailAbstract {
                     case SUCCESS:
                         binding.progressBar.setVisibility(View.GONE);
                         binding.emptyResponse.setVisibility(View.GONE);
-                        if(pets.data != null){
+                        if (pets.data != null) {
                             if (pets.data.size() == 0) {
                                 binding.emptyResponse.setVisibility(View.VISIBLE);
                             }

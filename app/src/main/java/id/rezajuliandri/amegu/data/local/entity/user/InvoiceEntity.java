@@ -8,27 +8,27 @@ import androidx.room.PrimaryKey;
 public class InvoiceEntity {
     @PrimaryKey
     @ColumnInfo(name = "_id")
-    private int id;
+    private final int id;
 
-    private int amount;
+    private final int amount;
 
-    private int total;
+    private final int total;
 
-    private int admin;
+    private final int admin;
 
-    private long attachmentId;
+    private final long attachmentId;
 
-    private String invoiceNo;
+    private final String invoiceNo;
 
-    private long ownerId;
+    private final long ownerId;
 
-    private long adopsiId;
+    private final long adopsiId;
 
-    private String createdAt;
+    private final String createdAt;
 
-    private String updatedAt;
+    private final String updatedAt;
 
-    public InvoiceEntity(int id, int amount, int total, int admin,  long attachmentId, String invoiceNo, long ownerId, long adopsiId, String createdAt, String updatedAt) {
+    public InvoiceEntity(int id, int amount, int total, int admin, long attachmentId, String invoiceNo, long ownerId, long adopsiId, String createdAt, String updatedAt) {
         this.id = id;
         this.amount = amount;
         this.total = total;

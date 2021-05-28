@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
  * Entity jenis pada database lokal
  */
 @Entity
-public class JenisEntity implements Comparable<JenisEntity>{
+public class JenisEntity implements Comparable<JenisEntity> {
     @PrimaryKey
     @ColumnInfo(name = "_id")
     long id;

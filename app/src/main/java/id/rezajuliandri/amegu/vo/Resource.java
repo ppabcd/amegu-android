@@ -9,6 +9,7 @@ import static id.rezajuliandri.amegu.vo.Status.SUCCESS;
 
 /**
  * Digunakan sebagai output dari network yang digunakan oleh fragment / activity
+ *
  * @param <T>
  */
 public class Resource<T> {

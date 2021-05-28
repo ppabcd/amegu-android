@@ -12,6 +12,7 @@ import id.rezajuliandri.amegu.vo.Resource;
 
 public class PetUserViewModel extends ViewModel {
     AmeguRepository ameguRepository;
+
     public PetUserViewModel(AmeguRepository ameguRepository) {
         this.ameguRepository = ameguRepository;
     }

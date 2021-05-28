@@ -36,11 +36,11 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class PetAdoptionFragment extends BaseFragment {
-    FragmentPetAdoptionBinding binding;
-    PetAdoptionViewModel viewModel;
     private static final int REQUEST_IMAGE = 1;
     private static final int PERMISSION_REQ_INTERNAL_STORAGE = 2;
     public String[] permissionsNeeded;
+    FragmentPetAdoptionBinding binding;
+    PetAdoptionViewModel viewModel;
     int fileId = 0;
 
     @Override
@@ -96,7 +96,7 @@ public class PetAdoptionFragment extends BaseFragment {
                                             ).observe(
                                                     getViewLifecycleOwner(),
                                                     status -> {
-                                                        if(status != null){
+                                                        if (status != null) {
                                                             if (status.toLowerCase().equals("ok")) {
                                                                 Toast.makeText(requireContext(), "Berhasil melakukan konfirmasi pembayaran", Toast.LENGTH_SHORT).show();
                                                                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_petAdoptionFragment_to_userPetAdoptionFragment);

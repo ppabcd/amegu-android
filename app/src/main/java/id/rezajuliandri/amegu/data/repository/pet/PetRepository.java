@@ -39,7 +39,7 @@ import id.rezajuliandri.amegu.vo.Resource;
  * Jika hanya diambil secara online maka return akan langsung ke remoteDataSource.
  * Namun jika diambil hanya dari database melakukan return data LiveData namun untuk pengambilannya
  * dengan menggunakan appExecutors.diskIO().execute(() -> {});
- *
+ * <p>
  * Jika data yang diambil berasal dari internet dan juga lokal dimana jika data tidak tersedia pada
  * lokal maka akan memanggil api dan menyimpannya di lokal namun jika data sudah tersedia langsung
  * melakukan pengambilan data dari local tanpa perlu memanggil api. Untuk hal ini mereturn object
@@ -64,16 +64,17 @@ import id.rezajuliandri.amegu.vo.Resource;
  * -+ dengan struktur database lokal. Setelah melakukan konversi langkah selanjutnya adalah mengirimkan
  * -+ kedalam database local melalui localDataSource. Setelah selesai maka akan mengembalikan kembali
  * -+ nilai dari dalam database untuk digunakan di viewModel.
- *
+ * <p>
  * Informasi lebih lanjut mengenai tiap method ada pada PetDataSource.java
  */
-public class PetRepository implements PetDataSource{
+public class PetRepository implements PetDataSource {
     private volatile static PetRepository INSTANCE = null;
 
     private final RemoteDataSource remoteDataSource;
     private final LocalDataSource localDataSource;
     private final AppExecutors appExecutors;
     private final Context context;
+    private int imageId = 0;
 
     private PetRepository(@NonNull RemoteDataSource remoteDataSource, LocalDataSource localDataSource, AppExecutors appExecutors, Context context) {
         this.remoteDataSource = remoteDataSource;
@@ -133,7 +134,7 @@ public class PetRepository implements PetDataSource{
                             response.getCreatedAt(),
                             response.getUpdatedAt()
                     );
-                    if(response.getAttachment() != null){
+                    if (response.getAttachment() != null) {
                         AttachmentResponse attachmentResponse = response.getAttachment();
                         AttachmentEntity attachmentEntity = new AttachmentEntity(
                                 attachmentResponse.getId(),
@@ -147,7 +148,7 @@ public class PetRepository implements PetDataSource{
                         );
                         localDataSource.insertAttachment(attachmentEntity);
                     }
-                    if(response.getRas() != null){
+                    if (response.getRas() != null) {
                         RasResponse rasResponse = response.getRas();
                         RasEntity rasEntity = new RasEntity(
                                 rasResponse.getId(),
@@ -347,7 +348,6 @@ public class PetRepository implements PetDataSource{
         });
     }
 
-    private int imageId = 0;
     public LiveData<Resource<AttachmentEntity>> uploadFile(File file, String token) {
         return new NetworkBoundResource<AttachmentEntity, AttachmentResponse>(appExecutors) {
             @Override
@@ -440,6 +440,7 @@ public class PetRepository implements PetDataSource{
             }
         }.asLiveData();
     }
+
     @Override
     public LiveData<String> uploadPet(long rasId, String namaHewan, int usia, int beratBadan, String kondisi, String jenisKelamin, int harga, String deskripsi, long attachmentId, String token) {
         return remoteDataSource.uploadPet(
@@ -455,6 +456,7 @@ public class PetRepository implements PetDataSource{
                 token
         );
     }
+
     @Override
     public LiveData<String> updatePet(long id, long rasId, String namaHewan, int usia, int beratBadan, String kondisi, String jenisKelamin, int harga, String deskripsi, long attachmentId, String token) {
         return remoteDataSource.updatePet(
@@ -531,7 +533,7 @@ public class PetRepository implements PetDataSource{
                             invoiceResponse.getUpdatedAt()
                     );
                     localDataSource.ameguDatabase.invoiceDao().insert(invoiceEntity);
-                    if(invoiceResponse.getAttachment() != null){
+                    if (invoiceResponse.getAttachment() != null) {
                         AttachmentResponse attachmentResponse = invoiceResponse.getAttachment();
                         AttachmentEntity attachmentEntity = new AttachmentEntity(
                                 attachmentResponse.getId(),
@@ -549,7 +551,8 @@ public class PetRepository implements PetDataSource{
             }
         }.asLiveData();
     }
-    public LiveData<Resource<AdopsiEntity>> getAdoptionDetailOwner(long adopsiId, String token){
+
+    public LiveData<Resource<AdopsiEntity>> getAdoptionDetailOwner(long adopsiId, String token) {
         return new NetworkBoundResource<AdopsiEntity, AdopsiResponse>(appExecutors) {
             @Override
             protected LiveData<AdopsiEntity> loadFromDB() {
@@ -591,7 +594,7 @@ public class PetRepository implements PetDataSource{
                             invoiceResponse.getUpdatedAt()
                     );
                     localDataSource.ameguDatabase.invoiceDao().insert(invoiceEntity);
-                    if(invoiceResponse.getAttachment() != null){
+                    if (invoiceResponse.getAttachment() != null) {
                         AttachmentResponse attachmentResponse = invoiceResponse.getAttachment();
                         AttachmentEntity attachmentEntity = new AttachmentEntity(
                                 attachmentResponse.getId(),

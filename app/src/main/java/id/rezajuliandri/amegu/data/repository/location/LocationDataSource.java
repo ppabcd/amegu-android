@@ -16,28 +16,32 @@ import id.rezajuliandri.amegu.vo.Resource;
 public interface LocationDataSource {
     /**
      * Mengambil data provinsi
-     * @return LiveData<Resource<List<ProvinsiEntity>>>
+     *
+     * @return LiveData<Resource < List < ProvinsiEntity>>>
      */
     LiveData<Resource<List<ProvinsiEntity>>> getAllProvince();
 
     /**
      * Mengambil data kota
+     *
      * @param provinsiId Id Provinsi untuk mengambil data kota
-     * @return LiveData<Resource<List<KotaEntity>>>
+     * @return LiveData<Resource < List < KotaEntity>>>
      */
     LiveData<Resource<List<KotaEntity>>> getAllKotaByProvinsi(long provinsiId);
 
     /**
      * Mengambil data kecamatan
+     *
      * @param kotaId Id Kota untuk mengambil data kecamatan
-     * @return LiveData<Resource<List<KecamatanEntity>>>
+     * @return LiveData<Resource < List < KecamatanEntity>>>
      */
     LiveData<Resource<List<KecamatanEntity>>> getAllKecamatanByKota(long kotaId);
 
     /**
      * Menbgambil data kelurahan
+     *
      * @param kecamatanId Id Kelurahan untuk mengambil data kecamatan
-     * @return LiveData<Resource<List<KelurahanEntity>>>
+     * @return LiveData<Resource < List < KelurahanEntity>>>
      */
     LiveData<Resource<List<KelurahanEntity>>> getAllKelurahanByKecamatan(long kecamatanId);
 }

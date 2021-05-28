@@ -30,7 +30,7 @@ import id.rezajuliandri.amegu.vo.Resource;
  * Jika hanya diambil secara online maka return akan langsung ke remoteDataSource.
  * Namun jika diambil hanya dari database melakukan return data LiveData namun untuk pengambilannya
  * dengan menggunakan appExecutors.diskIO().execute(() -> {});
- *
+ * <p>
  * Jika data yang diambil berasal dari internet dan juga lokal dimana jika data tidak tersedia pada
  * lokal maka akan memanggil api dan menyimpannya di lokal namun jika data sudah tersedia langsung
  * melakukan pengambilan data dari local tanpa perlu memanggil api. Untuk hal ini mereturn object
@@ -55,7 +55,7 @@ import id.rezajuliandri.amegu.vo.Resource;
  * -+ dengan struktur database lokal. Setelah melakukan konversi langkah selanjutnya adalah mengirimkan
  * -+ kedalam database local melalui localDataSource. Setelah selesai maka akan mengembalikan kembali
  * -+ nilai dari dalam database untuk digunakan di viewModel.
- *
+ * <p>
  * Informasi lebih lanjut mengenai tiap method ada pada LocationDataSource.java
  */
 public class LocationRepository implements LocationDataSource {

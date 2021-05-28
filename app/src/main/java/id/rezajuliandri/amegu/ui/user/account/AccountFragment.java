@@ -1,7 +1,5 @@
 package id.rezajuliandri.amegu.ui.user.account;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,8 +42,8 @@ public class AccountFragment extends Fragment {
                 viewModel.getAlamat(userEntity.getAlamatId()).observe(getViewLifecycleOwner(), alamatEntity -> {
                     binding.location.setText(alamatEntity.getProvinsiName());
                 });
-                if(userEntity.getIsAdmin() == 1){
-                    binding.btnPayment.setOnClickListener(v ->{
+                if (userEntity.getIsAdmin() == 1) {
+                    binding.btnPayment.setOnClickListener(v -> {
                         Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_account_to_userPaymentFragment);
                     });
                 } else {

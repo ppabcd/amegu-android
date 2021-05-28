@@ -4,38 +4,38 @@ import com.google.gson.annotations.SerializedName;
 
 public class BankResponse {
 
-	@SerializedName("createdAt")
-	private String createdAt;
+    @SerializedName("createdAt")
+    private String createdAt;
 
-	@SerializedName("code")
-	private String code;
+    @SerializedName("code")
+    private String code;
 
-	@SerializedName("name")
-	private String name;
+    @SerializedName("name")
+    private String name;
 
-	@SerializedName("id")
-	private int id;
+    @SerializedName("id")
+    private int id;
 
-	@SerializedName("updatedAt")
-	private String updatedAt;
+    @SerializedName("updatedAt")
+    private String updatedAt;
 
-	public String getCreatedAt(){
-		return createdAt;
-	}
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
-	public String getCode(){
-		return code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getName(){
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getId(){
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getUpdatedAt(){
-		return updatedAt;
-	}
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
 }

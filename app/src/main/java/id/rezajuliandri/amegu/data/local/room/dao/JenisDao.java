@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.rezajuliandri.amegu.data.local.entity.pet.JenisEntity;
-import id.rezajuliandri.amegu.data.local.entity.pet.RasEntity;
 
 @Dao
 public interface JenisDao {

@@ -9,10 +9,6 @@ import androidx.room.PrimaryKey;
  */
 @Entity
 public class UserEntity {
-    @ColumnInfo(name = "alamat_id")
-    private int alamatId;
-    @ColumnInfo(name = "bank_account_id")
-    private int bankAccountId;
     @PrimaryKey
     @ColumnInfo(name = "_id")
     private final long id;
@@ -28,6 +24,10 @@ public class UserEntity {
     private final String phoneNumber;
     @ColumnInfo(name = "is_admin")
     private final int isAdmin;
+    @ColumnInfo(name = "alamat_id")
+    private final int alamatId;
+    @ColumnInfo(name = "bank_account_id")
+    private final int bankAccountId;
 
     public UserEntity(
             long id,

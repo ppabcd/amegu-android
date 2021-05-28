@@ -13,7 +13,7 @@ public class UserPaymentViewModel extends ViewModel {
         this.ameguRepository = ameguRepository;
     }
 
-    public LiveData<UserEntity> getUser(){
+    public LiveData<UserEntity> getUser() {
         return ameguRepository.userRepository().getUser();
     }
 }

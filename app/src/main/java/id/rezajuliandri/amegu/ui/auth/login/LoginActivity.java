@@ -53,6 +53,7 @@ public class LoginActivity extends BaseActivity {
 
         }
     };
+    boolean isLock = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +119,7 @@ public class LoginActivity extends BaseActivity {
             });
         });
     }
-    boolean isLock = false;
+
     private void setProfile(String token) {
         binding.login.setEnabled(false);
         viewModel.setProfile(token).observe(this, profile -> {
@@ -129,8 +130,8 @@ public class LoginActivity extends BaseActivity {
                         btnText = "Loading...";
                         break;
                     case SUCCESS:
-                        if(!isLock){
-                            if(profile.data != null){
+                        if (!isLock) {
+                            if (profile.data != null) {
                                 isLock = true;
                                 if (profile.data.getAlamatId() == 0) {
                                     Intent intent = new Intent(LoginActivity.this, AddressActivity.class);

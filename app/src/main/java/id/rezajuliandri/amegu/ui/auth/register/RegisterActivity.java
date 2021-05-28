@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import java.util.Objects;
 
@@ -21,16 +20,6 @@ import id.rezajuliandri.amegu.viewmodel.ViewModelFactory;
 public class RegisterActivity extends AppCompatActivity {
     ActivityRegisterBinding binding;
     RegisterViewModel viewModel;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        setupActionBar();
-        setupViewModel();
-        viewAction();
-    }
     TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -70,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
                 binding.password.setError(checkPassword);
                 registerEnabled = false;
             }
-            if(checkPhoneNumber != null){
+            if (checkPhoneNumber != null) {
                 binding.phoneNumber.setError(checkPhoneNumber);
                 registerEnabled = false;
             }
@@ -82,6 +71,17 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        setupActionBar();
+        setupViewModel();
+        viewAction();
+    }
+
     private void setupViewModel() {
         ViewModelFactory viewModelFactory = ViewModelFactory.getInstance(this);
         viewModel = new ViewModelProvider(
@@ -101,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
         binding.username.addTextChangedListener(textWatcher);
         binding.password.addTextChangedListener(textWatcher);
         binding.phoneNumber.addTextChangedListener(textWatcher);
-        binding.register.setOnClickListener(v->{
+        binding.register.setOnClickListener(v -> {
             binding.register.setEnabled(false);
             binding.register.setText(R.string.loading);
             viewModel.register(
@@ -110,8 +110,8 @@ public class RegisterActivity extends AppCompatActivity {
                     binding.username.getText().toString().trim().toLowerCase(),
                     binding.password.getText().toString().trim(),
                     binding.phoneNumber.getText().toString().trim()
-            ).observe(this, status ->{
-                if(status.toLowerCase().equals("ok")){
+            ).observe(this, status -> {
+                if (status.toLowerCase().equals("ok")) {
                     Toast.makeText(this, "Berhasil membuat akun", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);

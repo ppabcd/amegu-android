@@ -6,9 +6,10 @@ import androidx.lifecycle.ViewModel;
 import id.rezajuliandri.amegu.data.AmeguRepository;
 import id.rezajuliandri.amegu.data.local.entity.user.UserEntity;
 
-public class UserPetAdoptionViewModel  extends ViewModel {
+public class UserPetAdoptionViewModel extends ViewModel {
     AmeguRepository ameguRepository;
-    public UserPetAdoptionViewModel(AmeguRepository ameguRepository){
+
+    public UserPetAdoptionViewModel(AmeguRepository ameguRepository) {
         this.ameguRepository = ameguRepository;
     }
 

@@ -24,6 +24,7 @@ import id.rezajuliandri.amegu.data.local.room.AmeguDatabase;
 public class LocalDataSource {
     private static LocalDataSource INSTANCE = null;
     public AmeguDatabase ameguDatabase;
+    ArrayList<Long> listFavorite = new ArrayList<>();
 
     public LocalDataSource(AmeguDatabase ameguDatabase) {
         this.ameguDatabase = ameguDatabase;
@@ -79,8 +80,6 @@ public class LocalDataSource {
     public LiveData<UserEntity> getUser() {
         return ameguDatabase.userDao().getUser();
     }
-
-    ArrayList<Long> listFavorite = new ArrayList<>();
 
     public void insertPetsAndDelete(ArrayList<PetEntity> petEntities) {
         List<PetEntity> listFavoritePets = ameguDatabase.petDao().getFavoritesEntities();

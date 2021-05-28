@@ -11,14 +11,14 @@ import androidx.room.PrimaryKey;
 public class AttachmentEntity {
     @PrimaryKey
     @ColumnInfo(name = "_id")
-    private int id;
-    private int userId;
-    private int hewanId;
-    private String fileName;
-    private String mimetype;
-    private String url;
-    private String createdAt;
-    private String updatedAt;
+    private final int id;
+    private final int userId;
+    private final int hewanId;
+    private final String fileName;
+    private final String mimetype;
+    private final String url;
+    private final String createdAt;
+    private final String updatedAt;
 
     public AttachmentEntity(int id, int userId, int hewanId, String fileName, String mimetype, String url, String createdAt, String updatedAt) {
         this.id = id;

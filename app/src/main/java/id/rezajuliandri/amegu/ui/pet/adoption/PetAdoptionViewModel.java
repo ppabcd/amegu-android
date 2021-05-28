@@ -14,7 +14,8 @@ import id.rezajuliandri.amegu.vo.Resource;
 
 public class PetAdoptionViewModel extends ViewModel {
     AmeguRepository ameguRepository;
-    public PetAdoptionViewModel(AmeguRepository ameguRepository){
+
+    public PetAdoptionViewModel(AmeguRepository ameguRepository) {
         this.ameguRepository = ameguRepository;
     }
 

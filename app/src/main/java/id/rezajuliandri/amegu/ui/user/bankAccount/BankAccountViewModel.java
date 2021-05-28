@@ -9,6 +9,7 @@ import id.rezajuliandri.amegu.vo.Resource;
 
 public class BankAccountViewModel extends ViewModel {
     AmeguRepository ameguRepository;
+
     public BankAccountViewModel(AmeguRepository ameguRepository) {
         this.ameguRepository = ameguRepository;
     }

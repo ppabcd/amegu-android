@@ -14,8 +14,9 @@ import id.rezajuliandri.amegu.data.local.entity.location.ProvinsiEntity;
 import id.rezajuliandri.amegu.data.local.entity.user.UserEntity;
 import id.rezajuliandri.amegu.vo.Resource;
 
-public class AddressUserViewModel  extends ViewModel {
+public class AddressUserViewModel extends ViewModel {
     AmeguRepository ameguRepository;
+
     public AddressUserViewModel(AmeguRepository ameguRepository) {
         this.ameguRepository = ameguRepository;
     }
@@ -36,6 +37,7 @@ public class AddressUserViewModel  extends ViewModel {
     public LiveData<Resource<List<KelurahanEntity>>> getKelurahan(long kelurahanId) {
         return ameguRepository.locationRepository().getAllKelurahanByKecamatan(kelurahanId);
     }
+
     // TODO Update sendAlamat
     public LiveData<String> sendAlamat(
             String alamat,

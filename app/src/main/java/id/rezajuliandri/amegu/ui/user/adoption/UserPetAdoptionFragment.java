@@ -2,11 +2,6 @@ package id.rezajuliandri.amegu.ui.user.adoption;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +10,11 @@ import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 
-import id.rezajuliandri.amegu.R;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+
 import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
-import id.rezajuliandri.amegu.databinding.FragmentPetPaymentBinding;
 import id.rezajuliandri.amegu.databinding.FragmentUserPetAdoptionBinding;
-import id.rezajuliandri.amegu.ui.search.result.SearchResultFragmentDirections;
-import id.rezajuliandri.amegu.ui.user.adoptiondetail.UserPetAdoptionDetailViewModel;
 import id.rezajuliandri.amegu.utils.ActionBarHelper;
 import id.rezajuliandri.amegu.utils.BaseFragment;
 import id.rezajuliandri.amegu.utils.NetworkUtils;
@@ -29,6 +23,7 @@ import id.rezajuliandri.amegu.viewmodel.ViewModelFactory;
 public class UserPetAdoptionFragment extends BaseFragment {
     FragmentUserPetAdoptionBinding binding;
     UserPetAdoptionViewModel viewModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,10 +34,10 @@ public class UserPetAdoptionFragment extends BaseFragment {
 
     @Override
     protected void getData() {
-        if(NetworkUtils.isConnectedFast(getContext())){
+        if (NetworkUtils.isConnectedFast(getContext())) {
             viewModel.getUser().observe(getViewLifecycleOwner(), userEntity -> {
                 binding.webView.getSettings().setJavaScriptEnabled(true);
-                binding.webView.setWebChromeClient(new WebChromeClient(){
+                binding.webView.setWebChromeClient(new WebChromeClient() {
                     @Override
                     public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
                         android.util.Log.d("WebView", consoleMessage.message());
@@ -50,7 +45,7 @@ public class UserPetAdoptionFragment extends BaseFragment {
                     }
                 });
                 binding.webView.addJavascriptInterface(new UserPetAdoptionBridge(requireContext(), binding), "bridge");
-                binding.webView.loadUrl("https://amegu.netlify.app/android/?token="+userEntity.getToken()+"&&target=history");
+                binding.webView.loadUrl("https://amegu.netlify.app/android/?token=" + userEntity.getToken() + "&&target=history");
             });
         } else {
             binding.webView.setVisibility(View.GONE);
@@ -83,16 +78,19 @@ public class UserPetAdoptionFragment extends BaseFragment {
     protected void moveToSearchFragment(View view) {
 
     }
-    static class UserPetAdoptionBridge{
+
+    static class UserPetAdoptionBridge {
         Context context;
         FragmentUserPetAdoptionBinding binding;
-        public UserPetAdoptionBridge(Context context, FragmentUserPetAdoptionBinding binding){
+
+        public UserPetAdoptionBridge(Context context, FragmentUserPetAdoptionBinding binding) {
             this.context = context;
             this.binding = binding;
         }
+
         @JavascriptInterface
-        public void changePage(long id, String type){
-            switch (type){
+        public void changePage(long id, String type) {
+            switch (type) {
                 case "payment":
                     UserPetAdoptionFragmentDirections.ActionUserPetAdoptionFragmentToPetAdoptionFragment toPetAdoptionFragment = UserPetAdoptionFragmentDirections.actionUserPetAdoptionFragmentToPetAdoptionFragment(id);
                     toPetAdoptionFragment.setPetId(id);
@@ -104,7 +102,7 @@ public class UserPetAdoptionFragment extends BaseFragment {
                     Navigation.findNavController(binding.getRoot()).navigate(toUserPetAdoptionDetailFragment);
                     break;
             }
-            Log.i("CHANGEPAGE", "id"+id+"type"+type);
+            Log.i("CHANGEPAGE", "id" + id + "type" + type);
         }
     }
 }

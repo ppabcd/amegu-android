@@ -1,21 +1,22 @@
 package id.rezajuliandri.amegu.data.remote.response.pet.jenis;
 
-import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class JenisResponseParent{
+import java.util.List;
 
-	@SerializedName("data")
-	private List<JenisResponse> data;
+public class JenisResponseParent {
 
-	@SerializedName("message")
-	private String message;
+    @SerializedName("data")
+    private List<JenisResponse> data;
 
-	public List<JenisResponse> getData(){
-		return data;
-	}
+    @SerializedName("message")
+    private String message;
 
-	public String getMessage(){
-		return message;
-	}
+    public List<JenisResponse> getData() {
+        return data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

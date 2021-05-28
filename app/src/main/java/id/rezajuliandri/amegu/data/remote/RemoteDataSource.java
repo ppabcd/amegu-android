@@ -174,6 +174,7 @@ public class RemoteDataSource {
         });
         return resultLogin;
     }
+
     public LiveData<String> register(String firstname, String lastName, String email, String password, String phoneNumber) {
         MutableLiveData<String> resultRegister = new MutableLiveData<>();
         Call<SimpleResponse> call = ApiConfig.getApiService().register(
@@ -246,6 +247,7 @@ public class RemoteDataSource {
         });
         return resultPets;
     }
+
     public LiveData<ApiResponse<List<PetResponse>>> getMyPets(String token) {
         MutableLiveData<ApiResponse<List<PetResponse>>> resultPets = new MutableLiveData<>();
         Call<PetsResponseParent> call = ApiConfig.getApiService().getMyPets(token);
@@ -486,6 +488,7 @@ public class RemoteDataSource {
         });
         return resultJenis;
     }
+
     public LiveData<ApiResponse<List<RasResponse>>> getRas(long jenisId) {
         MutableLiveData<ApiResponse<List<RasResponse>>> resultRas = new MutableLiveData<>();
         Call<RasResponseParent> call = ApiConfig.getApiService().getRas(jenisId);
@@ -533,6 +536,7 @@ public class RemoteDataSource {
         });
         return resultPet;
     }
+
     public LiveData<String> updatePet(long id, long rasId, String namaHewan, int usia, int beratBadan, String kondisi, String jenisKelamin, int harga, String deskripsi, long attachmentId, String token) {
         MutableLiveData<String> resultPet = new MutableLiveData<>();
         Call<SimpleResponse> call = ApiConfig.getApiService().updatePet(
@@ -609,8 +613,8 @@ public class RemoteDataSource {
         call.enqueue(new Callback<AdopsiDetailResponseParent>() {
             @Override
             public void onResponse(Call<AdopsiDetailResponseParent> call, Response<AdopsiDetailResponseParent> response) {
-                if(response.isSuccessful()){
-                    if(response.body()!= null){
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
                         resultAdopsi.setValue(ApiResponse.success(response.body().getAdopsiResponse()));
                     }
                 } else {
@@ -625,14 +629,15 @@ public class RemoteDataSource {
         });
         return resultAdopsi;
     }
+
     public LiveData<ApiResponse<AdopsiResponse>> getAdoptionOwner(long adopsiId, String token) {
         MutableLiveData<ApiResponse<AdopsiResponse>> resultAdopsi = new MutableLiveData<>();
         Call<AdopsiDetailResponseParent> call = ApiConfig.getApiService().adopsiDetailOwner(adopsiId, token);
         call.enqueue(new Callback<AdopsiDetailResponseParent>() {
             @Override
             public void onResponse(Call<AdopsiDetailResponseParent> call, Response<AdopsiDetailResponseParent> response) {
-                if(response.isSuccessful()){
-                    if(response.body()!= null){
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
                         resultAdopsi.setValue(ApiResponse.success(response.body().getAdopsiResponse()));
                     }
                 } else {

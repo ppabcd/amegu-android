@@ -54,6 +54,85 @@ public class UploadFragment extends BaseFragment {
     FragmentUploadBinding binding;
     UploadViewModel viewModel;
     long fileId = 0;
+    ArrayAdapter<JenisEntity> jenisEntityArrayAdapter;
+    ArrayAdapter<RasEntity> rasEntityArrayAdapter;
+    private boolean rasChecked = false;
+    private final RadioGroup.OnCheckedChangeListener jenisKelaminListener = (group, checkedId) -> checkButton();
+    TextWatcher textListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            checkButton();
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+    private final AdapterView.OnItemSelectedListener rasListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (position > 0) {
+                JenisEntity jenisEntity = (JenisEntity) binding.jenis.getSelectedItem();
+                RasEntity rasEntity = (RasEntity) binding.ras.getItemAtPosition(position);
+                if (rasEntity.getJenisId() == jenisEntity.getId()) {
+                    rasChecked = true;
+                }
+            } else {
+                rasChecked = false;
+            }
+            checkButton();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+    private final AdapterView.OnItemSelectedListener jenisListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (position > 0) {
+                JenisEntity jenis = (JenisEntity) binding.jenis.getItemAtPosition(position);
+                viewModel.getRas(jenis.getId()).observe(getViewLifecycleOwner(), rasEntitiesResource -> {
+                    if (rasEntitiesResource != null) {
+                        switch (rasEntitiesResource.status) {
+                            case LOADING:
+                                break;
+                            case SUCCESS:
+                                if (rasEntitiesResource.data != null) {
+                                    List<RasEntity> rasEntities = rasEntitiesResource.data;
+                                    rasEntities.add(new RasEntity(0, "Pilih ras hewan", 0));
+                                    Collections.sort(rasEntities);
+                                    rasEntityArrayAdapter = new ArrayAdapter<>(
+                                            requireActivity(),
+                                            R.layout.support_simple_spinner_dropdown_item,
+                                            rasEntities
+                                    );
+                                    binding.ras.setAdapter(rasEntityArrayAdapter);
+                                    binding.ras.setOnItemSelectedListener(rasListener);
+                                }
+                                break;
+                            case ERROR:
+                                Toast.makeText(requireContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                                break;
+
+                        }
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,9 +146,6 @@ public class UploadFragment extends BaseFragment {
         initData();
         super.onViewCreated(view, savedInstanceState);
     }
-
-    ArrayAdapter<JenisEntity> jenisEntityArrayAdapter;
-    ArrayAdapter<RasEntity> rasEntityArrayAdapter;
 
     private void initData() {
         jenisEntities = new ArrayList<>();
@@ -140,7 +216,7 @@ public class UploadFragment extends BaseFragment {
                 binding.send.setEnabled(false);
                 binding.send.setText(R.string.loading);
                 viewModel.uploadPet(
-                        ((RasEntity)binding.ras.getSelectedItem()).getId(),
+                        ((RasEntity) binding.ras.getSelectedItem()).getId(),
                         binding.namaHewan.getText().toString(),
                         Integer.parseInt(binding.usia.getText().toString()),
                         Integer.parseInt(binding.beratBadan.getText().toString()),
@@ -151,7 +227,7 @@ public class UploadFragment extends BaseFragment {
                         fileId,
                         userEntity.getToken()
                 ).observe(getViewLifecycleOwner(), status -> {
-                    if(status.toLowerCase().equals("ok")){
+                    if (status.toLowerCase().equals("ok")) {
                         Toast.makeText(requireContext(), "Berhasil mengirim data hewan", Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_upload_to_petsUserFragment);
                         return;
@@ -163,86 +239,6 @@ public class UploadFragment extends BaseFragment {
             });
         });
     }
-
-    private final RadioGroup.OnCheckedChangeListener jenisKelaminListener = (group, checkedId) -> checkButton();
-
-    private AdapterView.OnItemSelectedListener jenisListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position > 0) {
-                JenisEntity jenis = (JenisEntity) binding.jenis.getItemAtPosition(position);
-                viewModel.getRas(jenis.getId()).observe(getViewLifecycleOwner(), rasEntitiesResource -> {
-                    if (rasEntitiesResource != null) {
-                        switch (rasEntitiesResource.status) {
-                            case LOADING:
-                                break;
-                            case SUCCESS:
-                                if (rasEntitiesResource.data != null) {
-                                    List<RasEntity> rasEntities = rasEntitiesResource.data;
-                                    rasEntities.add(new RasEntity(0, "Pilih ras hewan", 0));
-                                    Collections.sort(rasEntities);
-                                    rasEntityArrayAdapter = new ArrayAdapter<>(
-                                            requireActivity(),
-                                            R.layout.support_simple_spinner_dropdown_item,
-                                            rasEntities
-                                    );
-                                    binding.ras.setAdapter(rasEntityArrayAdapter);
-                                    binding.ras.setOnItemSelectedListener(rasListener);
-                                }
-                                break;
-                            case ERROR:
-                                Toast.makeText(requireContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                                break;
-
-                        }
-                    }
-                });
-            }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    };
-    private boolean rasChecked = false;
-    private AdapterView.OnItemSelectedListener rasListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position > 0) {
-                JenisEntity jenisEntity = (JenisEntity) binding.jenis.getSelectedItem();
-                RasEntity rasEntity = (RasEntity) binding.ras.getItemAtPosition(position);
-                if (rasEntity.getJenisId() == jenisEntity.getId()) {
-                    rasChecked = true;
-                }
-            } else {
-                rasChecked = false;
-            }
-            checkButton();
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    };
-
-    TextWatcher textListener = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            checkButton();
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
 
     private void checkButton() {
         binding.send.setEnabled(false);
@@ -271,7 +267,7 @@ public class UploadFragment extends BaseFragment {
         if ("".equals(binding.deskripsi.getText().toString())) {
             return;
         }
-        if("".equals(binding.harga.getText().toString())){
+        if ("".equals(binding.harga.getText().toString())) {
             return;
         }
         if (Integer.parseInt(binding.harga.getText().toString()) < 0) {

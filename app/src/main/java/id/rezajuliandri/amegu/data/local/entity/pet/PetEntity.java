@@ -40,9 +40,9 @@ public class PetEntity implements Parcelable {
     private final int attachmentId;
     private final String attachmentUrl;
     private final String deskripsi;
-    private int isFavorite;
     private final String createdAt;
     private final String updatedAt;
+    private int isFavorite;
 
     public PetEntity(
             long id,
@@ -152,6 +152,10 @@ public class PetEntity implements Parcelable {
         return isFavorite;
     }
 
+    public void setIsFavorite(int isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
     public String getCreatedAt() {
         return createdAt;
     }
@@ -174,10 +178,6 @@ public class PetEntity implements Parcelable {
 
     public String getLokasi() {
         return lokasi;
-    }
-
-    public void setIsFavorite(int isFavorite){
-        this.isFavorite = isFavorite;
     }
 
     @Override

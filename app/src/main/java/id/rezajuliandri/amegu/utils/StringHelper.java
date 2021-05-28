@@ -74,8 +74,7 @@ public class StringHelper {
         return time;
     }
 
-    private static Date addDays(Date date, int days)
-    {
+    private static Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.DATE, days); //minus number would decrement the days

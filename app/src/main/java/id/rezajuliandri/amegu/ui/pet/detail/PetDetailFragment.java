@@ -21,7 +21,6 @@ import com.bumptech.glide.request.RequestOptions;
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
 import id.rezajuliandri.amegu.databinding.FragmentPetDetailBinding;
-import id.rezajuliandri.amegu.ui.search.result.SearchResultFragmentDirections;
 import id.rezajuliandri.amegu.utils.ActionBarHelper;
 import id.rezajuliandri.amegu.utils.ItemDetailAbstract;
 import id.rezajuliandri.amegu.utils.StringHelper;
@@ -114,7 +113,7 @@ public class PetDetailFragment extends ItemDetailAbstract {
 
                                             });
                                             builder.setPositiveButton("Ok", ((dialog, which) -> viewModel.deleteHewan(pet.getId(), userEntity.getToken()).observe(getViewLifecycleOwner(), status -> {
-                                                if(status.toLowerCase().equals("ok")){
+                                                if (status.toLowerCase().equals("ok")) {
                                                     Toast.makeText(requireContext(), "Berhasil menghapus data hewan", Toast.LENGTH_SHORT).show();
                                                     Navigation.findNavController(binding.getRoot()).navigate(R.id.action_petDetailFragment_to_petsUserFragment);
                                                     return;
@@ -126,7 +125,7 @@ public class PetDetailFragment extends ItemDetailAbstract {
 
                                     }
                                     binding.btnAdopt.setOnClickListener(v -> {
-                                        if(userEntity.getBankAccountId() == 0){
+                                        if (userEntity.getBankAccountId() == 0) {
                                             Toast.makeText(requireContext(), "User harus menambahkan rekening sebelum melakukan adopsi", Toast.LENGTH_SHORT).show();
                                             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_petDetailFragment_to_bankAccountFragment);
                                             return;

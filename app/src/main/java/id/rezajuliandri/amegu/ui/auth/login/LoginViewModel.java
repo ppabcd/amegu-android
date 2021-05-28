@@ -13,6 +13,7 @@ public class LoginViewModel extends ViewModel {
     AmeguRepository ameguRepository;
     private String errorMsgUsername = null;
     private String errorMsgPassword = null;
+
     public LoginViewModel(AmeguRepository ameguRepository) {
         this.ameguRepository = ameguRepository;
     }

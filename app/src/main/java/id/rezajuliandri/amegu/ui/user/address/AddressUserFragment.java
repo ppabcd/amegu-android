@@ -46,10 +46,162 @@ public class AddressUserFragment extends BaseFragment {
     ArrayList<KotaEntity> kotaEntities;
     ArrayAdapter<ProvinsiEntity> provinsiEntityArrayAdapter;
     ArrayAdapter<KotaEntity> kotaEntityArrayAdapter;
+    private final AdapterView.OnItemSelectedListener provinsiListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (position > 0) {
+                ProvinsiEntity entity = (ProvinsiEntity) binding.provinsi.getItemAtPosition(position);
+                viewModel.getKota(entity.getId()).observe(getViewLifecycleOwner(), kota -> {
+                    if (kota != null) {
+                        switch (kota.status) {
+                            case LOADING:
+                                break;
+                            case SUCCESS:
+                                kotaEntities = new ArrayList<>();
+                                kotaEntities.addAll(kota.data);
+                                kotaEntity = new KotaEntity(0, "Pilih Kota", 0);
+                                kotaEntities.add(kotaEntity);
+                                Collections.sort(kotaEntities);
+                                kotaEntityArrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, kotaEntities);
+                                binding.kota.setAdapter(kotaEntityArrayAdapter);
+                                binding.kota.setOnItemSelectedListener(kotaListener);
+                                break;
+                            case ERROR:
+                                Toast.makeText(requireContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                                break;
+
+                        }
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
     ArrayAdapter<KecamatanEntity> kecamatanEntityArrayAdapter;
+    private final AdapterView.OnItemSelectedListener kotaListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (position > 0) {
+                KotaEntity entity = (KotaEntity) binding.kota.getItemAtPosition(position);
+                viewModel.getKecamatan(entity.getId()).observe(getViewLifecycleOwner(), kecamatan -> {
+                    if (kecamatan != null) {
+                        switch (kecamatan.status) {
+                            case LOADING:
+                                break;
+                            case SUCCESS:
+                                kecamatanEntities = new ArrayList<>();
+                                kecamatanEntities.addAll(kecamatan.data);
+                                kecamatanEntity = new KecamatanEntity(0, "Pilih Kecamatan", 0);
+                                kecamatanEntities.add(kecamatanEntity);
+                                Collections.sort(kecamatanEntities);
+                                kecamatanEntityArrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, kecamatanEntities);
+                                binding.kecamatan.setAdapter(kecamatanEntityArrayAdapter);
+                                binding.kecamatan.setOnItemSelectedListener(kecamatanListener);
+                                break;
+                            case ERROR:
+                                Toast.makeText(requireContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                                break;
+
+                        }
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
     ArrayAdapter<KelurahanEntity> kelurahanEntityArrayAdapter;
+    private final AdapterView.OnItemSelectedListener kecamatanListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (position > 0) {
+                KecamatanEntity entity = (KecamatanEntity) binding.kecamatan.getItemAtPosition(position);
+                viewModel.getKelurahan(entity.getId()).observe(getViewLifecycleOwner(), kelurahan -> {
+                    if (kelurahan != null) {
+                        switch (kelurahan.status) {
+                            case LOADING:
+                                break;
+                            case SUCCESS:
+                                kelurahanEntities = new ArrayList<>();
+                                kelurahanEntities.addAll(kelurahan.data);
+                                kelurahanEntity = new KelurahanEntity(0, "Pilih Kelurahan", 0);
+                                kelurahanEntities.add(kelurahanEntity);
+                                Collections.sort(kelurahanEntities);
+                                kelurahanEntityArrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, kelurahanEntities);
+                                binding.kelurahan.setAdapter(kelurahanEntityArrayAdapter);
+                                binding.kelurahan.setOnItemSelectedListener(kelurahanListener);
+                                break;
+                            case ERROR:
+                                Toast.makeText(requireContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
     boolean completedCheck = false;
     boolean completedText = false;
+    private final TextWatcher alamat_listener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            completedText = !"".equals(binding.alamat.getText().toString());
+            checkButton();
+        }
+    };
+    private final AdapterView.OnItemSelectedListener kelurahanListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (position > 0) {
+                KelurahanEntity kelurahanEntity = (KelurahanEntity) binding.kelurahan.getItemAtPosition(position);
+                KecamatanEntity kecamatanEntity = (KecamatanEntity) binding.kecamatan.getSelectedItem();
+                KotaEntity kotaEntity = (KotaEntity) binding.kota.getSelectedItem();
+                ProvinsiEntity provinsiEntity = (ProvinsiEntity) binding.provinsi.getSelectedItem();
+                if (
+                        kelurahanEntity != null && kelurahanEntity.getId() != 0 &&
+                                kecamatanEntity != null && kecamatanEntity.getId() != 0 &&
+                                kotaEntity != null && kotaEntity.getId() != 0 &&
+                                provinsiEntity != null && provinsiEntity.getId() != 0
+                ) {
+                    completedCheck = true;
+                    checkButton();
+                    return;
+                }
+                completedCheck = false;
+                Toast.makeText(requireContext(), "Harap mengisi semua field", Toast.LENGTH_SHORT).show();
+                checkButton();
+                return;
+            }
+            completedCheck = false;
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -144,7 +296,7 @@ public class AddressUserFragment extends BaseFragment {
                                                 ((KelurahanEntity) binding.kelurahan.getSelectedItem()).getId(),
                                                 userEntity.getToken()
                                         ).observe(getViewLifecycleOwner(), status -> {
-                                            if(status.toLowerCase().equals("ok")){
+                                            if (status.toLowerCase().equals("ok")) {
                                                 viewModel.getProfile(userEntity.getToken()).observe(getViewLifecycleOwner(), this::checkProfile);
                                                 return;
                                             }
@@ -192,24 +344,6 @@ public class AddressUserFragment extends BaseFragment {
         }
     }
 
-    private final TextWatcher alamat_listener = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            completedText = !"".equals(binding.alamat.getText().toString());
-            checkButton();
-        }
-    };
-
     private void checkButton() {
         if (!completedCheck || !completedText) {
             binding.sendAddress.setEnabled(false);
@@ -217,142 +351,6 @@ public class AddressUserFragment extends BaseFragment {
         }
         binding.sendAddress.setEnabled(true);
     }
-
-    private final AdapterView.OnItemSelectedListener kelurahanListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position > 0) {
-                KelurahanEntity kelurahanEntity = (KelurahanEntity) binding.kelurahan.getItemAtPosition(position);
-                KecamatanEntity kecamatanEntity = (KecamatanEntity) binding.kecamatan.getSelectedItem();
-                KotaEntity kotaEntity = (KotaEntity) binding.kota.getSelectedItem();
-                ProvinsiEntity provinsiEntity = (ProvinsiEntity) binding.provinsi.getSelectedItem();
-                if (
-                        kelurahanEntity != null && kelurahanEntity.getId() != 0 &&
-                                kecamatanEntity != null && kecamatanEntity.getId() != 0 &&
-                                kotaEntity != null && kotaEntity.getId() != 0 &&
-                                provinsiEntity != null && provinsiEntity.getId() != 0
-                ) {
-                    completedCheck = true;
-                    checkButton();
-                    return;
-                }
-                completedCheck = false;
-                Toast.makeText(requireContext(), "Harap mengisi semua field", Toast.LENGTH_SHORT).show();
-                checkButton();
-                return;
-            }
-            completedCheck = false;
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    };
-    private final AdapterView.OnItemSelectedListener kecamatanListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position > 0) {
-                KecamatanEntity entity = (KecamatanEntity) binding.kecamatan.getItemAtPosition(position);
-                viewModel.getKelurahan(entity.getId()).observe(getViewLifecycleOwner(), kelurahan -> {
-                    if (kelurahan != null) {
-                        switch (kelurahan.status) {
-                            case LOADING:
-                                break;
-                            case SUCCESS:
-                                kelurahanEntities = new ArrayList<>();
-                                kelurahanEntities.addAll(kelurahan.data);
-                                kelurahanEntity = new KelurahanEntity(0, "Pilih Kelurahan", 0);
-                                kelurahanEntities.add(kelurahanEntity);
-                                Collections.sort(kelurahanEntities);
-                                kelurahanEntityArrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, kelurahanEntities);
-                                binding.kelurahan.setAdapter(kelurahanEntityArrayAdapter);
-                                binding.kelurahan.setOnItemSelectedListener(kelurahanListener);
-                                break;
-                            case ERROR:
-                                Toast.makeText(requireContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                    }
-                });
-            }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    };
-    private final AdapterView.OnItemSelectedListener kotaListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position > 0) {
-                KotaEntity entity = (KotaEntity) binding.kota.getItemAtPosition(position);
-                viewModel.getKecamatan(entity.getId()).observe(getViewLifecycleOwner(), kecamatan -> {
-                    if (kecamatan != null) {
-                        switch (kecamatan.status) {
-                            case LOADING:
-                                break;
-                            case SUCCESS:
-                                kecamatanEntities = new ArrayList<>();
-                                kecamatanEntities.addAll(kecamatan.data);
-                                kecamatanEntity = new KecamatanEntity(0, "Pilih Kecamatan", 0);
-                                kecamatanEntities.add(kecamatanEntity);
-                                Collections.sort(kecamatanEntities);
-                                kecamatanEntityArrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, kecamatanEntities);
-                                binding.kecamatan.setAdapter(kecamatanEntityArrayAdapter);
-                                binding.kecamatan.setOnItemSelectedListener(kecamatanListener);
-                                break;
-                            case ERROR:
-                                Toast.makeText(requireContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                                break;
-
-                        }
-                    }
-                });
-            }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    };
-    private final AdapterView.OnItemSelectedListener provinsiListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position > 0) {
-                ProvinsiEntity entity = (ProvinsiEntity) binding.provinsi.getItemAtPosition(position);
-                viewModel.getKota(entity.getId()).observe(getViewLifecycleOwner(), kota -> {
-                    if (kota != null) {
-                        switch (kota.status) {
-                            case LOADING:
-                                break;
-                            case SUCCESS:
-                                kotaEntities = new ArrayList<>();
-                                kotaEntities.addAll(kota.data);
-                                kotaEntity = new KotaEntity(0, "Pilih Kota", 0);
-                                kotaEntities.add(kotaEntity);
-                                Collections.sort(kotaEntities);
-                                kotaEntityArrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, kotaEntities);
-                                binding.kota.setAdapter(kotaEntityArrayAdapter);
-                                binding.kota.setOnItemSelectedListener(kotaListener);
-                                break;
-                            case ERROR:
-                                Toast.makeText(requireContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                                break;
-
-                        }
-                    }
-                });
-            }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    };
 
     @Override
     protected void setupViewModel() {

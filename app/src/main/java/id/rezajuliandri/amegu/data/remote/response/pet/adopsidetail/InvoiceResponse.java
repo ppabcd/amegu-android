@@ -7,87 +7,87 @@ import id.rezajuliandri.amegu.data.remote.response.auth.login.UserLoginResponse;
 
 public class InvoiceResponse {
 
-	@SerializedName("owner")
-	private UserLoginResponse owner;
+    @SerializedName("owner")
+    private UserLoginResponse owner;
 
-	@SerializedName("createdAt")
-	private String createdAt;
+    @SerializedName("createdAt")
+    private String createdAt;
 
-	@SerializedName("amount")
-	private int amount;
+    @SerializedName("amount")
+    private int amount;
 
-	@SerializedName("total")
-	private int total;
+    @SerializedName("total")
+    private int total;
 
-	@SerializedName("attachment")
-	private AttachmentResponse attachment;
+    @SerializedName("attachment")
+    private AttachmentResponse attachment;
 
-	@SerializedName("admin")
-	private int admin;
+    @SerializedName("admin")
+    private int admin;
 
-	@SerializedName("id")
-	private int id;
+    @SerializedName("id")
+    private int id;
 
-	@SerializedName("attachmentId")
-	private long attachmentId;
+    @SerializedName("attachmentId")
+    private long attachmentId;
 
-	@SerializedName("invoiceNo")
-	private String invoiceNo;
+    @SerializedName("invoiceNo")
+    private String invoiceNo;
 
-	@SerializedName("ownerId")
-	private int ownerId;
+    @SerializedName("ownerId")
+    private int ownerId;
 
-	@SerializedName("adopsiId")
-	private int adopsiId;
+    @SerializedName("adopsiId")
+    private int adopsiId;
 
-	@SerializedName("updatedAt")
-	private String updatedAt;
+    @SerializedName("updatedAt")
+    private String updatedAt;
 
-	public UserLoginResponse getOwner(){
-		return owner;
-	}
+    public UserLoginResponse getOwner() {
+        return owner;
+    }
 
-	public String getCreatedAt(){
-		return createdAt;
-	}
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
-	public int getAmount(){
-		return amount;
-	}
+    public int getAmount() {
+        return amount;
+    }
 
-	public int getTotal(){
-		return total;
-	}
+    public int getTotal() {
+        return total;
+    }
 
-	public AttachmentResponse getAttachment(){
-		return attachment;
-	}
+    public AttachmentResponse getAttachment() {
+        return attachment;
+    }
 
-	public int getAdmin(){
-		return admin;
-	}
+    public int getAdmin() {
+        return admin;
+    }
 
-	public int getId(){
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public long getAttachmentId(){
-		return attachmentId;
-	}
+    public long getAttachmentId() {
+        return attachmentId;
+    }
 
-	public String getInvoiceNo(){
-		return invoiceNo;
-	}
+    public String getInvoiceNo() {
+        return invoiceNo;
+    }
 
-	public int getOwnerId(){
-		return ownerId;
-	}
+    public int getOwnerId() {
+        return ownerId;
+    }
 
-	public int getAdopsiId(){
-		return adopsiId;
-	}
+    public int getAdopsiId() {
+        return adopsiId;
+    }
 
-	public String getUpdatedAt(){
-		return updatedAt;
-	}
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
 }

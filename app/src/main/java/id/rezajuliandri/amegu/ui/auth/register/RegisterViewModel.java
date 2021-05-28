@@ -11,14 +11,12 @@ public class RegisterViewModel extends ViewModel {
     public final int FIRST_NAME = 3;
     public final int LAST_NAME = 4;
     public final int PHONE_NUMBER = 5;
-
+    AmeguRepository ameguRepository;
     private String errorMsgUsername = null;
     private String errorMsgPassword = null;
     private String errorMsgFirstName = null;
     private String errorMsgLastName = null;
     private String errorMsgPhoneNumber = null;
-
-    AmeguRepository ameguRepository;
 
     public RegisterViewModel(AmeguRepository ameguRepository) {
         this.ameguRepository = ameguRepository;
@@ -45,6 +43,7 @@ public class RegisterViewModel extends ViewModel {
         }
         return "";
     }
+
     /**
      * Proses validasi ketika ada perubahan data pada form
      *
@@ -62,9 +61,10 @@ public class RegisterViewModel extends ViewModel {
                 "Nama pengguna tidak ada" : null;
         errorMsgPassword = (!isPasswordValid(password)) ?
                 "Kata sandi harus tersusun lebih dari 8 karakter" : null;
-        errorMsgPhoneNumber = ("".equals(phoneNumber))?
+        errorMsgPhoneNumber = ("".equals(phoneNumber)) ?
                 "Nomor telepon harus diisi" : null;
     }
+
     /**
      * Melakukan pengecekan username user
      *
@@ -87,7 +87,8 @@ public class RegisterViewModel extends ViewModel {
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 8;
     }
-    public LiveData<String> register(String firstname, String lastName, String email, String password, String phoneNumber){
+
+    public LiveData<String> register(String firstname, String lastName, String email, String password, String phoneNumber) {
         return ameguRepository.userRepository().register(firstname, lastName, email, password, phoneNumber);
     }
 }

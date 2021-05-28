@@ -1,26 +1,20 @@
 package id.rezajuliandri.amegu.ui.user.pets;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
 import id.rezajuliandri.amegu.databinding.FragmentPetsUserBinding;
 import id.rezajuliandri.amegu.ui.home.HomePetAdapter;
-import id.rezajuliandri.amegu.ui.user.favorite.FavoriteFragmentDirections;
 import id.rezajuliandri.amegu.utils.ActionBarHelper;
 import id.rezajuliandri.amegu.utils.BaseFragment;
 import id.rezajuliandri.amegu.viewmodel.ViewModelFactory;
@@ -30,6 +24,7 @@ public class PetsUserFragment extends BaseFragment {
     FragmentPetsUserBinding binding;
     PetUserViewModel viewModel;
     HomePetAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,7 +42,7 @@ public class PetsUserFragment extends BaseFragment {
         adapter = new HomePetAdapter(requireActivity().getApplication(), this, binding.getRoot());
 
         viewModel.getUserData().observe(getViewLifecycleOwner(), userEntity -> {
-            if(userEntity != null){
+            if (userEntity != null) {
                 viewModel.getMyPets(userEntity.getToken()).observe(getViewLifecycleOwner(), pets -> {
                     if (pets != null) {
                         switch (pets.status) {
@@ -56,7 +51,7 @@ public class PetsUserFragment extends BaseFragment {
                                 break;
                             case SUCCESS:
                                 binding.progressBar.setVisibility(View.GONE);
-                                if(pets.data != null){
+                                if (pets.data != null) {
                                     if (pets.data.size() == 0) {
                                         binding.emptyResponse.setVisibility(View.VISIBLE);
                                     }
@@ -93,6 +88,7 @@ public class PetsUserFragment extends BaseFragment {
         binding.toolbar.searchBox.clearFocus();
         binding.toolbar.searchBox.setFocusableInTouchMode(false);
     }
+
     @Override
     public void onResume() {
         super.onResume();

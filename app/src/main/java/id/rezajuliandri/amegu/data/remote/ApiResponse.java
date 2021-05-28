@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 /**
  * Class yang memproses data dari API
+ *
  * @param <T>
  */
 public class ApiResponse<T> {

@@ -15,6 +15,7 @@ import id.rezajuliandri.amegu.vo.Resource;
 
 public class UploadViewModel extends ViewModel {
     AmeguRepository ameguRepository;
+
     public UploadViewModel(AmeguRepository ameguRepository) {
         this.ameguRepository = ameguRepository;
     }
@@ -45,7 +46,7 @@ public class UploadViewModel extends ViewModel {
                                       String deskripsi,
                                       long attachmentId,
                                       String token) {
-        return ameguRepository.petRepository().uploadPet( rasId,
+        return ameguRepository.petRepository().uploadPet(rasId,
                 namaHewan,
                 usia,
                 beratBadan,

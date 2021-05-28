@@ -9,15 +9,15 @@ public class AdopsiEntity {
 
     @PrimaryKey
     @ColumnInfo(name = "_id")
-    private int id;
+    private final int id;
 
-    private int userId;
+    private final int userId;
 
-    private int hewanId;
+    private final int hewanId;
 
-    private int status;
+    private final int status;
 
-    private String statusText;
+    private final String statusText;
 
     public AdopsiEntity(int id, int userId, int hewanId, int status, String statusText) {
         this.id = id;

@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 
 import id.rezajuliandri.amegu.data.local.LocalDataSource;
 import id.rezajuliandri.amegu.data.remote.RemoteDataSource;
+import id.rezajuliandri.amegu.data.repository.location.LocationRepository;
 import id.rezajuliandri.amegu.data.repository.pet.PetRepository;
 import id.rezajuliandri.amegu.data.repository.user.UserRepository;
-import id.rezajuliandri.amegu.data.repository.location.LocationRepository;
 import id.rezajuliandri.amegu.utils.AppExecutors;
 
 /**
@@ -18,7 +18,7 @@ import id.rezajuliandri.amegu.utils.AppExecutors;
  * - UserRepository yang menghandle semua data mengenai user
  * - PetRepository yang menghandle semua data mengenai hewan
  */
-public class AmeguRepository implements AmeguDataSource{
+public class AmeguRepository implements AmeguDataSource {
     private volatile static AmeguRepository INSTANCE = null;
 
     private final RemoteDataSource remoteDataSource;

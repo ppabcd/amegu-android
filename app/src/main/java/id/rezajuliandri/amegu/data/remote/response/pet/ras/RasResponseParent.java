@@ -1,21 +1,22 @@
 package id.rezajuliandri.amegu.data.remote.response.pet.ras;
 
-import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class RasResponseParent{
+import java.util.List;
 
-	@SerializedName("data")
-	private List<RasResponse> data;
+public class RasResponseParent {
 
-	@SerializedName("message")
-	private String message;
+    @SerializedName("data")
+    private List<RasResponse> data;
 
-	public List<RasResponse> getData(){
-		return data;
-	}
+    @SerializedName("message")
+    private String message;
 
-	public String getMessage(){
-		return message;
-	}
+    public List<RasResponse> getData() {
+        return data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

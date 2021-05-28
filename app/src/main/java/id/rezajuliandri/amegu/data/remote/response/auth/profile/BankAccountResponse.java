@@ -2,54 +2,54 @@ package id.rezajuliandri.amegu.data.remote.response.auth.profile;
 
 import com.google.gson.annotations.SerializedName;
 
-public class BankAccountResponse{
+public class BankAccountResponse {
 
-	@SerializedName("bankAccount")
-	private String bankAccount;
+    @SerializedName("bankAccount")
+    private String bankAccount;
 
-	@SerializedName("createdAt")
-	private String createdAt;
+    @SerializedName("createdAt")
+    private String createdAt;
 
-	@SerializedName("bankId")
-	private int bankId;
+    @SerializedName("bankId")
+    private int bankId;
 
-	@SerializedName("bank")
-	private BankResponse bank;
+    @SerializedName("bank")
+    private BankResponse bank;
 
-	@SerializedName("ownerName")
-	private String ownerName;
+    @SerializedName("ownerName")
+    private String ownerName;
 
-	@SerializedName("id")
-	private int id;
+    @SerializedName("id")
+    private int id;
 
-	@SerializedName("updatedAt")
-	private String updatedAt;
+    @SerializedName("updatedAt")
+    private String updatedAt;
 
-	public String getBankAccount(){
-		return bankAccount;
-	}
+    public String getBankAccount() {
+        return bankAccount;
+    }
 
-	public String getCreatedAt(){
-		return createdAt;
-	}
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
-	public int getBankId(){
-		return bankId;
-	}
+    public int getBankId() {
+        return bankId;
+    }
 
-	public BankResponse getBank(){
-		return bank;
-	}
+    public BankResponse getBank() {
+        return bank;
+    }
 
-	public String getOwnerName(){
-		return ownerName;
-	}
+    public String getOwnerName() {
+        return ownerName;
+    }
 
-	public int getId(){
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getUpdatedAt(){
-		return updatedAt;
-	}
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
 }

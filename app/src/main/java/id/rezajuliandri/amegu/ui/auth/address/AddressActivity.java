@@ -43,8 +43,112 @@ public class AddressActivity extends AppCompatActivity {
     ArrayList<KotaEntity> kotaEntities;
     ArrayAdapter<ProvinsiEntity> provinsiEntityArrayAdapter;
     ArrayAdapter<KotaEntity> kotaEntityArrayAdapter;
+    private final AdapterView.OnItemSelectedListener provinsiListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (position > 0) {
+                ProvinsiEntity entity = (ProvinsiEntity) binding.provinsi.getItemAtPosition(position);
+                viewModel.getKota(entity.getId()).observe(AddressActivity.this, kota -> {
+                    if (kota != null) {
+                        switch (kota.status) {
+                            case LOADING:
+                                break;
+                            case SUCCESS:
+                                kotaEntities = new ArrayList<>();
+                                kotaEntities.addAll(kota.data);
+                                kotaEntity = new KotaEntity(0, "Pilih Kota", 0);
+                                kotaEntities.add(kotaEntity);
+                                Collections.sort(kotaEntities);
+                                kotaEntityArrayAdapter = new ArrayAdapter<>(AddressActivity.this, R.layout.support_simple_spinner_dropdown_item, kotaEntities);
+                                binding.kota.setAdapter(kotaEntityArrayAdapter);
+                                binding.kota.setOnItemSelectedListener(kotaListener);
+                                break;
+                            case ERROR:
+                                Toast.makeText(AddressActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                                break;
+
+                        }
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
     ArrayAdapter<KecamatanEntity> kecamatanEntityArrayAdapter;
+    private final AdapterView.OnItemSelectedListener kotaListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (position > 0) {
+                KotaEntity entity = (KotaEntity) binding.kota.getItemAtPosition(position);
+                viewModel.getKecamatan(entity.getId()).observe(AddressActivity.this, kecamatan -> {
+                    if (kecamatan != null) {
+                        switch (kecamatan.status) {
+                            case LOADING:
+                                break;
+                            case SUCCESS:
+                                kecamatanEntities = new ArrayList<>();
+                                kecamatanEntities.addAll(kecamatan.data);
+                                kecamatanEntity = new KecamatanEntity(0, "Pilih Kecamatan", 0);
+                                kecamatanEntities.add(kecamatanEntity);
+                                Collections.sort(kecamatanEntities);
+                                kecamatanEntityArrayAdapter = new ArrayAdapter<>(AddressActivity.this, R.layout.support_simple_spinner_dropdown_item, kecamatanEntities);
+                                binding.kecamatan.setAdapter(kecamatanEntityArrayAdapter);
+                                binding.kecamatan.setOnItemSelectedListener(kecamatanListener);
+                                break;
+                            case ERROR:
+                                Toast.makeText(AddressActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                                break;
+
+                        }
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
     ArrayAdapter<KelurahanEntity> kelurahanEntityArrayAdapter;
+    private final AdapterView.OnItemSelectedListener kecamatanListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (position > 0) {
+                KecamatanEntity entity = (KecamatanEntity) binding.kecamatan.getItemAtPosition(position);
+                viewModel.getKelurahan(entity.getId()).observe(AddressActivity.this, kelurahan -> {
+                    if (kelurahan != null) {
+                        switch (kelurahan.status) {
+                            case LOADING:
+                                break;
+                            case SUCCESS:
+                                kelurahanEntities = new ArrayList<>();
+                                kelurahanEntities.addAll(kelurahan.data);
+                                kelurahanEntity = new KelurahanEntity(0, "Pilih Kelurahan", 0);
+                                kelurahanEntities.add(kelurahanEntity);
+                                Collections.sort(kelurahanEntities);
+                                kelurahanEntityArrayAdapter = new ArrayAdapter<>(AddressActivity.this, R.layout.support_simple_spinner_dropdown_item, kelurahanEntities);
+                                binding.kelurahan.setAdapter(kelurahanEntityArrayAdapter);
+                                binding.kelurahan.setOnItemSelectedListener(kelurahanListener);
+                                break;
+                            case ERROR:
+                                Toast.makeText(AddressActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
     boolean completedCheck = false;
     boolean completedText = false;
     private final TextWatcher alamat_listener = new TextWatcher() {
@@ -88,110 +192,6 @@ public class AddressActivity extends AppCompatActivity {
                 return;
             }
             completedCheck = false;
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    };
-    private final AdapterView.OnItemSelectedListener kecamatanListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position > 0) {
-                KecamatanEntity entity = (KecamatanEntity) binding.kecamatan.getItemAtPosition(position);
-                viewModel.getKelurahan(entity.getId()).observe(AddressActivity.this, kelurahan -> {
-                    if (kelurahan != null) {
-                        switch (kelurahan.status) {
-                            case LOADING:
-                                break;
-                            case SUCCESS:
-                                kelurahanEntities = new ArrayList<>();
-                                kelurahanEntities.addAll(kelurahan.data);
-                                kelurahanEntity = new KelurahanEntity(0, "Pilih Kelurahan", 0);
-                                kelurahanEntities.add(kelurahanEntity);
-                                Collections.sort(kelurahanEntities);
-                                kelurahanEntityArrayAdapter = new ArrayAdapter<>(AddressActivity.this, R.layout.support_simple_spinner_dropdown_item, kelurahanEntities);
-                                binding.kelurahan.setAdapter(kelurahanEntityArrayAdapter);
-                                binding.kelurahan.setOnItemSelectedListener(kelurahanListener);
-                                break;
-                            case ERROR:
-                                Toast.makeText(AddressActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                    }
-                });
-            }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    };
-    private final AdapterView.OnItemSelectedListener kotaListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position > 0) {
-                KotaEntity entity = (KotaEntity) binding.kota.getItemAtPosition(position);
-                viewModel.getKecamatan(entity.getId()).observe(AddressActivity.this, kecamatan -> {
-                    if (kecamatan != null) {
-                        switch (kecamatan.status) {
-                            case LOADING:
-                                break;
-                            case SUCCESS:
-                                kecamatanEntities = new ArrayList<>();
-                                kecamatanEntities.addAll(kecamatan.data);
-                                kecamatanEntity = new KecamatanEntity(0, "Pilih Kecamatan", 0);
-                                kecamatanEntities.add(kecamatanEntity);
-                                Collections.sort(kecamatanEntities);
-                                kecamatanEntityArrayAdapter = new ArrayAdapter<>(AddressActivity.this, R.layout.support_simple_spinner_dropdown_item, kecamatanEntities);
-                                binding.kecamatan.setAdapter(kecamatanEntityArrayAdapter);
-                                binding.kecamatan.setOnItemSelectedListener(kecamatanListener);
-                                break;
-                            case ERROR:
-                                Toast.makeText(AddressActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                                break;
-
-                        }
-                    }
-                });
-            }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    };
-    private final AdapterView.OnItemSelectedListener provinsiListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position > 0) {
-                ProvinsiEntity entity = (ProvinsiEntity) binding.provinsi.getItemAtPosition(position);
-                viewModel.getKota(entity.getId()).observe(AddressActivity.this, kota -> {
-                    if (kota != null) {
-                        switch (kota.status) {
-                            case LOADING:
-                                break;
-                            case SUCCESS:
-                                kotaEntities = new ArrayList<>();
-                                kotaEntities.addAll(kota.data);
-                                kotaEntity = new KotaEntity(0, "Pilih Kota", 0);
-                                kotaEntities.add(kotaEntity);
-                                Collections.sort(kotaEntities);
-                                kotaEntityArrayAdapter = new ArrayAdapter<>(AddressActivity.this, R.layout.support_simple_spinner_dropdown_item, kotaEntities);
-                                binding.kota.setAdapter(kotaEntityArrayAdapter);
-                                binding.kota.setOnItemSelectedListener(kotaListener);
-                                break;
-                            case ERROR:
-                                Toast.makeText(AddressActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                                break;
-
-                        }
-                    }
-                });
-            }
         }
 
         @Override
@@ -289,7 +289,7 @@ public class AddressActivity extends AppCompatActivity {
                             ((KelurahanEntity) binding.kelurahan.getSelectedItem()).getId(),
                             userEntity.getToken()
                     ).observe(this, status -> {
-                        if(status.toLowerCase().equals("ok")){
+                        if (status.toLowerCase().equals("ok")) {
                             viewModel.getProfile(userEntity.getToken()).observe(this, this::checkProfile);
                             return;
                         }

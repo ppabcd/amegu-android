@@ -190,7 +190,8 @@ public class ImageFilePath {
 
         return (permissionNeeded.size() == 0);
     }
-    public interface OnCheckPermission{
+
+    public interface OnCheckPermission {
         void onPermissionNeeded(String[] requiredPermissions);
     }
 }

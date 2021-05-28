@@ -48,59 +48,20 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 public class PetUpdateFragment extends BaseFragment {
-    FragmentPetUpdateBinding binding;
-    PetUpdateViewModel viewModel;
-
     private static final int REQUEST_IMAGE = 1;
     private static final int PERMISSION_REQ_INTERNAL_STORAGE = 2;
     public String[] permissionsNeeded;
-
+    FragmentPetUpdateBinding binding;
+    PetUpdateViewModel viewModel;
     ArrayList<JenisEntity> jenisEntities;
     ArrayList<RasEntity> rasEntities;
 
     long petId;
     int fileId = 0;
     long rasId = 0;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = FragmentPetUpdateBinding.inflate(getLayoutInflater());
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        initData();
-        super.onViewCreated(view, savedInstanceState);
-    }
-
     ArrayAdapter<JenisEntity> jenisEntityArrayAdapter;
     ArrayAdapter<RasEntity> rasEntityArrayAdapter;
-
-    private void initData() {
-        jenisEntities = new ArrayList<>();
-        rasEntities = new ArrayList<>();
-        JenisEntity jenisEntity = new JenisEntity(0, "Pilih jenis hewan");
-        RasEntity rasEntity = new RasEntity(0, "Pilih ras", 0);
-        jenisEntities.add(jenisEntity);
-        rasEntities.add(rasEntity);
-
-        jenisEntityArrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, jenisEntities);
-        rasEntityArrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, rasEntities);
-
-        binding.jenis.setAdapter(jenisEntityArrayAdapter);
-        binding.ras.setAdapter(rasEntityArrayAdapter);
-        binding.jenisKelamin.setOnCheckedChangeListener(jenisKelaminListener);
-        binding.namaHewan.addTextChangedListener(textListener);
-        binding.usia.addTextChangedListener(textListener);
-        binding.beratBadan.addTextChangedListener(textListener);
-        binding.kondisi.addTextChangedListener(textListener);
-        binding.harga.addTextChangedListener(textListener);
-        binding.deskripsi.addTextChangedListener(textListener);
-    }
-
+    private boolean rasChecked = false;
     private final RadioGroup.OnCheckedChangeListener jenisKelaminListener = (group, checkedId) -> checkButton();
     TextWatcher textListener = new TextWatcher() {
         @Override
@@ -118,7 +79,27 @@ public class PetUpdateFragment extends BaseFragment {
 
         }
     };
-    private AdapterView.OnItemSelectedListener jenisListener = new AdapterView.OnItemSelectedListener() {
+    private final AdapterView.OnItemSelectedListener rasListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (position > 0) {
+                JenisEntity jenisEntity = (JenisEntity) binding.jenis.getSelectedItem();
+                RasEntity rasEntity = (RasEntity) binding.ras.getItemAtPosition(position);
+                if (rasEntity.getJenisId() == jenisEntity.getId()) {
+                    rasChecked = true;
+                }
+            } else {
+                rasChecked = false;
+            }
+            checkButton();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+    private final AdapterView.OnItemSelectedListener jenisListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             if (position > 0) {
@@ -166,27 +147,42 @@ public class PetUpdateFragment extends BaseFragment {
 
         }
     };
-    private boolean rasChecked = false;
-    private AdapterView.OnItemSelectedListener rasListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position > 0) {
-                JenisEntity jenisEntity = (JenisEntity) binding.jenis.getSelectedItem();
-                RasEntity rasEntity = (RasEntity) binding.ras.getItemAtPosition(position);
-                if (rasEntity.getJenisId() == jenisEntity.getId()) {
-                    rasChecked = true;
-                }
-            } else {
-                rasChecked = false;
-            }
-            checkButton();
-        }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding = FragmentPetUpdateBinding.inflate(getLayoutInflater());
+        return binding.getRoot();
+    }
 
-        }
-    };
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        initData();
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void initData() {
+        jenisEntities = new ArrayList<>();
+        rasEntities = new ArrayList<>();
+        JenisEntity jenisEntity = new JenisEntity(0, "Pilih jenis hewan");
+        RasEntity rasEntity = new RasEntity(0, "Pilih ras", 0);
+        jenisEntities.add(jenisEntity);
+        rasEntities.add(rasEntity);
+
+        jenisEntityArrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, jenisEntities);
+        rasEntityArrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, rasEntities);
+
+        binding.jenis.setAdapter(jenisEntityArrayAdapter);
+        binding.ras.setAdapter(rasEntityArrayAdapter);
+        binding.jenisKelamin.setOnCheckedChangeListener(jenisKelaminListener);
+        binding.namaHewan.addTextChangedListener(textListener);
+        binding.usia.addTextChangedListener(textListener);
+        binding.beratBadan.addTextChangedListener(textListener);
+        binding.kondisi.addTextChangedListener(textListener);
+        binding.harga.addTextChangedListener(textListener);
+        binding.deskripsi.addTextChangedListener(textListener);
+    }
 
     private void checkButton() {
         binding.send.setEnabled(false);

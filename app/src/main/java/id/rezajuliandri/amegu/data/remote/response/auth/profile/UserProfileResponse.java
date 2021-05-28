@@ -100,7 +100,7 @@ public class UserProfileResponse {
         return updatedAt;
     }
 
-    public int getIsAdmin(){
+    public int getIsAdmin() {
         return this.isAdmin;
     }
 }

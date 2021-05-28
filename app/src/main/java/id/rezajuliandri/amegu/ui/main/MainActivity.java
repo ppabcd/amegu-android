@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity {
     private void refreshUserData() {
         if (NetworkUtils.isConnectedFast(this)) {
             viewModel.getUser().observe(this, userEntity -> {
-                if(userEntity != null){
+                if (userEntity != null) {
                     viewModel.getProfile(userEntity.getToken()).observe(this, this::checkProfile);
                 }
             });

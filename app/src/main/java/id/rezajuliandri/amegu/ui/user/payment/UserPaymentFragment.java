@@ -1,17 +1,15 @@
 package id.rezajuliandri.amegu.ui.user.payment;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
+
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import id.rezajuliandri.amegu.R;
 import id.rezajuliandri.amegu.data.local.entity.pet.PetEntity;
@@ -24,6 +22,7 @@ import id.rezajuliandri.amegu.viewmodel.ViewModelFactory;
 public class UserPaymentFragment extends BaseFragment {
     FragmentUserPaymentBinding binding;
     UserPaymentViewModel viewModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,18 +33,18 @@ public class UserPaymentFragment extends BaseFragment {
 
     @Override
     protected void getData() {
-        if(NetworkUtils.isConnectedFast(getContext())){
+        if (NetworkUtils.isConnectedFast(getContext())) {
             viewModel.getUser().observe(getViewLifecycleOwner(), userEntity -> {
                 binding.webView.getSettings().setJavaScriptEnabled(true);
-                binding.webView.setWebChromeClient(new WebChromeClient(){
+                binding.webView.setWebChromeClient(new WebChromeClient() {
                     @Override
                     public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
                         android.util.Log.d("WebView", consoleMessage.message());
                         return true;
                     }
                 });
-                Log.i("URLL", "https://amegu.netlify.app/android/?token="+userEntity.getToken()+"&&target=admin/payments");
-                binding.webView.loadUrl("https://amegu.netlify.app/android/?token="+userEntity.getToken()+"&&target=admin/payments");
+                Log.i("URLL", "https://amegu.netlify.app/android/?token=" + userEntity.getToken() + "&&target=admin/payments");
+                binding.webView.loadUrl("https://amegu.netlify.app/android/?token=" + userEntity.getToken() + "&&target=admin/payments");
             });
         } else {
             binding.webView.setVisibility(View.GONE);

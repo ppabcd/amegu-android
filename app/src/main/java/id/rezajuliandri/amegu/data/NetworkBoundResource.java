@@ -9,6 +9,7 @@ import id.rezajuliandri.amegu.vo.Resource;
 
 /**
  * Bagian yang melakukan pemilihan apakah data yang diambil berasal dari lokal atau dari online
+ *
  * @param <ResultType>
  * @param <RequestType>
  */

@@ -86,31 +86,32 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("/v1/main/hewan")
     Call<SimpleResponse> uploadPet(@Field("rasId") long rasId,
-                                    @Field("namaHewan") String namaHewan,
-                                    @Field("usia") int usia,
-                                    @Field("beratBadan") int beratBadan,
-                                    @Field("kondisi") String kondisi,
-                                    @Field("jenisKelamin") String jenisKelamin,
-                                    @Field("harga") int harga,
-                                    @Field("deskripsi") String deskripsi,
-                                    @Field("attachmentId") long attachmentId,
-                                    @Field("token") String token
+                                   @Field("namaHewan") String namaHewan,
+                                   @Field("usia") int usia,
+                                   @Field("beratBadan") int beratBadan,
+                                   @Field("kondisi") String kondisi,
+                                   @Field("jenisKelamin") String jenisKelamin,
+                                   @Field("harga") int harga,
+                                   @Field("deskripsi") String deskripsi,
+                                   @Field("attachmentId") long attachmentId,
+                                   @Field("token") String token
     );
 
     @FormUrlEncoded
     @PUT("/v1/main/hewan")
     Call<SimpleResponse> updatePet(@Field("id") long id,
-                                    @Field("rasId") long rasId,
-                                    @Field("namaHewan") String namaHewan,
-                                    @Field("usia") int usia,
-                                    @Field("beratBadan") int beratBadan,
-                                    @Field("kondisi") String kondisi,
-                                    @Field("jenisKelamin") String jenisKelamin,
-                                    @Field("harga") int harga,
-                                    @Field("deskripsi") String deskripsi,
-                                    @Field("attachmentId") long attachmentId,
-                                    @Field("token") String token
+                                   @Field("rasId") long rasId,
+                                   @Field("namaHewan") String namaHewan,
+                                   @Field("usia") int usia,
+                                   @Field("beratBadan") int beratBadan,
+                                   @Field("kondisi") String kondisi,
+                                   @Field("jenisKelamin") String jenisKelamin,
+                                   @Field("harga") int harga,
+                                   @Field("deskripsi") String deskripsi,
+                                   @Field("attachmentId") long attachmentId,
+                                   @Field("token") String token
     );
+
     @DELETE("/v1/main/hewan")
     Call<SimpleResponse> deletePet(@Query("id") long id, @Query("token") String token);
 

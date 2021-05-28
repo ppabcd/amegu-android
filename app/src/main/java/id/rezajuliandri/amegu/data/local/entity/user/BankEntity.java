@@ -8,11 +8,11 @@ import androidx.room.PrimaryKey;
 public class BankEntity {
     @PrimaryKey
     @ColumnInfo(name = "_id")
-    private long id;
-    private String code;
-    private String name;
-    private String createdAt;
-    private String updatedAt;
+    private final long id;
+    private final String code;
+    private final String name;
+    private final String createdAt;
+    private final String updatedAt;
 
     public BankEntity(long id, String code, String name, String createdAt, String updatedAt) {
         this.id = id;
