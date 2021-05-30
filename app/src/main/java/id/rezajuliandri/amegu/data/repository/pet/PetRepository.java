@@ -416,7 +416,7 @@ public class PetRepository implements PetDataSource {
         return new NetworkBoundResource<List<RasEntity>, List<RasResponse>>(appExecutors) {
             @Override
             protected LiveData<List<RasEntity>> loadFromDB() {
-                return localDataSource.ameguDatabase.rasDao().getAllRasEntity();
+                return localDataSource.ameguDatabase.rasDao().getRasByJenis(id);
             }
 
             @Override

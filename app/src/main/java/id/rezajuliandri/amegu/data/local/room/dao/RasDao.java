@@ -24,4 +24,7 @@ public interface RasDao {
 
     @Query("SELECT * FROM RasEntity")
     LiveData<List<RasEntity>> getAllRasEntity();
+
+    @Query("SELECT * FROM RasEntity WHERE jenisId = :id")
+    LiveData<List<RasEntity>> getRasByJenis(long id);
 }

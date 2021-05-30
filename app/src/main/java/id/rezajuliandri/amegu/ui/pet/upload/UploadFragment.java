@@ -80,6 +80,8 @@ public class UploadFragment extends BaseFragment {
             if (position > 0) {
                 JenisEntity jenisEntity = (JenisEntity) binding.jenis.getSelectedItem();
                 RasEntity rasEntity = (RasEntity) binding.ras.getItemAtPosition(position);
+                Log.i("VALIDASI_JENIS", String.valueOf(jenisEntity.getId()));
+                Log.i("VALIDASI_JENIS_RAS", String.valueOf(rasEntity.getJenisId()));
                 if (rasEntity.getJenisId() == jenisEntity.getId()) {
                     rasChecked = true;
                 }
@@ -242,37 +244,49 @@ public class UploadFragment extends BaseFragment {
 
     private void checkButton() {
         binding.send.setEnabled(false);
+        Log.i("VALIDASI", "BUTTON: FALSE");
         if (!rasChecked) {
+            Log.i("VALIDASI", "RAS");
             return;
         }
         if (binding.jenisKelamin.getCheckedRadioButtonId() == -1) {
+            Log.i("VALIDASI", "JENIS KELAMIN");
             return;
         }
         if ("".equals(binding.namaHewan.getText().toString())) {
+            Log.i("VALIDASI", "NAMA HEWAN");
             return;
         }
         if (fileId == 0) {
+            Log.i("VALIDASI", "FILEID");
             return;
         }
         if ("".equals(binding.usia.getText().toString())) {
+            Log.i("VALIDASI", "USIA");
             return;
         }
         if ("".equals(binding.beratBadan.getText().toString()) ||
                 Integer.parseInt(binding.beratBadan.getText().toString()) < 1) {
+            Log.i("VALIDASI", "BERAT");
             return;
         }
         if ("".equals(binding.kondisi.getText().toString())) {
+            Log.i("VALIDASI", "KONDISI");
             return;
         }
         if ("".equals(binding.deskripsi.getText().toString())) {
+            Log.i("VALIDASI", "DESKRIPSI");
             return;
         }
         if ("".equals(binding.harga.getText().toString())) {
+            Log.i("VALIDASI", "HARGA");
             return;
         }
         if (Integer.parseInt(binding.harga.getText().toString()) < 0) {
+            Log.i("VALIDASI", "HARGA2");
             return;
         }
+        Log.i("VALIDASI", "BUTTON: ENABLED");
         binding.send.setEnabled(true);
     }
 
